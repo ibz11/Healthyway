@@ -1,0 +1,53 @@
+body {
+    /* background-color:linear-gradient(to right, #0f0c29,#302b63,#24243e) !important; */
+background:linear-gradient(to right, #e0eafc,#cfdef3,#c9d6ff,#e2e2e2);
+/* #136a8a,#267871); */
+/* #606c88,#3f4c6b); */
+/* #616161,#9bc5c3, */
+/* #83a4d4, #b6fbff, */
+ /* #2C5364, #203A43, #0F2027);  */
+/* #0f0c29,#302b63,#24243e) !important; */
+
+color:black;
+}
+
+
+
+
+
+
+
+.div-center{
+    display: flex;
+    justify-content:center;
+    margin: 2em;
+    text-align: center;
+}
+.auth-grid{
+    display: grid;
+    grid-template-columns: auto;
+    border: 1px solid orange;
+    padding:2em;
+    width:20%;
+}
+.auth-form{
+width:28em;
+/* background: #0f0c29; */
+ 
+  border: 1px solid black;
+  border-radius: .3em;
+  padding:2em;
+}
+.auth-btn{
+ 
+    width:100%;
+}
+
+
+.link{
+    color:black;
+}
+.link:hover{
+    color:gray;
+
+}
