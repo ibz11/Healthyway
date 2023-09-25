@@ -201,14 +201,14 @@ else if($userdata->role=='therapist'){
     // response()->json($columnData);
     return view('Panel/therapist/home',compact('data','hello','columnData'));
 }
-else {
+else if($userdata->role=='student'){
     $columnData = [];
     // $hello = User::select('twoFA_enabled')->get();
     $hello=User::select('twoFA_enabled')->where('id','=',Session::get('loginId'))->get();
     foreach ($hello as $hello) {
     $columnData[] = $hello;
     }
-    return view('welcome',compact('userdata','columnData'));
+    return view('Panel/student/home',compact('userdata','columnData'));
 }
 }
 

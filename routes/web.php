@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\StudentController;
 use App\Mail\TwoFA_Login;
 use Illuminate\Support\Facades\Mail;
 /*
@@ -58,6 +59,13 @@ Route::match(['get', 'post'],'updateuser/{id}',[AdminController::class,'updateus
 route::get('deleteuser/{id}',[AdminController::class,'deleteuser']);
 
 });
+
+
+
+
+route::get('progress',[StudentController::class,'progress']);
+Route::match(['get', 'post'],'expertsystem',[StudentController::class,'expertsystem'] );
+route::get('deletetest/{id}',[StudentController::class,'deletetest']);
 
 
 
