@@ -6,8 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
-
-class AdminMiddleware
+class StudentMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,16 +16,16 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::check()){
-        if(Auth::user()->role=='admin'){
-        return $next($request);
-        }
-        else{
-            return redirect()->back();
-        }
-        }
-        else{
-            return redirect()->back();
-                }
+            if(Auth::user()->role=='student'){
+            return $next($request);
+            }
+            else{
+                return redirect()->back();
+            }
+          
+            }
+            
+                
         return $next($request);
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+class TherapistMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,17 +16,19 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+       
         if(Auth::check()){
-        if(Auth::user()->role=='admin'){
+            if(Auth::user()->role=='therapist'){
+            return $next($request);
+            }
+            else{
+                return redirect()->back();
+            }
+            }
+            
         return $next($request);
-        }
-        else{
-            return redirect()->back();
-        }
-        }
-        else{
-            return redirect()->back();
-                }
-        return $next($request);
+        // else{
+        //     return redirect()->back()->with('Error',"error");
+        // }
     }
 }

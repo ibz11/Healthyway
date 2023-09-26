@@ -42,7 +42,7 @@ $confirm_password=$request->confirmPassword;
 $request->validate([
     'full_name'=>'required|min:3',
     'email'=>'required|min:4|email|unique:users',
-    'phone'=>'min:10|max:10', 
+    'phone'=>'min:10|max:10|unique:users', 
     'password' => [
         'required',
         'string',
@@ -111,7 +111,7 @@ if(Hash::check($request->password,$user->password)){
         Mail::to($user->email)->send(new TwoFA_Login($fourDigitCode));
         return redirect('twofaview');
         }
-        else if($disabled2FA){
+        else{
         
         return redirect('dashboard');
         }
@@ -139,7 +139,7 @@ public function twofaview(){
 
 
 public function verify2FA(Request $request){
-$twoFAcode=234;
+// $twoFAcode=234;
 
 $data=User::where('id','=',Session::get('loginId'))->first();
 
@@ -199,7 +199,7 @@ else if($userdata->role=='therapist'){
     $columnData[] = $hello;
     }
     // response()->json($columnData);
-    return view('Panel/therapist/home',compact('data','hello','columnData'));
+    return view('Panel/therapist/home',compact('userdata','hello','columnData'));
 }
 else if($userdata->role=='student'){
     $columnData = [];
@@ -360,7 +360,7 @@ $verified2FA=User::where('twoFA_verified','=',1)->first();
 $disabled2FA=User::where('twoFA_enabled','=',0)->first();
 
 $data=User::where('id','=',Session::get('loginId'))->first();
-    if(Session::has('loginId')){
+if(Session::has('loginId')){
         if($verified2FA){
             $data->twoFA_code= 0;
             $data->twoFA_verified=0;
