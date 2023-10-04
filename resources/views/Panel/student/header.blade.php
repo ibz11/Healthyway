@@ -123,6 +123,11 @@ overflow-x: auto;
                     <span>Progress</span></a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('journalstudent')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Journals</span></a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -395,6 +400,10 @@ overflow-x: auto;
 @if(Session::has('success'))
  <div class="alert alert-success">{{Session::get('success')}}</div>
  
+ @endif
+
+ @if(Session::has('warning'))
+ <div class="alert alert-warning">{{Session::get('warning')}}</div>
  @endif
 
  @if(Session::has('Error'))

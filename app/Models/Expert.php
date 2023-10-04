@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Expert extends Model
 {
+    protected $primaryKey = 'exp_id';
     use HasFactory;
 }

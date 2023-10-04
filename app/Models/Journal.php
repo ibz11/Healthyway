@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Journal extends Model
 {
+    protected $primaryKey = 'Journal_id';
     use HasFactory;
 }

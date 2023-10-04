@@ -99,7 +99,8 @@ $verified2FA=User::where('twoFA_enabled','=',1)->first();
 $disabled2FA=User::where('twoFA_enabled','=',0)->first();
 $twoFAcode=234;
 
-if($user){
+if($user)
+{
 if(Hash::check($request->password,$user->password)){
         
         
@@ -199,7 +200,7 @@ else if($userdata->role=='therapist'){
     $columnData[] = $hello;
     }
     // response()->json($columnData);
-    return view('Panel/therapist/home',compact('userdata','hello','columnData'));
+    return view('Panel/therapist/home',compact('userdata','columnData'));
 }
 else if($userdata->role=='student'){
     $columnData = [];
@@ -209,6 +210,10 @@ else if($userdata->role=='student'){
     $columnData[] = $hello;
     }
     return view('Panel/student/home',compact('userdata','columnData'));
+}
+else{
+    $user=Auth::User();
+    return view('home',compact('user'));   
 }
 }
 

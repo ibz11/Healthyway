@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('recommendations', function (Blueprint $table) {
             $table->id('Recommendations_id');
-            $table->enum('fear_level',['high','moderate','low'])->nullable();
-            $table->enum('avoidance_level',['high','moderate','low'])->nullable();
+            $table->enum('fear_level',['high','marked','low'])->nullable();
+            $table->enum('avoidance_level',['high','marked','low'])->nullable();
             $table->LongText('Recommendation')->nullable();
             $table->timestamps();
         });

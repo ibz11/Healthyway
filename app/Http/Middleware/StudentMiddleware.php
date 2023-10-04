@@ -16,16 +16,15 @@ class StudentMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::check()){
-            if(Auth::user()->role=='student'){
+            if(Auth::user()->role=='therapist'){
             return $next($request);
             }
             else{
                 return redirect()->back();
             }
-          
             }
             
-                
         return $next($request);
-    }
-}
+                }
+               
+            }

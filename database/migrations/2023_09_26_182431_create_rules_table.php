@@ -19,6 +19,17 @@ return new class extends Migration
         });
     }
 
+    // 0-29 You do not suffer from social
+    // anxiety
+    // 30-49 Mild social anxiety
+    // 50-64 Moderate social anxiety
+    // 65-79 Marked social anxiety
+    // 80-94 Severe social anxiety
+    //  95   Very severe social anxiety
+
+
+
+
     /**
      * Reverse the migrations.
      */

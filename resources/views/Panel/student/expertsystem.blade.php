@@ -1,25 +1,15 @@
 @include('Panel/student/header')
 
 
-@if(Session::has('success'))
-<div class="alert alert-success">{{Session::get('success')}}</div>
- 
- @endif
-
- @if(Session::has('Error'))
- <div class="alert alert-danger">{{Session::get('Error')}}</div>
- @endif
  
 
 <div class="container-form"
 > 
 
  
-<form action="" 
+<form action="{{URL('expertsystem')}}" 
 
-method="POST" class="expertform"id="editform"enctype="multipart/form-data"
-
->
+method="POST" class="expertform"id="editform"enctype="multipart/form-data">
 @csrf
 <div   class="mb-3 mt-3">
 <h1>Expert system Form</h1>

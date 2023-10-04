@@ -1,0 +1,283 @@
+   //     if($highfear && $midAV){
+    //         $myFear="High";
+    //         $myAvoidance="Moderate";
+
+    //         $rules_id = Rules::select('Rule_id')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get(); 
+    //         $rules_idverysevere= Rules::select('Rule_id')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();         
+           
+    //         $recommend_id=Recommendations::select('Recommendations_id')->where('fear_level',$myFear )->where('avoidance_level',$myAvoidance )->get();
+    //         //$data=$db->toArray();
+    //         $socialanxietylevel=Rules::select('socialanxiety_level')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get();
+    //         $socialanxiety_levelverysevere= Rules::select('socialanxiety_level')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();
+    //         //storing to database
+    //         $exp->user_id=$user_id;
+    //         $exp->recommend_id=$recommend_id[0]['Recommendations_id'];
+    //         $exp->LSAS_score=$result;
+    //         $exp->fear_level=$myFear;
+    //         $exp->avoidance_level=$myAvoidance;
+
+    //         if($result>=95){
+    //         //Very severe
+    //         $exp->socialanxiety_level=$socialanxiety_levelverysevere[0]['socialanxiety_level'] ;
+    //         $exp->rules_id=$rules_idverysevere[0]['Rule_id'];
+
+
+    //         }
+    //         else{
+            
+    //         $exp->socialanxiety_level= $socialanxietylevel[0]['socialanxiety_level'];
+    //         $exp->rules_id=$rules_id[0]['Rule_id'];
+
+    //         }
+    //         $exp->save(); 
+    //         return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+
+
+
+    //     }
+    //     //high + low
+    //    else if($highfear && $lowAV){
+    //         $myFear="High";
+    //         $myAvoidance="Low";
+
+    //         $rules_id = Rules::select('Rule_id')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get(); 
+    //         $rules_idverysevere= Rules::select('Rule_id')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();         
+           
+    //         $recommend_id=Recommendations::select('Recommendations_id')->where('fear_level',$myFear )->where('avoidance_level',$myAvoidance )->get();
+    //         //$data=$db->toArray();
+    //         $socialanxietylevel=Rules::select('socialanxiety_level')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get();
+    //         $socialanxiety_levelverysevere= Rules::select('socialanxiety_level')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();
+    //         //storing to database
+    //         $exp->user_id=$user_id;
+    //         $exp->recommend_id=$recommend_id[0]['Recommendations_id'];
+    //         $exp->LSAS_score=$result;
+    //         $exp->fear_level=$myFear;
+    //         $exp->avoidance_level=$myAvoidance;
+    //         if($result>=95){
+    //         //Very severe
+    //         $exp->socialanxiety_level=$socialanxiety_levelverysevere[0]['socialanxiety_level'] ;
+    //         $exp->rules_id=$rules_idverysevere[0]['Rule_id'];
+
+
+    //         }
+    //         else{
+            
+    //         $exp->socialanxiety_level= $socialanxietylevel[0]['socialanxiety_level'];
+    //         $exp->rules_id=$rules_id[0]['Rule_id'];
+
+    //         }
+    //         $exp->save(); 
+    //         return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+
+    //     }
+    //     //mod +  high
+    //   else  if($midfear && $highAV){
+    //         $myFear="Moderate";
+    //         $myAvoidance="High";
+
+    //         $rules_id = Rules::select('Rule_id')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get(); 
+    //         $rules_idverysevere= Rules::select('Rule_id')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();         
+           
+    //         $recommend_id=Recommendations::select('Recommendations_id')->where('fear_level',$myFear )->where('avoidance_level',$myAvoidance )->get();
+    //         //$data=$db->toArray();
+    //         $socialanxietylevel=Rules::select('socialanxiety_level')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get();
+    //         $socialanxiety_levelverysevere= Rules::select('socialanxiety_level')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();
+    //         //storing to database
+    //         $exp->user_id=$user_id;
+    //         $exp->recommend_id=$recommend_id[0]['Recommendations_id'];
+    //         $exp->LSAS_score=$result;
+    //         $exp->fear_level=$myFear;
+    //         $exp->avoidance_level=$myAvoidance;
+    //         if($result>=95){
+    //         //Very severe
+    //         $exp->socialanxiety_level=$socialanxiety_levelverysevere[0]['socialanxiety_level'] ;
+    //         $exp->rules_id=$rules_idverysevere[0]['Rule_id'];
+
+
+    //         }
+    //         else{
+            
+    //         $exp->socialanxiety_level= $socialanxietylevel[0]['socialanxiety_level'];
+    //         $exp->rules_id=$rules_id[0]['Rule_id'];
+
+    //         }
+    //         $exp->save(); 
+    //         return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+
+    //     }
+    //     //mod +  mod
+    //  else   if($midfear && $midAV){
+    //         $myFear="Moderate";
+    //         $myAvoidance="Moderate";
+
+
+    //         $rules_id = Rules::select('Rule_id')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get(); 
+    //         $rules_idverysevere= Rules::select('Rule_id')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();         
+           
+    //         $recommend_id=Recommendations::select('Recommendations_id')->where('fear_level',$myFear )->where('avoidance_level',$myAvoidance )->get();
+    //         //$data=$db->toArray();
+    //         $socialanxietylevel=Rules::select('socialanxiety_level')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get();
+    //         $socialanxiety_levelverysevere= Rules::select('socialanxiety_level')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();
+    //         //storing to database
+    //         $exp->user_id=$user_id;
+    //         $exp->recommend_id=$recommend_id[0]['Recommendations_id'];
+    //         $exp->LSAS_score=$result;
+    //         $exp->fear_level=$myFear;
+    //         $exp->avoidance_level=$myAvoidance;
+    //         if($result>=95){
+    //         //Very severe
+    //         $exp->socialanxiety_level=$socialanxiety_levelverysevere[0]['socialanxiety_level'] ;
+    //         $exp->rules_id=$rules_idverysevere[0]['Rule_id'];
+
+
+    //         }
+    //         else{
+            
+    //         $exp->socialanxiety_level= $socialanxietylevel[0]['socialanxiety_level'];
+    //         $exp->rules_id=$rules_id[0]['Rule_id'];
+
+    //         }
+    //         $exp->save(); 
+    //         return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+
+    //     }
+    //     //mod + low
+    //   else  if($midfear && $lowAV){
+    //         $myFear="Moderate";
+    //         $myAvoidance="Low";
+
+    //         $rules_id = Rules::select('Rule_id')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get(); 
+    //         $rules_idverysevere= Rules::select('Rule_id')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();         
+           
+    //         $recommend_id=Recommendations::select('Recommendations_id')->where('fear_level',$myFear )->where('avoidance_level',$myAvoidance )->get();
+    //         //$data=$db->toArray();
+    //         $socialanxietylevel=Rules::select('socialanxiety_level')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get();
+    //         $socialanxiety_levelverysevere= Rules::select('socialanxiety_level')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();
+    //         //storing to database
+    //         $exp->user_id=$user_id;
+    //         $exp->recommend_id=$recommend_id[0]['Recommendations_id'];
+    //         $exp->LSAS_score=$result;
+    //         $exp->fear_level=$myFear;
+    //         $exp->avoidance_level=$myAvoidance;
+    //         if($result>=95){
+    //         //Very severe
+    //         $exp->socialanxiety_level=$socialanxiety_levelverysevere[0]['socialanxiety_level'] ;
+    //         $exp->rules_id=$rules_idverysevere[0]['Rule_id'];
+
+
+    //         }
+    //         else{
+            
+    //         $exp->socialanxiety_level= $socialanxietylevel[0]['socialanxiety_level'];
+    //         $exp->rules_id=$rules_id[0]['Rule_id'];
+
+    //         }
+    //         $exp->save(); 
+    //         return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+
+    //     }
+    //     //low + high
+    //    else  if($lowfear && $lowAV){
+    //         $myFear="Low";
+    //         $myAvoidance="Low";
+
+    //         $rules_id = Rules::select('Rule_id')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get(); 
+    //         $rules_idverysevere= Rules::select('Rule_id')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();         
+           
+    //         $recommend_id=Recommendations::select('Recommendations_id')->where('fear_level',$myFear )->where('avoidance_level',$myAvoidance )->get();
+    //         //$data=$db->toArray();
+    //         $socialanxietylevel=Rules::select('socialanxiety_level')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get();
+    //         $socialanxiety_levelverysevere= Rules::select('socialanxiety_level')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();
+    //         //storing to database
+    //         $exp->user_id=$user_id;
+    //         $exp->recommend_id=$recommend_id[0]['Recommendations_id'];
+    //         $exp->LSAS_score=$result;
+    //         $exp->fear_level=$myFear;
+    //         $exp->avoidance_level=$myAvoidance;
+    //         if($result>=95){
+    //         //Very severe
+    //         $exp->socialanxiety_level=$socialanxiety_levelverysevere[0]['socialanxiety_level'] ;
+    //         $exp->rules_id=$rules_idverysevere[0]['Rule_id'];
+
+
+    //         }
+    //         else{
+            
+    //         $exp->socialanxiety_level= $socialanxietylevel[0]['socialanxiety_level'];
+    //         $exp->rules_id=$rules_id[0]['Rule_id'];
+
+    //         }
+    //         $exp->save(); 
+    //         return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+
+    //     }
+    //     //low + mod
+    //    else if($lowfear && $midAV){
+    //         $myFear="Low";
+    //         $myAvoidance="Moderate";
+
+    //         $rules_id = Rules::select('Rule_id')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get(); 
+    //         $rules_idverysevere= Rules::select('Rule_id')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();         
+           
+    //         $recommend_id=Recommendations::select('Recommendations_id')->where('fear_level',$myFear )->where('avoidance_level',$myAvoidance )->get();
+    //         //$data=$db->toArray();
+    //         $socialanxietylevel=Rules::select('socialanxiety_level')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get();
+    //         $socialanxiety_levelverysevere= Rules::select('socialanxiety_level')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();
+    //         //storing to database
+    //         $exp->user_id=$user_id;
+    //         $exp->recommend_id=$recommend_id[0]['Recommendations_id'];
+    //         $exp->LSAS_score=$result;
+    //         $exp->fear_level=$myFear;
+    //         $exp->avoidance_level=$myAvoidance;
+    //         if($result>=95){
+    //         //Very severe
+    //         $exp->socialanxiety_level=$socialanxiety_levelverysevere[0]['socialanxiety_level'] ;
+    //         $exp->rules_id=$rules_idverysevere[0]['Rule_id'];
+
+
+    //         }
+    //         else{
+            
+    //         $exp->socialanxiety_level= $socialanxietylevel[0]['socialanxiety_level'];
+    //         $exp->rules_id=$rules_id[0]['Rule_id'];
+
+    //         }
+    //         $exp->save(); 
+    //         return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+
+    //     }
+    //     //low +low
+    //    else if($lowfear && $lowAV){
+    //         $myFear="Low";
+    //         $myAvoidance="Low";
+
+    //         $rules_id = Rules::select('Rule_id')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get(); 
+    //         $rules_idverysevere= Rules::select('Rule_id')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();         
+           
+    //         $recommend_id=Recommendations::select('Recommendations_id')->where('fear_level',$myFear )->where('avoidance_level',$myAvoidance )->get();
+    //         //$data=$db->toArray();
+    //         $socialanxietylevel=Rules::select('socialanxiety_level')->whereRaw('? BETWEEN SUBSTRING_INDEX(score_range, "-", 1) AND SUBSTRING_INDEX(score_range, "-", -1)', [$result])->get();
+    //         $socialanxiety_levelverysevere= Rules::select('socialanxiety_level')->where('score_range','=' ,'95')->where('score_range' ,'<=',$result)->get();
+    //         //storing to database
+    //         $exp->user_id=$user_id;
+    //         $exp->recommend_id=$recommend_id[0]['Recommendations_id'];
+    //         $exp->LSAS_score=$result;
+    //         $exp->fear_level=$myFear;
+    //         $exp->avoidance_level=$myAvoidance;
+    //         if($result>=95){
+    //         //Very severe
+    //         $exp->socialanxiety_level=$socialanxiety_levelverysevere[0]['socialanxiety_level'] ;
+    //         $exp->rules_id=$rules_idverysevere[0]['Rule_id'];
+
+
+    //         }
+    //         else{
+            
+    //         $exp->socialanxiety_level= $socialanxietylevel[0]['socialanxiety_level'];
+    //         $exp->rules_id=$rules_id[0]['Rule_id'];
+
+    //         }
+    //         $exp->save(); 
+    //         return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+
+    //     }

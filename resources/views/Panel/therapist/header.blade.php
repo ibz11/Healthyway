@@ -14,13 +14,15 @@
 
     <!-- Custom fonts for this template-->
     <link href="/adminpanel/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
     
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    
-    <link href="/adminpanel/css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- {{ asset('css/style.css') }} -->
+    <link href=" {{ asset('/adminpanel/css/sb-admin-2.min.css')}}" rel="stylesheet">
     
     @vite('resources/js/app.js')
     <!-- <link href="/Panel/css/styles.css" rel="stylesheet" /> -->
@@ -74,24 +76,20 @@
                     <span>Students Progress</span></a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{{URL('progress')}}">
-                <i class="fas fa-fw fa-table"></i>
-                    <span>Expert Recomendations</span></a>
-            </li>
+      
 
             <li class="nav-item">
-                <a class="nav-link" href="{{URL('progress')}}">
+                <a class="nav-link" href="{{URL('viewstudentjournals')}}">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>View Journals</span></a>
+                    <span>View Student Journals</span></a>
             </li>
 
-
+<!--
             <li class="nav-item">
                 <a class="nav-link" href="{{URL('progress')}}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Appointments</span></a>
-            </li>
+            </li> -->
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -320,11 +318,11 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            <a class="nav-link dropdown-toggle" href="" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$userdata->full_name}}</span>
                                 <img class="img-profile rounded-circle"
-                                    src="adminpanel/img/undraw_profile.svg">
+                                    src="/adminpanel/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

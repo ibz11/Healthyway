@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TherapistController;
+use App\Http\Controllers\ExpertController;
+use App\Http\Controllers\JournalController;
 use App\Mail\TwoFA_Login;
 use Illuminate\Support\Facades\Mail;
 /*
@@ -19,7 +21,9 @@ use Illuminate\Support\Facades\Mail;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+    // dd(session()->all());
+
 });
 
 //Authentication
@@ -62,7 +66,7 @@ Route::match(['get', 'post'],'profile/{id}',[AuthController::class,'profile'] )-
 
 //Admin Controlls
 Route::middleware(['admin','AlreadyAuth', 'isLoggedin'])->group(function () {
-    
+
 Route::get('/users', [AdminController::class,'users']);
 Route::match(['get', 'post'],'updateuser/{id}',[AdminController::class,'updateuser'] );
 route::get('deleteuser/{id}',[AdminController::class,'deleteuser']);
@@ -74,27 +78,42 @@ route::get('deleteuser/{id}',[AdminController::class,'deleteuser']);
 
 
 //Students routes
-
-// route::get('expertsystem',[StudentController::class,'expertsystem'] );
-
 Route::middleware(['student'])->group(function () 
 {
-route::get('progress',[StudentController::class,'progress']);
-Route::match(['get', 'post'],'expertsystem',[StudentController::class,'expertsystem'] );
-route::get('deletetest/{id}',[StudentController::class,'deletetest']);
+route::get('progress',[ExpertController::class,'progress']);
+Route::match(['get', 'post'],'expertsystem',[ExpertController::class,'expertsystem'] );
+route::get('viewdiagnosis/{exp_id}',[ExpertController::class,'viewdiagnosis']);
+route::get('deletediagnosis/{exp_id}',[ExpertController::class,'deletediagnosis']);
+route::post('expertsystem2',[ExpertController::class,'expertsystem2']);
 
+//Journal controls
+route::get('/journalstudent',[JournalController::class,'journalstudent']);
+route::get('viewjournal/{Journal_id}',[JournalController::class,'viewjournal']);
+Route::match(['get', 'post'],'createjournal',[JournalController::class,'createjournal'] );
+Route::match(['get', 'post'],'updatejournal/{Journal_id}',[JournalController::class,'updatejournal'] );
+route::get('deletejournal/{Journal_id}',[JournalController::class,'deletejournal']);
+route::get('publicjournal',[JournalController::class,'publicjournal']);
+route::get('privatejournal',[JournalController::class,'privatejournal']);
 
-route::post('expertsystem2',[StudentController::class,'expertsystem2']);
-
-
-
-
+route::get('publicselectjournal/{Journal_id}',[JournalController::class,'publicselectjournal']);
+route::get('privateselectjournal/{Journal_id}',[JournalController::class,'privateselectjournal']);
 
 });
 
+
+
+
 //Therapists routes
-Route::middleware(['therapist'])->group(function () {
+Route::middleware(['therapist'])->group(function () 
+{
+
 route::get('/studentprogress',[TherapistController::class,'studentprogress']);
+route::get('/viewstudent/{id}',[TherapistController::class,'viewstudent']);
+route::get('/viewstudentdiagnosis/{exp_id}',[TherapistController::class,'viewstudentdiagnosis']);
+route::get('/viewstudentjournals',[TherapistController::class,'viewstudentjournals']);
+route::get('/studentjournals/{id}',[TherapistController::class,'studentjournals']);
+route::get('/viewindividualjournal/{Journal_id}',[TherapistController::class,'viewindividualjournal']);
+
 });
     
 
