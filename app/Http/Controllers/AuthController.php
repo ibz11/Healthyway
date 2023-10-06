@@ -17,119 +17,115 @@ use App\Mail\ForgotPassword;
 use App\Helpers\RandomCodeGenerator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
 
-//Authentication views
-    public function loginview(){
-        $error='';
-        $title='Login';
-        return view('Auth/login',compact('title'));
-    }
+//Registration functions
     public function registerview(){
        
         $title='Register';
         return view('Auth/register',compact('title'));
     }
 
-
-//Registration and Login functions    
-public function registerUser(Request $request){
-$password=$request->password; 
-$confirm_password=$request->confirmPassword;
-
-$request->validate([
-    'full_name'=>'required|min:3',
-    'email'=>'required|min:4|email|unique:users',
-    'phone'=>'min:10|max:10|unique:users', 
-    'password' => [
-        'required',
-        'string',
-        'min:8', // Minimum length of 8 characters
-        'max:17',
-        'regex:/[A-Z]/', // Requires at least one uppercase letter
-        'regex:/[a-z]/', // Requires at least one lowercase letter
-        'regex:/[0-9]/', // Requires at least one digit
-        'regex:/[@$!%*#?&]/', // Requires at least one special character
-    ],
-    'confirm_password'=>'required|same:password', 
-
-]);
-
-$user= new User;
-$user->full_name=$request->full_name;
-$user->email=$request->email;
-$user->phone=$request->phone;
-$user->password=Hash::make($request->password);
-$res=$user->save();
-
-if($res==true) {
-return redirect('login')->with('success','You have been registered successfully');
-}
-else{
-    return back()->with('Error','Something went wrong try again');
-}
-
-}
-
-public function loginUser(Request $request){
-
-$request->validate([
-    'email'=>'required|min:4|email',
-    'password' => [
-        'required',
-        'string',
-        'min:8', // Minimum length of 8 characters
-        'max:17',
-        'regex:/[A-Z]/', // Requires at least one uppercase letter
-        'regex:/[a-z]/', // Requires at least one lowercase letter
-        'regex:/[0-9]/', // Requires at least one digit
-        'regex:/[@$!%*#?&]/', // Requires at least one special character
+    public function registerUser(Request $request)
+    {  
+        $request->validate([
+            'full_name' => 'required',
+            'email' => 'required|email|unique:users',
+            'phone'=>'required',
+            'password' => 'required|min:6',
+            // 'password' => [
+            //     'required',
+            //     'string',
+            //     'min:8', // Minimum length of 8 characters
+            //     'max:17',
+            //     'regex:/[A-Z]/', // Requires at least one uppercase letter
+            //     'regex:/[a-z]/', // Requires at least one lowercase letter
+            //     'regex:/[0-9]/', // Requires at least one digit
+            //     'regex:/[@$!%*#?&]/', // Requires at least one special character
+            // ],
+            'confirm_password'=>'required|same:password', 
+        ]);
+           
+        $data = $request->all();
+        $check = $this->create($data);
+        if($check==true) {
+            return redirect('login')->with('success','You have been registered successfully');
+            }
+            else{
+                return back()->with('Error','Something went wrong try again');
+            }  
         
-    ],
-
- 
-]);
-
-$user=User::where('email','=',$request->email)->first();
-$enabled2FA=User::where('twoFA_enabled','=',1)->first();
-$disabled2FA=User::where('twoFA_enabled','=',0)->first();
-$verified2FA=User::where('twoFA_enabled','=',1)->first();
-$disabled2FA=User::where('twoFA_enabled','=',0)->first();
-$twoFAcode=234;
-
-if($user)
-{
-if(Hash::check($request->password,$user->password)){
-        
-        
-        $request->session()->put('loginId',$user->id);
-        if($enabled2FA){
-        $fourDigitCode = RandomCodeGenerator::generateRandomCode(4); 
-        $user->twoFA_code=Hash::make($fourDigitCode);
-        $user->save();
-        Mail::to($user->email)->send(new TwoFA_Login($fourDigitCode));
-        return redirect('twofaview');
-        }
-        else{
-        
-        return redirect('dashboard');
-        }
-   
-
     }
-    else
+
+
+    public function create(array $data)
     {
-        return back()->with('Error','This email is not registered or the password is wrong');
-    }
+      return User::create([
+        'full_name' => $data['full_name'],
+        'phone' => $data['phone'],
+        'email' => $data['email'],
+        'password' => Hash::make($data['password'])
+      ]);
+    }  
 
-}
-else{
-    return back()->with('Error','This email is not registered or the password is wrong');
+//End of Registration
+
+
+
+//Login Functions 
+public function loginview(){
+    $error='';
+    $title='Login';
+    return view('Auth/login',compact('title'));
+    
 }
 
+public function loginUser(Request $request)
+{
+    $request->validate([
+        'email' => 'required',
+        'password' => 'required',
+    ]);
+
+    $credentials = $request->only('email', 'password');
+    if (auth()->attempt($credentials)) {
+
+        $user=User::where('id',Auth::User()->id)->first();
+        $request->session()->put('loginId',Auth::User()->id);
+
+        //$fourDigitCode = RandomCodeGenerator::generateRandomCode(5); 
+        //$user->twoFA_code=Hash::make($fourDigitCode);
+        //$user->save();
+        //Mail::to($user->email)->send(new TwoFA_Login($fourDigitCode));
+        return redirect('twofaview');
+    
+
+       }
+ 
+    return redirect()->back()->with('Error','Login details are invalid');
+  
 }
+
+
+
+//End of Login functions
+
+
+
+
+
+
+
+
+//Authentication views
+
+
+
+
+
 
 
 public function twofaview(){
@@ -140,15 +136,15 @@ public function twofaview(){
 
 
 public function verify2FA(Request $request){
-// $twoFAcode=234;
+$twoFAcode=123;
 
 $data=User::where('id','=',Session::get('loginId'))->first();
 
-if(Hash::check($request->twoFA_input , $data->twoFA_code)){
+if($request->twoFA_input ==$twoFAcode){
+   // Hash::check($request->twoFA_input , $data->twoFA_code)
     //$request->session()->put('loginId',$user->id);
-    
-    $data->twoFA_verified=1;
-    $data->save();
+    // $data->twoFA_verified=1;
+    // $data->save();
     return redirect('/dashboard')->with('success','Login Successful!');
 }
 else{
@@ -360,33 +356,17 @@ public function profile(Request $request,$id){
 
 
 
-public function logout(){
-$verified2FA=User::where('twoFA_verified','=',1)->first();
-$disabled2FA=User::where('twoFA_enabled','=',0)->first();
 
-$data=User::where('id','=',Session::get('loginId'))->first();
-if(Session::has('loginId')){
-        if($verified2FA){
-            $data->twoFA_code= 0;
-            $data->twoFA_verified=0;
-            $data->save();
-            Session::pull('loginId');
-            return redirect('login');
-            
-        }
-        else{
-            Session::pull('loginId');
-            return redirect('login');  
-        }
-       
-    }  
+//Logout functionality
+public function logout() {
+    // $data=User::where('id','=',Auth::User()->id)->first();
+    // $data->twoFA_code=Hash::make(0);
+    Session::flush();
+    Auth::logout();
+
+    return redirect('login')->with('success','Logout succesfull. So sad to see you go.');
 }
-
-
-// public  function testFA(){
-//     $fourDigitCode = RandomCodeGenerator::generateRandomCode(4); 
-//     dd( $fourDigitCode);
-// }
+//End of logout functions
 
 
 

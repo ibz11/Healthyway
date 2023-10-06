@@ -26,7 +26,57 @@
     
     @vite('resources/js/app.js')
     <!-- <link href="/Panel/css/styles.css" rel="stylesheet" /> -->
+    <style>
+    .expertform{
+color:white;
+background:linear-gradient(to right,#141E30,#243B55);
+border-radius:.4em;
+width:fit-content;
+height: fit-content;
+padding: 2em;
+margin:0em;
+ }
+
+ .container-form{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+ }
+
+ .container2{
+    display: flex; 
+    /* border:2px solid white; */
+    flex-direction:row; 
+    
+}
+  @media only screen and (max-width: 800px){ 
+.containerform{
+    transform: scale(.7); 
+}
+.expertform{
+    
+width:auto;
+overflow-x: auto; 
+  /* transform: scale(1); */
+  transform: scale(1); 
+  /* background:blue; */
+}
+/* .expertform div{
+ 
+    width:auto;
+    transform: scale(1);  
+} */
+.container-form{
+   margin:0;
+   padding:0;
   
+}
+.container2{
+    transform: scale(1); 
+     
+}
+}
+  </style>
 </head>
 
 <body id="page-top">
@@ -62,14 +112,13 @@
             </div>
 
     
-            <!-- Nav Item - Tables -->
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="{{URL('expertsystem')}}">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Take LSAS test</span></a>
-            </li> -->
-
-            <!-- Nav Item - Charts -->
+   
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('therapistprofile')}}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>My Therapist Profile</span></a>
+            </li> 
+       
             <li class="nav-item">
                 <a class="nav-link" href="{{URL('studentprogress')}}">
                     <i class="fas fa-fw fa-chart-area"></i>
@@ -84,12 +133,8 @@
                     <span>View Student Journals</span></a>
             </li>
 
-<!--
-            <li class="nav-item">
-                <a class="nav-link" href="{{URL('progress')}}">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Appointments</span></a>
-            </li> -->
+
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 

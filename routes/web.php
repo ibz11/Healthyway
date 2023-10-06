@@ -30,10 +30,11 @@ Route::get('/', function () {
 Route::get('/login', [AuthController::class,'loginview'])->middleware('AlreadyAuth');
 Route::get('/register', [AuthController::class,'registerview'])->middleware('AlreadyAuth');
 Route::post('/registerUser', [AuthController::class,'registerUser']);
+// Route::post('/customRegistration', [AuthController::class,'customRegistration']);
 Route::post('/loginUser', [AuthController::class,'loginUser']);
 Route::get('/dashboard', [AuthController::class,'dashboard'])->middleware('isLoggedin');
 
-Route::get('/twofaview', [AuthController::class,'twofaview'])->middleware('isLoggedin');
+Route::get('/twofaview', [AuthController::class,'twofaview'])->middleware('auth');
 // 'AlreadyAuth','2FAVerified',
 Route::post('verify2FA', [AuthController::class,'verify2FA']);
 Route::get('enable2FA/{id}', [AuthController::class,'enable2FA']);
@@ -78,7 +79,7 @@ route::get('deleteuser/{id}',[AdminController::class,'deleteuser']);
 
 
 //Students routes
-Route::middleware(['student'])->group(function () 
+Route::middleware(['auth','student'])->group(function () 
 {
 route::get('progress',[ExpertController::class,'progress']);
 Route::match(['get', 'post'],'expertsystem',[ExpertController::class,'expertsystem'] );
@@ -114,6 +115,11 @@ route::get('/viewstudentjournals',[TherapistController::class,'viewstudentjourna
 route::get('/studentjournals/{id}',[TherapistController::class,'studentjournals']);
 route::get('/viewindividualjournal/{Journal_id}',[TherapistController::class,'viewindividualjournal']);
 
+route::get('/therapistprofile',[TherapistController::class,'therapistprofile']);
+Route::match(['get', 'post'],'createtherapistprofile',[TherapistController::class,'createtherapistprofile'] );
+route::get('profileview/{therapist_id}',[TherapistController::class,'profileview']);
+route::get('deleteprofile/{therapist_id}',[TherapistController::class,'deleteprofile']);
+Route::match(['get', 'post'],'updateprofile/{therapist_id}',[TherapistController::class,'updateprofile'] );
 });
     
 

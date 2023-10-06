@@ -15,12 +15,14 @@ return new class extends Migration
             $table->id('therapist_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('title')->nullable();
             $table->string('Full_name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('phone')->unique()->nullable();
             $table->string('Location')->nullable();
             $table->string('profile_img')->nullable();
             $table->string('specialization')->nullable();
+            $table->LongText('bio')->nullable();
 
             $table->timestamps();
         });

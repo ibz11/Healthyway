@@ -9,4 +9,12 @@ class User extends Authenticatable
 //  Model
 {
     use HasFactory;
+
+
+protected $fillable=[
+'full_name',
+'email',
+'phone',
+'password'
+    ];
 }

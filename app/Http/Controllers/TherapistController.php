@@ -8,6 +8,7 @@ use App\Models\Rules;
 use App\Models\Recommendations;
 use App\Models\Expert;
 use App\Models\Journal;
+use App\Models\Therapist;
 use Hash;
 use Session;
 use Illuminate\Support\Str;
@@ -18,6 +19,7 @@ use App\Mail\ForgotPassword;
 use App\Helpers\RandomCodeGenerator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Auth;
 
 class TherapistController extends Controller
 {
@@ -93,5 +95,120 @@ class TherapistController extends Controller
         $userdata=User::where('id','=',Session::get('loginId'))->first();
      
         return view('panel.therapist.journal.journalview',compact('userdata','journal')); 
+    }
+
+    public function therapistprofile(){
+        $userdata=User::where('id','=',Session::get('loginId'))->first();
+        $therapist=Therapist::where('user_id',Auth::User()->id)->get();
+        return view('Panel.therapist.profile.profile',compact('userdata','therapist'));
+    }
+
+
+    public function profileview(Request $request,$therapist_id){
+        $therapist=Therapist::find($therapist_id);
+        $userdata=User::where('id','=',Session::get('loginId'))->first();
+        return view('Panel.therapist.profile.profileview',compact('userdata','therapist'));
+    }
+    public function createtherapistprofile(Request $request){
+        if($request->isMethod('get')){
+        $userdata=User::where('id','=',Session::get('loginId'))->first();
+
+          
+        return view('Panel.therapist.profile.create',compact('userdata'));
+        }  
+        if ($request->isMethod('post'))
+        {  $request->validate([
+            'specialization' => 'title',
+            'specialization' => 'required',
+            'location' => 'required',
+            'profile_img' => 'required|image|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
+        ]);
+           
+
+            $therapist=new Therapist;
+            $therapist->user_id=Auth::User()->id;
+            $therapist->Full_name=Auth::User()->full_name;
+            $therapist->email=Auth::User()->email;
+            $therapist->phone=Auth::User()->phone;
+
+            $therapist->Location=$request->location;
+            $therapist->title=$request->title;
+            $therapist->specialization=$request->specialization;
+            $therapist->bio=$request->bio;
+
+            $profile_img=$request->profile_img;
+
+            if($profile_img){
+                  $imagename=time().'.'.$profile_img->getClientOriginalExtension();
+            
+                  $profile_img->move('therapist_img',$imagename);
+            
+                  $therapist->profile_img= $imagename;
+                  }
+
+            $therapist->save();
+            return redirect('therapistprofile')->with('success','Profile is created');
+
+       
+        } 
+    }
+
+
+    public function updateprofile(Request $request,$therapist_id){
+        if($request->isMethod('get')){
+        $userdata=User::where('id','=',Session::get('loginId'))->first();
+        $therapist=Therapist::find($therapist_id);
+          
+        return view('Panel.therapist.profile.update',compact('userdata','therapist'));
+        }  
+        if ($request->isMethod('post'))
+        {  $request->validate([
+            'specialization' => 'title',
+            'specialization' => 'required',
+            'location' => 'required',
+            'profile_img' => 'image|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
+        ]);
+           
+
+            $therapist=Therapist::find($therapist_id);
+            $therapist->user_id=Auth::User()->id;
+            $therapist->Full_name=Auth::User()->full_name;
+            $therapist->email=Auth::User()->email;
+            $therapist->phone=Auth::User()->phone;
+
+            $therapist->Location=$request->location;
+            $therapist->title=$request->title;
+            $therapist->specialization=$request->specialization;
+            $therapist->bio=$request->bio;
+
+            $profile_img=$request->profile_img;
+
+            if(!$profile_img){
+            
+            }
+                
+            else{
+                  $imagename=time().'.'.$profile_img->getClientOriginalExtension();
+            
+                  $profile_img->move('therapist_img',$imagename);
+            
+                  $therapist->profile_img= $imagename;
+                  }
+
+            $therapist->save();
+            return redirect('therapistprofile')->with('success','Profile is Updated');
+
+       
+        } }
+
+
+
+
+
+
+public function deleteprofile(Request $request,$therapist_id){
+$therapist=Therapist::find($therapist_id);
+$therapist->delete();
+return redirect('therapistprofile')->with('warning','Profile has been deleted');
     }
 }
