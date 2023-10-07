@@ -139,6 +139,11 @@ overflow-x: auto;
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>View Student Appointments</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('viewstudentappointments')}}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Expert system recommendations</span></a>
+            </li>
 
 
 
@@ -419,6 +424,9 @@ overflow-x: auto;
  <div class="alert alert-danger">{{Session::get('Error')}}</div>
  @endif
 
+ @if(Session::has('warning'))
+ <div class="alert alert-warning">{{Session::get('warning')}}</div>
+ @endif
   
 
 

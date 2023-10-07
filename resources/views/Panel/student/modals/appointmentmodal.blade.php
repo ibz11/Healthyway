@@ -9,15 +9,21 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+      <p>Appointment ID:{{ $appointment->appointment_id }}</p>
       <p>User ID:{{ $appointment->user_id }}</p>
       <p>Time:{{ $appointment->time }}</p>
       <p>Appointment Date:{{ $appointment->appointment_date }}</p>
       <p>Location:{{ $appointment->location }}</p>
         @if($appointment->status=='accepted')
+        @if(!$appointment->onlinelink==null)
+            <p>Online link: {{$appointment->onlinelink}}</p>
+            @else
+            <p></p>
+            @endif
        status: <span class="text-light badge bg-success">accepted</span>
         @endif
         @if($appointment->status=='rejected')
-        status:  <span class="text-light badge bg-danger">rejected</span>
+        Status:  <span class="text-light badge bg-danger">rejected</span>
         @endif
         @if($appointment->status=='pending')
         status: <span class="text-light badge bg-info">pending</span>
@@ -26,6 +32,8 @@
       <p>Rejection reason:{{ $appointment->rejectionreason }}</p>
     @else
     @endif
+
+
       <p>Created At:{{ $appointment->created_at }}</p>
       </div>
       <div class="modal-footer">

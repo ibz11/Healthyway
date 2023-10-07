@@ -18,7 +18,7 @@
                   <div  class="d-flex flex-column align-items-center text-center">
                     <img src="/therapist_img/{{$therapist->profile_img}}"style="border:solid 1px black;" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
-                      <h4>{{$therapist->title}}.{{$therapist->Full_name}}</h4>
+                      <h4>{{$therapist->user_id}} {{$therapist->title}}.{{$therapist->Full_name}}</h4>
                       <p class="text-light mb-1"><span class="badge bg-info">{{$therapist->specialization}} </span></p>
                       <p class="text-dark font-size-sm">Address- {{$therapist->Location}}</p>
                     
@@ -117,7 +117,7 @@
 <div  hidden class="mb-3 mt-3">
 <label for="email" class="form-label">Therapist ID</label>
 
-<input readonly type="text" class="datepicker form-control w-50" id="phone" value="{{$therapist->therapist_id}}"  name="Therapists_id" required>
+<input readonly type="text" class="datepicker form-control w-50" id="phone" value="{{$therapist->user_id}}"  name="therapists_id" required>
 </div>
 
 <div   class="mb-3 mt-3">

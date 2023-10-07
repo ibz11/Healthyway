@@ -131,11 +131,13 @@ route::get('deleteprofile/{therapist_id}',[TherapistController::class,'deletepro
 Route::match(['get', 'post'],'updateprofile/{therapist_id}',[TherapistController::class,'updateprofile'] );
 
 //Appointments
-route::get('viewstudentsappointments',[AppointmentController::class,'viewstudentsappointments']);
-route::get('viewmodalappointment/{appointment_id}',[AppointmentController::class, 'viewappointment']);
-Route::get('acceptapt/{id}', [AppointmentController::class,'acceptapt']);
-Route::get('rejectapt/{id}', [AppointmentController::class,'rejectapt']);
+route::get('viewstudentappointments',[AppointmentController::class,'viewstudentsappointments']);
+// route::get('viewmodalappointment/{appointment_id}',[AppointmentController::class, 'viewappointment']);
+Route::get('acceptapt/{appointment_id}', [AppointmentController::class,'acceptapt']);
+Route::get('rejectapt/{appointment_id}', [AppointmentController::class,'rejectapt']);
 Route::match(['get', 'post'],'modalrejection/{appointment_id}',[AppointmentController::class,'modalrejection'] );
+Route::match(['get', 'post'],'modalonline/{appointment_id}',[AppointmentController::class,'modalonline']);
+
 });
     
 

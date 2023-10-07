@@ -24,6 +24,72 @@ use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
+
+   //Therapists Controls
+   public function  modalrejection(Request $request,$appointment_id){
+if($request->isMethod('get')){
+   $appointment=Appointments::find($appointment_id);
+   return view('Panel.therapist.modals.rejectionmodal',compact('appointment'));
+}
+
+if($request->isMethod('post')){
+   $appointment=Appointments::find($appointment_id); 
+   $appointment->rejectionreason=$request->rejectionreason;
+   $appointment->save();
+   return redirect()->back()->with(['success'=>"Rejection Reason has been added"]);
+}
+   }
+
+
+   public function  modalonline(Request $request,$appointment_id){
+      if($request->isMethod('get')){
+         $appointment=Appointments::find($appointment_id);
+         return view('Panel.therapist.modals.onlinelinkmodal',compact('appointment'));
+      }
+      
+      if($request->isMethod('post')){
+         $request->validate([
+            'onlinelink'=>'required'
+         ]);
+         $appointment=Appointments::find($appointment_id); 
+         $appointment->onlinelink=$request->onlinelink;
+         $appointment->save();
+         return redirect()->back()->with(['success'=>"Online link has been added"]);
+      }
+         }
+
+
+
+
+
+
+public function rejectapt($appointment_id){
+$appointment=Appointments::find($appointment_id);
+$appointment->status='rejected';
+$appointment->save();
+return redirect()->back()->with('warning','Appointment is rejected');
+}
+public function acceptapt($appointment_id){
+   $appointment=Appointments::find($appointment_id);
+   $appointment->status="accepted";
+   $appointment->save();
+   return redirect()->back()->with('success','Appointment is accepted');
+  
+   // echo $appointment->status;
+}
+
+public function viewstudentsappointments(){
+   $userdata=User::where('id','=',Session::get('loginId'))->first();
+   $appointment=Appointments::where('Therapists_id',Auth::User()->id)->simplePaginate(12);
+   
+   return view('panel.therapist.studentappointments',compact('userdata','appointment')); 
+}
+
+
+
+
+
+   //End of therapists Controls
    public function createappointment(Request $request){
 
    $request->validate([
@@ -34,7 +100,7 @@ class AppointmentController extends Controller
 
     $appointment=new Appointments;
     $appointment->user_id=Auth::User()->id;
-    $appointment->Therapists_id=$request->Therapists_id;
+    $appointment->Therapists_id=$request->therapists_id;
     $appointment->appointment_date=$request->appointment_date;
     $appointment->time=$request->time;
     $appointment->location=$request->location;

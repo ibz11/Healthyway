@@ -1,8 +1,12 @@
-@include('Panel/student/header')
+@include('./Panel/therapist/header') 
+
+
+
+
 
 <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">MY APPOINTMENTS</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">STUDENT'S APPOINTMENTS</h6>
                         </div>
                         <div>
 @if(method_exists($appointment,'links'))
@@ -19,17 +23,17 @@
                                             <th>User ID</th>
                                             <th>Time</th>
                                             <th>Location</th>
-                                            <th>Online link</th>
-                                           
+                                            <th>Online Link</th>
                                             <th>Therapists_id</th>
+                                            <th>Issue</th>
                                             <th>status</th>
                                             <th>Rejection reason</th>
                                       
                                             <th>Created at</th>
-                                            <th>Download PDF</th>
-                                            <th>View</th>
-                                            <th>Update</th>
-                                            <th>Delete</th>
+
+                                            <th>UI</th>
+                                            <th>Accept</th>
+                                            <th>Reject</th>
                                           
                                          
                                         </tr>
@@ -49,12 +53,13 @@
                                 @endif
                             </td>
                             @if(!$appointment->onlinelink=='')
-                          <td>{{$appointment->onlinelink}}</td>
+                            <td>{{$appointment->onlinelink}}</td>
                             @else
                             <td></td>
                             @endif
-                            
+                           
                                 <td>{{$appointment->Therapists_id}}</td>
+                                <td>{{$appointment->issue}}</td>
                                 <td>
                                 @if($appointment->status=='accepted')
                                 <span class="text-light badge bg-success">accepted</span>
@@ -78,20 +83,16 @@
                                 <td>{{$appointment->created_at}}</td>
                                 
                               
-
-
                                 @if($appointment->status=='accepted')
-                                <td><a style="border-radius:0em;"href="{{URL('viewdiagnosis',$appointment->appointment_id)}}" class="btn btn-outline-dark">Download PDF</a></td>
-                                @else
-                                <td> </td>
+                                <td><button type="button" class="show btn btn-outline-primary text-light" data-u-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#onlineModal">Give a online link if online</button></td>
                                 @endif
-                               
-                            
-                           
-                                <td><button type="button" class="show btn btn-outline-primary" data-appointment-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#staticBackdrop">View appointment</button></td>
-                                <td><button type="button" class="show btn btn-outline-success" data-update-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#updateModal">Update</button></td>
-                                <!-- <a style="border-radius:0em;"href="{{URL('viewdiagnosis',$appointment->appointment_id)}}" class="btn btn-outline-primary">View </a> -->
-                                <td><a style="border-radius:0em;" href="{{URL('deleteappointment',$appointment->appointment_id)}}"class="btn btn-outline-danger">Delete</a></td>
+                                @if($appointment->status=='rejected')
+                                <td><button type="button" class="show btn btn-outline-warning text-light" data-reject-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#updateModal">Give a reason for rejecting</button></td>
+                                @endif
+       
+        <!-- <a style="border-radius:0em;"href="{{URL('viewdiagnosis',$appointment->appointment_id)}}" class="btn btn-outline-primary">View </a> -->
+        <td><a style="border-radius:0em;" href="{{URL('acceptapt',$appointment->appointment_id)}}"class="btn btn-outline-success">Accept</a></td>
+        <td><a style="border-radius:0em;" href="{{URL('rejectapt',$appointment->appointment_id)}}"class="btn btn-outline-danger">Reject</a></td>
 
                                 </tr>
                                     @endforeach
@@ -103,10 +104,12 @@
                         </div>
                     </div>
 
+</div>
 
-@include('Panel/student/modals/appointmentmodal')
-@include('Panel/student/modals/updateappointmentmodal')
+@include('Panel/therapist/modal/onlinelinkmodal')
+@include('Panel/therapist/modal/rejectionmodal')
 
 
 
-@include('Panel/student/footer')
+
+@include('./Panel/therapist/footer') 
