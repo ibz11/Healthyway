@@ -24,7 +24,7 @@ class JournalController extends Controller
         $user_id= Session::get('loginId');
         $userdata=User::where('id','=',Session::get('loginId'))->first();
 
-        $journal=Journal::where('user_id','=',$user_id)->get();
+        $journal=Journal::where('user_id','=',$user_id)->latest()->simplePaginate(8);
         return view('panel.student.journal',compact('userdata','journal'));
     }
 

@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Appointments extends Model
 {
+    protected $primaryKey = 'appointment_id';
     use HasFactory;
 }

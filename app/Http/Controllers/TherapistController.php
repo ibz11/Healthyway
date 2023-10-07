@@ -26,7 +26,7 @@ class TherapistController extends Controller
     public function studentprogress(){
         $user_id= Session::get('loginId');
         $userdata=User::where('id','=',Session::get('loginId'))->first();
-        $user=User::where('role','student')->latest()->get();
+        $user=User::where('role','student')->latest()->simplePaginate(12);
         // simplePaginate(1);
 
 
@@ -34,7 +34,7 @@ class TherapistController extends Controller
     }
 
     public function viewstudent(Request $request,$id){
-        $expdata=Expert::where('user_id',$id)->latest()->get();
+        $expdata=Expert::where('user_id',$id)->latest()->simplePaginate(8);
         $user=User::find($id);
         $userdata=User::where('id','=',Session::get('loginId'))->first();
         $scores=Expert::where('user_id',$id)->sum('LSAS_score');
@@ -76,7 +76,7 @@ class TherapistController extends Controller
     public function  viewstudentjournals(){
         $user_id= Session::get('loginId');
         $userdata=User::where('id','=',Session::get('loginId'))->first();
-        $user=User::where('role','student')->latest()->get();
+        $user=User::where('role','student')->latest()->simplePaginate(12);
         return view('Panel.therapist.journal.viewstudentjournals',compact('userdata','user'));
 
     }
@@ -86,7 +86,7 @@ class TherapistController extends Controller
         $user=User::find($id);
       
 
-        $journal=Journal::where('user_id','=',$id)->latest()->get();
+        $journal=Journal::where('user_id','=',$id)->latest()->simplePaginate(12);
      
         return view('Panel.therapist.journal.studentjournals',compact('userdata','user','journal'));
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TherapistController;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\JournalController;
+use App\Http\Controllers\AppointmentController;
 use App\Mail\TwoFA_Login;
 use Illuminate\Support\Facades\Mail;
 /*
@@ -99,13 +100,21 @@ route::get('privatejournal',[JournalController::class,'privatejournal']);
 route::get('publicselectjournal/{Journal_id}',[JournalController::class,'publicselectjournal']);
 route::get('privateselectjournal/{Journal_id}',[JournalController::class,'privateselectjournal']);
 
+route::get('/studenttherapistprofile',[StudentController::class,'studenttherapistprofile']);
+route::get('/viewtherapist/{therapist_id}',[StudentController::class,'viewtherapist']);
+route::post('createappointment',[AppointmentController::class,'createappointment']);
+route::get('myAppointments',[AppointmentController::class,'myAppointments']);
+route::get('deleteappointment/{appointment_id}',[AppointmentController::class, 'deleteappointment']);
+route::get('viewappointment/{appointment_id}',[AppointmentController::class, 'viewappointment']);
+Route::match(['get', 'post'],'updateappointment/{appointment_id}',[AppointmentController::class,'updateappointment'] );
+
 });
 
 
 
 
 //Therapists routes
-Route::middleware(['therapist'])->group(function () 
+Route::middleware(['auth','therapist'])->group(function () 
 {
 
 route::get('/studentprogress',[TherapistController::class,'studentprogress']);
@@ -120,6 +129,13 @@ Route::match(['get', 'post'],'createtherapistprofile',[TherapistController::clas
 route::get('profileview/{therapist_id}',[TherapistController::class,'profileview']);
 route::get('deleteprofile/{therapist_id}',[TherapistController::class,'deleteprofile']);
 Route::match(['get', 'post'],'updateprofile/{therapist_id}',[TherapistController::class,'updateprofile'] );
+
+//Appointments
+route::get('viewstudentsappointments',[AppointmentController::class,'viewstudentsappointments']);
+route::get('viewmodalappointment/{appointment_id}',[AppointmentController::class, 'viewappointment']);
+Route::get('acceptapt/{id}', [AppointmentController::class,'acceptapt']);
+Route::get('rejectapt/{id}', [AppointmentController::class,'rejectapt']);
+Route::match(['get', 'post'],'modalrejection/{appointment_id}',[AppointmentController::class,'modalrejection'] );
 });
     
 

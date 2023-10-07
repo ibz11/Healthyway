@@ -5,6 +5,12 @@
     <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
             class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
 </div>
+
+@if(method_exists($user,'links'))
+<div class="m-4">
+  {{ $user->links()}}
+</div>  
+@endif
 <div class="row">
 
     <!-- Earnings (Monthly) Card Example -->

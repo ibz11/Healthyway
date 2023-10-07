@@ -23,6 +23,13 @@
 
 </div>
 
+
+@if(method_exists($journal,'links'))
+<div class="d-flex justify-content-center">
+  {!! $journal->links()!!} 
+</div>
+@endif
+
 <h1 class="h3 mt-5 text-gray-800">Your  journals</h1>
 <div class="mt-1 mb-5 row">
 @foreach($journal as $journal)

@@ -25,7 +25,7 @@ class ExpertController extends Controller
     public function progress(){
         $user_id= Session::get('loginId');
         $userdata=User::where('id','=',Session::get('loginId'))->first();
-        $expdata=Expert::where('user_id',$user_id)->latest()->get();
+        $expdata=Expert::where('user_id',$user_id)->latest()->simplePaginate(8);
 
 
         $scores=Expert::where('user_id',$user_id)->sum('LSAS_score');

@@ -56,6 +56,11 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">USERS</h6>
                         </div>
+                  @if(method_exists($expdata,'links'))
+                  <div class="d-flex justify-content-center">
+                  {!! $expdata->links()!!} 
+                  </div>
+                  @endif
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

@@ -133,6 +133,13 @@ overflow-x: auto;
                     <span>View Student Journals</span></a>
             </li>
 
+            
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('viewstudentappointments')}}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>View Student Appointments</span></a>
+            </li>
+
 
 
             <!-- Divider -->

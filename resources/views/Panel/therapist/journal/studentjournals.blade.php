@@ -12,7 +12,11 @@
 </div>
 </div>
 
-
+@if(method_exists($journal,'links'))
+<div class="d-flex justify-content-center">
+  {!! $journal->links()!!} 
+</div>
+@endif
 
 </div>
 
