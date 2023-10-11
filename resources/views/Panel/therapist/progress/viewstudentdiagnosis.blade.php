@@ -19,7 +19,9 @@
         <h5 class="card-title">Student's level of Fear is :<strong> {{$expdata->fear_level}}</strong>   </h5>
         <h5 class="card-title">Student's Level of Avoidance is: <strong> {{$expdata->avoidance_level}}</strong> </h5>
         <h1>Recommendation</h1>
-        <h5 class="card-title">{{$recommendation}}</h5>
+        <p class="text-xl card-title">
+        {!! nl2br(str_replace(',', ',<br>',$recommendation)) !!}
+</p>
       
        
       </div>

@@ -23,6 +23,28 @@ use Illuminate\Support\Facades\Auth;
 
 class TherapistController extends Controller
 {
+
+    public function getrecommendations()
+    {
+    $userdata=User::where('id','=',Session::get('loginId'))->first();
+      $rec=Recommendations::simplePaginate(9);
+      return view('Panel.therapist.recommendations',compact('rec','userdata'));
+    }
+    public function getRecommendationDetails($Recommendations_id)
+    {
+        $rec = Recommendation::find($id);
+        return view('Panel.therapist.modals.recommendationmodal',compact('rec'));
+    }
+    public function addrecommendation(Request $request,$Recommendations_id)
+    {
+        
+            $rec=Recommendations::find($Recommendations_id);
+            $rec->Recommendation=$request->recommendation;
+            $rec->update();
+            return redirect('getrecommendations')->with('success','Recommendation has been Added.');
+     
+
+    }
     public function studentprogress(){
         $user_id= Session::get('loginId');
         $userdata=User::where('id','=',Session::get('loginId'))->first();

@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Recommendations extends Model
 {
+    protected $primaryKey = 'Recommendations_id';
     use HasFactory;
 }

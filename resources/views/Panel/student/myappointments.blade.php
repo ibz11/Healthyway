@@ -1,5 +1,8 @@
 @include('Panel/student/header')
 
+@if(!$appointment)
+<h1>No appointments have been made yet.</h1>
+@else
 <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">MY APPOINTMENTS</h6>
@@ -10,6 +13,7 @@
   {!! $appointment->links()!!} 
 </div>
 @endif
+
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -22,6 +26,7 @@
                                             <th>Online link</th>
                                            
                                             <th>Therapists_id</th>
+                                            <th>Issue</th>
                                             <th>status</th>
                                             <th>Rejection reason</th>
                                       
@@ -55,6 +60,7 @@
                             @endif
                             
                                 <td>{{$appointment->Therapists_id}}</td>
+                                <td>{{$appointment->issue}}</td>
                                 <td>
                                 @if($appointment->status=='accepted')
                                 <span class="text-light badge bg-success">accepted</span>
@@ -88,12 +94,14 @@
                                
                             
                            
-                                <td><button type="button" class="show btn btn-outline-primary" data-appointment-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#staticBackdrop">View appointment</button></td>
-                                <td><button type="button" class="show btn btn-outline-success" data-update-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#updateModal">Update</button></td>
+                                <td><button type="button" class="show btn btn-outline-primary" data-appointment-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#appointment_{{ $appointment->appointment_id }}">View appointment</button></td>
+                                <td><button type="button" class="show btn btn-outline-success" data-update-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#updateModal_{{ $appointment->appointment_id }}">Update</button></td>
                                 <!-- <a style="border-radius:0em;"href="{{URL('viewdiagnosis',$appointment->appointment_id)}}" class="btn btn-outline-primary">View </a> -->
                                 <td><a style="border-radius:0em;" href="{{URL('deleteappointment',$appointment->appointment_id)}}"class="btn btn-outline-danger">Delete</a></td>
 
                                 </tr>
+                                @include('Panel/student/modals/appointmentmodal')
+                               @include('Panel/student/modals/updateappointmentmodal')
                                     @endforeach
                                       
                                  
@@ -101,11 +109,11 @@
                                 </table>
                             </div>
                         </div>
+                        @endif
                     </div>
 
 
-@include('Panel/student/modals/appointmentmodal')
-@include('Panel/student/modals/updateappointmentmodal')
+
 
 
 

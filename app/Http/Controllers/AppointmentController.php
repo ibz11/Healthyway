@@ -72,6 +72,7 @@ return redirect()->back()->with('warning','Appointment is rejected');
 public function acceptapt($appointment_id){
    $appointment=Appointments::find($appointment_id);
    $appointment->status="accepted";
+   $appointment->rejectionreason="NONE";
    $appointment->save();
    return redirect()->back()->with('success','Appointment is accepted');
   
@@ -80,7 +81,7 @@ public function acceptapt($appointment_id){
 
 public function viewstudentsappointments(){
    $userdata=User::where('id','=',Session::get('loginId'))->first();
-   $appointment=Appointments::where('Therapists_id',Auth::User()->id)->simplePaginate(12);
+   $appointment=Appointments::where('Therapists_id',Auth::User()->id)->latest()->simplePaginate(15);
    
    return view('panel.therapist.studentappointments',compact('userdata','appointment')); 
 }
@@ -112,12 +113,14 @@ public function viewstudentsappointments(){
    public function myAppointments()
    {
     $userdata=User::where('id','=',Session::get('loginId'))->first();
-    $appointment=Appointments::where('user_id',Auth::User()->id)->simplePaginate(8);
+    $appointment=Appointments::where('user_id',Auth::User()->id)->latest()->simplePaginate(8);
     
-    $location=Therapist::select('location')->get();
-    $address=$location[0]['location'];
-    // echo $address;
-    return view('Panel.student.myappointments',compact('userdata','appointment','address'));
+    $location=Therapist::all();
+    //select('location')->get();
+   //  $address=$location;
+   //  //$location[0]['location'];
+   //  // echo $address;
+    return view('Panel.student.myappointments',compact('userdata','appointment','location'));
    }
    public function viewappointment(Request $request,$appointment_id){
     $appointment=Appointments::find($appointment_id);
@@ -129,12 +132,12 @@ public function viewstudentsappointments(){
    public function updateappointment(Request $request,$appointment_id){
     $appointment=Appointments::find($appointment_id);
     $location=Therapist::select('location')->where('therapist_id',$appointment->Therapists_id)->get();
-    $address=$location[0]['location'];
+  
 
     if($request->isMethod('get')){
    
    
-    return view('Panel.student.modals.updateappointmentmodal', compact('appointment','address'));
+    return view('Panel.student.modals.updateappointmentmodal', compact('appointment'));
     }
 
     if($request->isMethod('post')){
@@ -154,7 +157,7 @@ public function viewstudentsappointments(){
          $appointment->issue=$request->issue;
          $appointment->save();
          
-        return redirect()->back()->with('success','Appointment is Updated');
+        return redirect('myAppointments')->with('success','Appointment is Updated');
         }
    }
    public function deleteappointment(Request $request,$appointment_id){

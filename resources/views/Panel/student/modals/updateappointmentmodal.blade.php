@@ -1,15 +1,16 @@
 <!-- Button trigger modal -->
 
 <!-- Modal -->
-<div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="updateModal_{{ $appointment->appointment_id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">My Appointment {{ $appointment->appointment_date }}</h1>
+      <h1 class="modal-title fs-5" id="staticBackdropLabel">Appointment ID {{ $appointment->appointment_id }}</h1>
+      
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
+      <h5 class="modal-title fs-5" id="staticBackdropLabel">Appointment Date {{ $appointment->appointment_date }}</h5>
       <form action="{{URL('updateappointment',$appointment->appointment_id )}}" method="POST" id="editform"enctype="multipart/form-data">
 @csrf
 
@@ -72,16 +73,20 @@ Current choice:{{$appointment->location}}
 <option value="Online" >
 Online
 </option>
-<option value="{{$address}}" >
-Therapist's office: {{$address}}
+@foreach($location as $location)
+@if($location->user_id === $appointment->Therapists_id)
+<option value="{{$location->Location}}" >
+Therapist's office: {{$location->Location}}
 </option>
+@endif
+@endforeach
 
 
 
 </select>
 </div>
 <div class="mb-3 mt-3">
-<button class="text-light btn btn-danger "type="submit">Book</button>
+<button class="text-light btn btn-success "type="submit">Update</button>
 </div>
 </form>
 

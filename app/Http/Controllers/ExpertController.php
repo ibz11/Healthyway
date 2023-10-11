@@ -73,6 +73,9 @@ public function deletediagnosis($exp_id){
     $expdata->delete();
     return redirect()->back()->with('Error','Data has been deleted');
 }
+
+
+
     public function expertsystem(Request $request){
 
         $userdata=User::where('id','=',Session::get('loginId'))->first();

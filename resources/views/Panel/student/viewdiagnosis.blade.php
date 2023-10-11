@@ -6,7 +6,7 @@
       <div class="card-body">
         <h1 class="card-title"><strong>{{$expdata->LSAS_score}}</strong></h1>
         <p><strong>LSAS SCORE</strong></p>
-        <h4 class="card-text"><strong> {{$expdata->socialanxiety_level}}</i></strong> social anxiety  </h4>
+        <h4 class="card-text">Social Anxiety Level: <strong> {{$expdata->socialanxiety_level}}</i></strong>   </h4>
        
       </div>
     </div>

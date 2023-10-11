@@ -133,7 +133,7 @@
 
 
                                 <td>{{$expdata->created_at}}</td>
-                                <td><a style="border-radius:0em;"href="{{URL('viewdiagnosis',$expdata->exp_id)}}" class="btn btn-outline-primary">View</a></td>
+                                <td><a style="border-radius:0em;"href="{{URL('viewdiagnosis',$expdata->exp_id)}}" class="btn btn-outline-primary">View Diagnosis</a></td>
                                 <td><a style="border-radius:0em;" href="{{URL('deletediagnosis',$expdata->exp_id)}}"class="btn btn-outline-danger">Delete</a></td>
 
                                 </tr>

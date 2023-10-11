@@ -22,6 +22,7 @@
                                             <th>Appointment ID</th>
                                             <th>User ID</th>
                                             <th>Time</th>
+                                            <th>Date</th>
                                             <th>Location</th>
                                             <th>Online Link</th>
                                             <th>Therapists_id</th>
@@ -45,6 +46,7 @@
                                 <td>{{$appointment->appointment_id}}</td>
                                 <td>{{$appointment->user_id}}</td>
                                 <td>{{$appointment->time}}</td>
+                                <td>{{$appointment->appointment_date}}</td>
                                 <td>    
                                 @if($appointment->location=='Online')
                                 <span class="text-light badge bg-info">Online</>
@@ -55,7 +57,7 @@
                             @if(!$appointment->onlinelink=='')
                             <td>{{$appointment->onlinelink}}</td>
                             @else
-                            <td></td>
+                            <td>None</td>
                             @endif
                            
                                 <td>{{$appointment->Therapists_id}}</td>
@@ -75,7 +77,7 @@
                                 <td>{{$appointment->rejectionreason}}</td>
                                 @endif
                                 @if($appointment->status=='accepted')
-                                <td>None</td>
+                                <td>{{$appointment->rejectionreason}}</td>
                                 @endif
                                 @if($appointment->status=='pending')
                                 <td>None</td>
@@ -84,10 +86,10 @@
                                 
                               
                                 @if($appointment->status=='accepted')
-                                <td><button type="button" class="show btn btn-outline-primary text-light" data-u-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#onlineModal">Give a online link if online</button></td>
+                                <td><button type="button" class="show btn btn-outline-primary text-light" data-u-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#onlineModal__{{ $appointment->appointment_id }}">Give a online link if online</button></td>
                                 @endif
                                 @if($appointment->status=='rejected')
-                                <td><button type="button" class="show btn btn-outline-warning text-light" data-reject-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#updateModal">Give a reason for rejecting</button></td>
+                                <td><button type="button" class="show btn btn-outline-warning text-light" data-reject-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#updateModal_{{ $appointment->appointment_id }}">Give a reason for rejecting</button></td>
                                 @endif
        
         <!-- <a style="border-radius:0em;"href="{{URL('viewdiagnosis',$appointment->appointment_id)}}" class="btn btn-outline-primary">View </a> -->
@@ -95,6 +97,8 @@
         <td><a style="border-radius:0em;" href="{{URL('rejectapt',$appointment->appointment_id)}}"class="btn btn-outline-danger">Reject</a></td>
 
                                 </tr>
+                                @include('Panel/therapist/modal/onlinelinkmodal')
+                                @include('Panel/therapist/modal/rejectionmodal')
                                     @endforeach
                                       
                                  
@@ -106,8 +110,6 @@
 
 </div>
 
-@include('Panel/therapist/modal/onlinelinkmodal')
-@include('Panel/therapist/modal/rejectionmodal')
 
 
 

@@ -96,10 +96,10 @@ public function loginUser(Request $request)
         $user=User::where('id',Auth::User()->id)->first();
         $request->session()->put('loginId',Auth::User()->id);
 
-        //$fourDigitCode = RandomCodeGenerator::generateRandomCode(5); 
-        //$user->twoFA_code=Hash::make($fourDigitCode);
-        //$user->save();
-        //Mail::to($user->email)->send(new TwoFA_Login($fourDigitCode));
+        $fourDigitCode = RandomCodeGenerator::generateRandomCode(5); 
+        $user->twoFA_code=Hash::make($fourDigitCode);
+        $user->save();
+        Mail::to($user->email)->send(new TwoFA_Login($fourDigitCode));
         return redirect('twofaview');
     
 
@@ -138,11 +138,11 @@ public function twofaview(){
 public function verify2FA(Request $request){
 $twoFAcode=123;
 
-$data=User::where('id','=',Session::get('loginId'))->first();
+$user=User::where('id','=',Session::get('loginId'))->first();
 
-if($request->twoFA_input ==$twoFAcode){
-   // Hash::check($request->twoFA_input , $data->twoFA_code)
-    //$request->session()->put('loginId',$user->id);
+// if($request->twoFA_input ==$twoFAcode){
+if(Hash::check($request->twoFA_input , $user->twoFA_code)){
+    $request->session()->put('loginId',$user->id);
     // $data->twoFA_verified=1;
     // $data->save();
     return redirect('/dashboard')->with('success','Login Successful!');

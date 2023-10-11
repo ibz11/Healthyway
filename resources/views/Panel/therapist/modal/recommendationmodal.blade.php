@@ -1,27 +1,23 @@
 <!-- Button trigger modal -->
 
 <!-- Modal -->
-<div class="modal fade" id="onlineModal__{{ $appointment->appointment_id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="recommendationModal_{{  $rec->Recommendations_id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-      <h1 class="modal-title fs-5" id="staticBackdropLabel">Appointment ID: {{ $appointment->appointment_id }}</h1> <br><br>
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Appointment Date: {{ $appointment->appointment_date }}</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Recommendation ID: {{ $rec->Recommendations_id }}</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 
-      <form action="{{URL('modalonline',$appointment->appointment_id )}}" method="POST" id="editform"enctype="multipart/form-data">
+      <form action="{{URL('addrecommendation',$rec->Recommendations_id )}}" method="POST" id="editform"enctype="multipart/form-data">
 @csrf
 
-<h1 class="mt-4 text-2xl"><strong>Give an online link meeting if its online</strong></h1>  
+<h1 class="mt-4 text-2xl"><strong>Add recommendations based on the instances below</strong></h1>  
 
+<h3 class="text-dark">Fear Level:{{$rec->fear_level}} </h3>
+<h3 class="text-dark">Avoidance Level:{{$rec->avoidance_level}} </h3>
 
-<!-- <div hidden class="mb-3 mt-3">
-<label for="email" class="form-label">Therapist ID</label>
-
-<input readonly type="text" class="datepicker form-control w-50" id="phone" value="{{$appointment->Therapists_id}}"  name="Therapists_id" required>
-</div> -->
 
 
 
@@ -29,16 +25,17 @@
 
 
 <div class="mb-0 mt-3">
-<label for="email" class="form-label">Online meeting link</label>
-<p class="text-primary">Note: You can give an online meeting link if the location is online</p>
+<label for="email" class="form-label">Expert system recommendations</label>
+<p class="text-primary">Note: Here  you can give recommendations of solutions to deal with their social anxiety</p>
+<p class="text-primary">Seperate the recommendations with a comma e.g <br> Sleep 8 hours ,<br> Drink a lot of water</p>
 </div>
 <div class="mb-3 mt-3">
 
 <div id="emailHelp" style="border-radius:.3em;background:#f5cac3; color:#d00000;"class="m-1 text-danger form-text">
 <strong>@error('onlinelink') {{$message}} @enderror</strong></div>
 
-<textarea name="onlinelink"  cols="30" rows="10">
-{{$appointment->onlinelink}}
+<textarea name="recommendation"  cols="30" rows="10">
+{{$rec->Recommendation}}
 </textarea>
 </div>
 
@@ -63,11 +60,11 @@
     $(document).ready(function() {
         // Show modal when a button is clicked
         $('.show').on('click', function() {
-            var itemId = $(this).data('data-online-id');
+            var itemId = $(this).data('recommendation-id');
 
             // Make an AJAX request to fetch item details based on the ID
             $.ajax({
-                url: '/modalrejection/' + itemId, // Replace with the actual route
+                url: '/getRecommendationDetails/' + itemId, // Replace with the actual route
                 method: 'GET',
                 success: function(data) {
                     // Assuming you have a modal with the ID "item-modal"

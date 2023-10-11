@@ -137,7 +137,13 @@ Route::get('acceptapt/{appointment_id}', [AppointmentController::class,'acceptap
 Route::get('rejectapt/{appointment_id}', [AppointmentController::class,'rejectapt']);
 Route::match(['get', 'post'],'modalrejection/{appointment_id}',[AppointmentController::class,'modalrejection'] );
 Route::match(['get', 'post'],'modalonline/{appointment_id}',[AppointmentController::class,'modalonline']);
+//Expert system recommendations
+route::get('/getrecommendations',[TherapistController::class,'getrecommendations']);
 
+// 
+Route::post('/addrecommendation/{Recommendations_id}',[TherapistController::class,'addrecommendation']);
+
+route::get('/getRecommendationDetails/{Recommendations_id}',[TherapistController::class,'getRecommendationDetails']);
 });
     
 

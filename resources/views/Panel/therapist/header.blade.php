@@ -140,7 +140,7 @@ overflow-x: auto;
                     <span>View Student Appointments</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{URL('viewstudentappointments')}}">
+                <a class="nav-link" href="{{URL('getrecommendations')}}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Expert system recommendations</span></a>
             </li>
