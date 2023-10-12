@@ -103,7 +103,7 @@ Therapist's office: {{$location->Location}}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
-    $(document).ready(function() {
+$(document).ready(function() {
         // Show modal when a button is clicked
         $('.show').on('click', function() {
             var itemId = $(this).data('data-update-id');

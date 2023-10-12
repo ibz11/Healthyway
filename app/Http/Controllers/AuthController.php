@@ -35,17 +35,17 @@ class AuthController extends Controller
             'full_name' => 'required',
             'email' => 'required|email|unique:users',
             'phone'=>'required',
-            'password' => 'required|min:6',
-            // 'password' => [
-            //     'required',
-            //     'string',
-            //     'min:8', // Minimum length of 8 characters
-            //     'max:17',
-            //     'regex:/[A-Z]/', // Requires at least one uppercase letter
-            //     'regex:/[a-z]/', // Requires at least one lowercase letter
-            //     'regex:/[0-9]/', // Requires at least one digit
-            //     'regex:/[@$!%*#?&]/', // Requires at least one special character
-            // ],
+            // 'password' => 'required|min:6',
+            'password' => [
+                'required',
+                'string',
+                'min:8', // Minimum length of 8 characters
+                'max:17',
+                'regex:/[A-Z]/', // Requires at least one uppercase letter
+                'regex:/[a-z]/', // Requires at least one lowercase letter
+                'regex:/[0-9]/', // Requires at least one digit
+                'regex:/[@$!%*#?&]/', // Requires at least one special character
+            ],
             'confirm_password'=>'required|same:password', 
         ]);
            
