@@ -107,6 +107,9 @@ route::get('myAppointments',[AppointmentController::class,'myAppointments']);
 route::get('deleteappointment/{appointment_id}',[AppointmentController::class, 'deleteappointment']);
 route::get('viewappointment/{appointment_id}',[AppointmentController::class, 'viewappointment']);
 Route::match(['get', 'post'],'updateappointment/{appointment_id}',[AppointmentController::class,'updateappointment'] );
+Route::get('/myprogresspdf', [StudentController::class, 'myprogresspdf']);
+route::get('/progresspdfview',[StudentController::class,'progresspdfview']);
+// route::get('/myChart',[StudentController::class,'myChart']);
 
 });
 
@@ -144,6 +147,12 @@ route::get('/getrecommendations',[TherapistController::class,'getrecommendations
 Route::post('/addrecommendation/{Recommendations_id}',[TherapistController::class,'addrecommendation']);
 
 route::get('/getRecommendationDetails/{Recommendations_id}',[TherapistController::class,'getRecommendationDetails']);
+
+
+//Reports pdf
+Route::get('/studentpdfview/{id}', [TherapistController::class, 'studentpdfview']);
+Route::get('/studentprogresspdf/{id}', [TherapistController::class, 'studentprogresspdf']);
+Route::post('/appointmentcreate', [TherapistController::class, 'appointmentcreate']);
 });
     
 

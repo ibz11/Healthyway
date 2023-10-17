@@ -27,7 +27,33 @@ class ExpertController extends Controller
         $userdata=User::where('id','=',Session::get('loginId'))->first();
         $expdata=Expert::where('user_id',$user_id)->latest()->simplePaginate(8);
 
+        $very_severe=Expert::where('user_id',$user_id)->where('socialanxiety_level','very_severe')->count();
+        $severe=Expert::where('user_id',$user_id)->where('socialanxiety_level','severe')->count();
+        $marked=Expert::where('user_id',$user_id)->where('socialanxiety_level','marked')->count();
+        $moderate=Expert::where('user_id',$user_id)->where('socialanxiety_level','moderate')->count();
+        $mild=Expert::where('user_id',$user_id)->where('socialanxiety_level','mild')->count();
+         if($very_severe==0)
+         {
+           $very_severe=0;
+         }
+         if($severe==0)
+         {
+           $severe=0;
+         }
+         if($marked==0)
+         {
+           $marked=0;
+         }
+         if($moderate==0)
+         {
+           $moderate=0;
+         }
+         if($mild==0)
+         {
+           $mild=0;
+         }
 
+         
         $scores=Expert::where('user_id',$user_id)->sum('LSAS_score');
         $scorecount=Expert::select('LSAS_score')->where('user_id',$user_id)->count();
         $averageLSAS;
@@ -54,7 +80,12 @@ class ExpertController extends Controller
         $created_at [] = $createdAt;
         }
         // print_r($created_at);
-        return view('Panel.student.progress',compact('userdata','expdata','LSAS_scores','created_at',  'averageLSAS' ));
+        return view('Panel.student.progress',compact('userdata','expdata','LSAS_scores','created_at',  'averageLSAS','very_severe',
+        'severe',
+        'marked',
+        'moderate',
+        'mild' ));
+   
 
     }
 

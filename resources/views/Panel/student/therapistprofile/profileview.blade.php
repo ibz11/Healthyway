@@ -159,6 +159,8 @@
 
 </textarea>
 </div>
+
+
 <div class="mb-0 mt-3">
 <label for="email" class="form-label">Venue</label>
 </div>
@@ -171,12 +173,12 @@ Online
 Therapist's office: {{$therapist->Location}} 
 </option>
 
-
-
 </select>
 </div>
+
+
 <div class="mb-3 mt-3">
-<button class="text-light btn btn-danger "type="submit">Book</button>
+<button class="text-light btn btn-primary "type="submit">Book</button>
 </div>
 </form>
 

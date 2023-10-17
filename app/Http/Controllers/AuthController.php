@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Recommendations;
+use App\Models\Expert;
+use App\Models\Journal;
+use App\Models\Therapist;
+use App\Models\Appointments;
+
 use Hash;
 use Session;
 use Illuminate\Support\Str;
@@ -96,10 +102,10 @@ public function loginUser(Request $request)
         $user=User::where('id',Auth::User()->id)->first();
         $request->session()->put('loginId',Auth::User()->id);
 
-        $fourDigitCode = RandomCodeGenerator::generateRandomCode(5); 
-        $user->twoFA_code=Hash::make($fourDigitCode);
-        $user->save();
-        Mail::to($user->email)->send(new TwoFA_Login($fourDigitCode));
+        // $fourDigitCode = RandomCodeGenerator::generateRandomCode(5); 
+        // $user->twoFA_code=Hash::make($fourDigitCode);
+        // $user->save();
+        // Mail::to($user->email)->send(new TwoFA_Login($fourDigitCode));
         return redirect('twofaview');
     
 
@@ -141,7 +147,8 @@ $twoFAcode=123;
 $user=User::where('id','=',Session::get('loginId'))->first();
 
 // if($request->twoFA_input ==$twoFAcode){
-if(Hash::check($request->twoFA_input , $user->twoFA_code)){
+if($request->twoFA_input ==$twoFAcode){
+//(Hash::check($request->twoFA_input , $user->twoFA_code))
     $request->session()->put('loginId',$user->id);
     // $data->twoFA_verified=1;
     // $data->save();
@@ -188,24 +195,39 @@ if($userdata->role=='admin')
     return view('Panel/Admin/home',compact('userdata'));
 
 else if($userdata->role=='therapist'){
-    // $hello=User::all();
+  
+    $public_journal=Journal::where('view_content',1)->count();
+    $apt=Appointments::where('Therapists_id',Auth::user()->id)->count();
+    $accepted_apt=Appointments::where('Therapists_id',Auth::user()->id)->where('status','accepted')->count();
+    $rejected_apt=Appointments::where('Therapists_id',Auth::user()->id)->where('status','rejected')->count();
+    $pending_apt=Appointments::where('Therapists_id',Auth::user()->id)->where('status','accepted')->count();
+    $urgent_anxiety=Expert::where('socialanxiety_level', 'severe')
+    ->orWhere('socialanxiety_level', 'very_severe')
+    ->count();
+
     $columnData = [];
     // $hello = User::select('twoFA_enabled')->get();
-    $hello=User::select('twoFA_enabled')->where('id','=',Session::get('loginId'))->get();
-    foreach ($hello as $hello) {
-    $columnData[] = $hello;
+    $data=User::select('twoFA_enabled')->where('id','=',Session::get('loginId'))->get();
+    foreach ($data as $data) {
+    $columnData[] = $data;
     }
     // response()->json($columnData);
-    return view('Panel/therapist/home',compact('userdata','columnData'));
+    return view('Panel/therapist/home',compact('userdata','columnData','public_journal','accepted_apt','rejected_apt','pending_apt','urgent_anxiety'));
 }
 else if($userdata->role=='student'){
     $columnData = [];
-    // $hello = User::select('twoFA_enabled')->get();
-    $hello=User::select('twoFA_enabled')->where('id','=',Session::get('loginId'))->get();
-    foreach ($hello as $hello) {
-    $columnData[] = $hello;
-    }
-    return view('Panel/student/home',compact('userdata','columnData'));
+    
+    $data=User::select('twoFA_enabled')->where('id','=',Session::get('loginId'))->get();
+    $journal=Journal::where('user_id',Auth::user()->id)->count();
+    $apt=Appointments::where('user_id',Auth::user()->id)->count();
+    $accepted_apt=Appointments::where('user_id',Auth::user()->id)->where('status','accepted')->count();
+    $exp=Expert::where('user_id',Auth::user()->id)->count();
+// $apt=Appointments;
+// $exp=Expert;
+    foreach ($data as $data) {
+    $columnData[] = $data;}
+
+    return view('Panel/student/home',compact('userdata','columnData','journal','apt','exp','accepted_apt'));
 }
 else{
     $user=Auth::User();

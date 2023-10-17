@@ -2,34 +2,48 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between  mb-4">
     <h1 class="h3 mb-0 text-gray-800">Hello {{$userdata->full_name}}.Below you can check your progress</h1>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+
+    <a href="{{URL('myprogresspdf')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
             class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
 </div>
 
 <div class="row">
 
+<div class="col-xl-3  col-lg-5">
+<div class="card shadow mb-4">
+<div class="card-body p-5">
+    <h1><u>Expert System entries</u></h1>
+    <div class="row">
+    <p class="text-dark">Number of <span class="badge bg-danger text-light">very severe</span> cases:</p> 
+    <h4 class="text-dark"><strong>{{$very_severe}}</strong></h4>
+    </div>
+
+    <div class="row">
+    <p class="text-dark">Number of <span class="badge bg-danger text-light">severe</span> cases:</p> 
+    <h4 class="text-dark"><strong>{{$severe}}</strong></h4>
+    </div>
+
+    <div class="row">
+    <p class="text-dark">Number of <span class="badge bg-warning text-light">marked</span> cases:</p> 
+    <h4 class="text-dark"><strong>{{$marked}}</strong></h4>
+    </div>
+
+    <div class="row">
+    <p class="text-dark">Number of <span class="badge bg-primary text-light">moderate</span> cases:</p> 
+    <h4 class="text-dark"><strong>{{$moderate}}</strong></h4>
+    </div>
+
+    <div class="row">
+    <p class="text-dark">Number of <span class="badge bg-info text-light">mild</span> cases:</p> 
+    <h4 class="text-dark"><strong>{{$mild}}</strong></h4>
+    </div>
+</div>
+</div>
+</div>
     <!-- Area Chart -->
     <div class="col-xl-8 col-lg-7">
         <div class="card shadow mb-4">
-            <!-- Card Header - Dropdown -->
-            <!-- <div
-                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">LSAS Progress</h6>
-                <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                        aria-labelledby="dropdownMenuLink">
-                        <div class="dropdown-header">Dropdown Header:</div>
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </div>
-            </div> -->
+
             <!-- Card Body -->
             <div class="card-body">
             <div class="chart-area">
@@ -44,7 +58,7 @@
     </div>
 
     <!-- Pie Chart -->
-    <div class="col-xl-4 col-lg-5">
+    <div class="col-xl-3 col-lg-5">
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div
@@ -76,10 +90,10 @@
         </div>
     </div>
 
-
+    <div class="col-xl-9 col-lg-5">
     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">USERS</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">My Expert System Data</h6>
                         </div>
 
                         @if(method_exists($expdata,'links'))
@@ -146,7 +160,7 @@
                         </div>
                     </div>
 
-
+</div>
 
 
 

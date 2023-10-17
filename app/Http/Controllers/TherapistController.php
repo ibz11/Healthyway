@@ -9,6 +9,7 @@ use App\Models\Recommendations;
 use App\Models\Expert;
 use App\Models\Journal;
 use App\Models\Therapist;
+use App\Models\Appointments;
 use Hash;
 use Session;
 use Illuminate\Support\Str;
@@ -20,9 +21,194 @@ use App\Helpers\RandomCodeGenerator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Auth;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 class TherapistController extends Controller
 {
+    public function appointmentcreate(Request $request){
+        $appointment=new Appointments;
+        //$appointment->user_id=Auth::User()->id;
+        $appointment->user_id=$request->user_id;
+        $appointment->Therapists_id=$request->Therapists_id;
+        $appointment->appointment_date=$request->appointment_date;
+        $appointment->time=$request->time;
+        $appointment->onlinelink=$request->onlinelink;
+        $appointment->location=$request->location;
+       
+        $appointment->save();
+        return redirect()->back()->with('success','Appointment for the User has been created');
+
+    }
+    public function studentpdfview($id){
+        $user=User::find($id);
+        $user_id= Session::get('loginId');
+        $userdata=User::where('id','=',Session::get('loginId'))->first();
+        $expdata=Expert::where('user_id',$id)->latest()->get();
+        $very_severe=Expert::where('user_id',$id)->where('socialanxiety_level','very_severe')->count();
+        $severe=Expert::where('user_id',$id)->where('socialanxiety_level','severe')->count();
+        $marked=Expert::where('user_id',$id)->where('socialanxiety_level','marked')->count();
+        $moderate=Expert::where('user_id',$id)->where('socialanxiety_level','moderate')->count();
+        $mild=Expert::where('user_id',$id)->where('socialanxiety_level','mild')->count();
+         if($very_severe==0)
+         {
+           $very_severe=0;
+         }
+         if($severe==0)
+         {
+           $severe=0;
+         }
+         if($marked==0)
+         {
+           $marked=0;
+         }
+         if($moderate==0)
+         {
+           $moderate=0;
+         }
+         if($mild==0)
+         {
+           $mild=0;
+         }
+    
+        $scores=Expert::where('user_id',$id)->sum('LSAS_score');
+        $scorecount=Expert::select('LSAS_score')->where('user_id',$id)->count();
+        $averageLSAS;
+        if($scorecount==0){
+            $averageLSAS=0;
+        }
+        else{
+            $averageLSAS=round( $scores/intval($scorecount));
+        }
+    
+        // orderBy('desc')
+        // ->where('user_id',$user_id)
+    
+        $LSAS_scores = [];
+        $created_at = [];
+       
+        $lsas=Expert::select('LSAS_score')->where('user_id','=',$user_id)->get();
+        foreach ($lsas as $lsas) {
+        $LSAS_scores [] = $lsas;
+        }
+        
+        $createdAt=Expert::select('created_at')->where('user_id','=',$user_id)->get();
+        foreach ($createdAt as $createdAt) {
+        $created_at [] = $createdAt;
+        }
+        // print_r($created_at);
+        return view('Panel.therapist.PDF.studentprogresspdfview',compact(
+        'user',
+        'userdata',
+        'expdata',
+        'LSAS_scores',
+        'created_at', 
+        'averageLSAS', 
+        'very_severe',
+        'severe',
+        'marked',
+        'moderate',
+        'mild'
+            ));
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    public function studentprogresspdf($id){
+       
+        $user=User::find($id);
+        $user_id= Session::get('loginId');
+        $userdata=User::where('id','=',Session::get('loginId'))->first();
+        $expdata=Expert::where('user_id',$id)->latest()->get();
+        $very_severe=Expert::where('user_id',$id)->where('socialanxiety_level','very_severe')->count();
+        $severe=Expert::where('user_id',$id)->where('socialanxiety_level','severe')->count();
+        $marked=Expert::where('user_id',$id)->where('socialanxiety_level','marked')->count();
+        $moderate=Expert::where('user_id',$id)->where('socialanxiety_level','moderate')->count();
+        $mild=Expert::where('user_id',$id)->where('socialanxiety_level','mild')->count();
+         if($very_severe==0)
+         {
+           $very_severe=0;
+         }
+         if($severe==0)
+         {
+           $severe=0;
+         }
+         if($marked==0)
+         {
+           $marked=0;
+         }
+         if($moderate==0)
+         {
+           $moderate=0;
+         }
+         if($mild==0)
+         {
+           $mild=0;
+         }
+    
+        $scores=Expert::where('user_id',$id)->sum('LSAS_score');
+        $scorecount=Expert::select('LSAS_score')->where('user_id',$id)->count();
+        $averageLSAS;
+        if($scorecount==0){
+            $averageLSAS=0;
+        }
+        else{
+            $averageLSAS=round( $scores/intval($scorecount));
+        }
+    
+        // orderBy('desc')
+        // ->where('user_id',$user_id)
+    
+        $LSAS_scores = [];
+        $created_at = [];
+       
+        $lsas=Expert::select('LSAS_score')->where('user_id','=',$user_id)->get();
+        foreach ($lsas as $lsas) {
+        $LSAS_scores [] = $lsas;
+        }
+        
+        $createdAt=Expert::select('created_at')->where('user_id','=',$user_id)->get();
+        foreach ($createdAt as $createdAt) {
+        $created_at [] = $createdAt;
+        }
+            $pdf = Pdf::loadView('Panel.therapist.PDF.studentprogresspdfview',[
+               'user'=>$user ,
+            'userdata'=>$userdata,
+            'expdata'=>$expdata,
+            'LSAS_scores'=>$LSAS_scores,
+            'created_at'=>$created_at,
+            'averageLSAS'=>$averageLSAS,
+            'very_severe'=>$very_severe,
+            'severe'=>$severe,
+            'marked'=>$marked,
+            'moderate'=>$moderate,
+            'mild'=>$mild,
+            
+            ]
+            
+        )->setOptions([
+            'dpi'=>150,
+            'defaultFont' => 'sans-serif',
+            'isHtml5ParserEnabled' => true,
+            // 'isPhpEnabled' => true,
+            // 'isPhpDebug' => true,
+        ]);
+             $pdfName=$user->full_name;
+            return $pdf->download("$pdfName Progress.pdf");
+        
+    }
+
+
+
+
+
+
+
+
+
 
     public function getrecommendations()
     {
@@ -59,6 +245,34 @@ class TherapistController extends Controller
         $expdata=Expert::where('user_id',$id)->latest()->simplePaginate(8);
         $user=User::find($id);
         $userdata=User::where('id','=',Session::get('loginId'))->first();
+       
+        $very_severe=Expert::where('user_id',$id)->where('socialanxiety_level','very_severe')->count();
+        $severe=Expert::where('user_id',$id)->where('socialanxiety_level','severe')->count();
+        $marked=Expert::where('user_id',$id)->where('socialanxiety_level','marked')->count();
+        $moderate=Expert::where('user_id',$id)->where('socialanxiety_level','moderate')->count();
+        $mild=Expert::where('user_id',$id)->where('socialanxiety_level','mild')->count();
+         if($very_severe==0)
+         {
+           $very_severe=0;
+         }
+         if($severe==0)
+         {
+           $severe=0;
+         }
+         if($marked==0)
+         {
+           $marked=0;
+         }
+         if($moderate==0)
+         {
+           $moderate=0;
+         }
+         if($mild==0)
+         {
+           $mild=0;
+         }
+    
+
         $scores=Expert::where('user_id',$id)->sum('LSAS_score');
         $scorecount=Expert::select('LSAS_score')->where('user_id',$id)->count();
         $averageLSAS;
@@ -82,7 +296,24 @@ class TherapistController extends Controller
         $created_at [] = $createdAt;
         }
 
-        return view('Panel.therapist.progress.viewprogress',compact('user','userdata','averageLSAS','expdata','LSAS_scores','created_at'));
+
+        $address=Therapist::select('Location')->where('user_id',Auth::user()->id)->get();
+        $location=$address[0]['Location'];
+        return view('Panel.therapist.progress.viewprogress',compact(
+            'location',
+            'user',
+            'userdata',
+            'averageLSAS',
+            'expdata',
+            'LSAS_scores',
+            'created_at',
+            'very_severe',
+            'severe',
+            'marked',
+            'moderate',
+            'mild'
+        
+        ));
     }
 
     public function viewstudentdiagnosis(Request $request,$exp_id){
@@ -92,7 +323,8 @@ class TherapistController extends Controller
         $diagnosis=Recommendations::select('Recommendation')->where('Recommendations_id',$expdata->recommend_id)->get();
         $recommendation=$diagnosis[0]['Recommendation'];
      
-       return view('Panel.therapist.progress.viewstudentdiagnosis',compact('userdata','expdata','recommendation'));
+       return view('Panel.therapist.progress.viewstudentdiagnosis',compact('userdata',
+       'expdata','recommendation',));
     
     }
     public function  viewstudentjournals(){

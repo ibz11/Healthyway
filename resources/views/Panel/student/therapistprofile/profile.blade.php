@@ -23,6 +23,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                 <div  class="d-flex flex-column align-items-center text-center">
+                <!-- asset('storage/'.$therapist->profile_img)     -->
                     <img src="/therapist_img/{{$therapist->profile_img}}"style="border:solid 1px black;" alt="Admin" class="rounded-circle" width="150">
                     <div class="col mr-2">
                         <div class="m-2 text-xs font-weight-bold text-primary text-uppercase mb-1">

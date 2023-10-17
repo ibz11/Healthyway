@@ -7,6 +7,7 @@
 <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">STUDENT'S APPOINTMENTS</h6>
+                            <p class="m-0 font-weight-bold text-primary">The latest appointments are the firsts one displayed here</p>
                         </div>
                         <div>
 @if(method_exists($appointment,'links'))

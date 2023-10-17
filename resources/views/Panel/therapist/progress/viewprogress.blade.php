@@ -4,12 +4,49 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between  mb-4">
     <h1 class="h3 mb-0 text-gray-800">Hello {{$userdata->full_name}}.Below you can check {{$user->full_name}}'s' progress</h1>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+   
+    
+    <button type="button" class="show d-none d-sm-inline-block btn btn-sm btn-info shadow-sm" data-appointment-id="{{ $user->id }}" data-bs-toggle="modal" data-bs-target="#appointmentModal">
+      <i class="fas fa-book fa-sm text-white-50">
+      </i> Make an appointment for this user</button>
+    
+      <a href="{{URL('studentprogresspdf',$user->id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
             class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
 </div>
 
 <div class="row">
 
+<div class="col-xl-4  col-lg-5">
+<div class="card shadow mb-4">
+<div class="card-body p-5">
+    <h1><u>Expert System entries</u></h1>
+    <div class="row">
+    <p class="text-dark">Number of <span class="badge bg-danger text-light">very severe</span> cases:</p> 
+    <h4 class="text-dark"><strong>{{$very_severe}}</strong></h4>
+    </div>
+
+    <div class="row">
+    <p class="text-dark">Number of <span class="badge bg-danger text-light">severe</span> cases:</p> 
+    <h4 class="text-dark"><strong>{{$severe}}</strong></h4>
+    </div>
+
+    <div class="row">
+    <p class="text-dark">Number of <span class="badge bg-warning text-light">marked</span> cases:</p> 
+    <h4 class="text-dark"><strong>{{$marked}}</strong></h4>
+    </div>
+
+    <div class="row">
+    <p class="text-dark">Number of <span class="badge bg-primary text-light">moderate</span> cases:</p> 
+    <h4 class="text-dark"><strong>{{$moderate}}</strong></h4>
+    </div>
+
+    <div class="row">
+    <p class="text-dark">Number of <span class="badge bg-info text-light">mild</span> cases:</p> 
+    <h4 class="text-dark"><strong>{{$mild}}</strong></h4>
+    </div>
+</div>
+</div>
+</div>
     <!-- Area Chart -->
     <div class="col-xl-8 col-lg-7">
         <div class="card shadow mb-4">
@@ -29,7 +66,7 @@
     </div>
 
     <!-- Pie Chart -->
-    <div class="col-xl-4 col-lg-5">
+    <div class="col-xl-3 col-lg-5">
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div
@@ -51,10 +88,10 @@
         </div>
     </div>
 
-
+    <div class="col-xl-9 col-lg-5">
     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">USERS</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Expert System Data</h6>
                         </div>
                   @if(method_exists($expdata,'links'))
                   <div class="d-flex justify-content-center">
@@ -119,12 +156,12 @@
                         </div>
                     </div>
 
+</div>
 
 
 
 
-
-
+@include('Panel/therapist/modal/appointmentmodal')
 
 
 

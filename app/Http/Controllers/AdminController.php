@@ -14,7 +14,7 @@ use App\Mail\ForgotPassword;
 use App\Helpers\RandomCodeGenerator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 class AdminController extends Controller
 {
     public function users(){
