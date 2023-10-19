@@ -196,6 +196,7 @@ public function studenttherapistprofile(){
 public function viewtherapist(Request $request,$therapist_id){
     $therapist=Therapist::find($therapist_id);
     $userdata=User::where('id','=',Session::get('loginId'))->first();
+    
     return view('Panel.student.therapistprofile.profileview',compact('userdata','therapist'));
 }
 

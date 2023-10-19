@@ -61,17 +61,18 @@
 
 
 
-
+<!-- If the profile picture is not working in a deeper route then its because you didn't add the '/'
+ at the script tags below -->
 
     <!-- Bootstrap core JavaScript-->
-    <script src="adminpanel/vendor/jquery/jquery.min.js"></script>
-    <script src="adminpanel/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/adminpanel/vendor/jquery/jquery.min.js"></script>
+    <script src="/adminpanel/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core pluadminpanel/gin JavaScript-->
-    <script src="adminpanel/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/adminpanel/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom sadminpanel/cripts for all pages-->
-    <script src="adminpanel/js/sb-admin-2.min.js"></script>
+    <script src="/adminpanel/js/sb-admin-2.min.js"></script>
 
     <!-- Page levadminpanel/el plugins -->
     <script src="/adminpanel/vendor/chart.js/Chart.min.js"></script>

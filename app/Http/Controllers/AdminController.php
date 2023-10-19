@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Rules;
+use App\Models\Recommendations;
+use App\Models\Expert;
+use App\Models\Journal;
+use App\Models\Therapist;
+use App\Models\Appointments;
 use Hash;
 use Session;
 use Illuminate\Support\Str;

@@ -71,7 +71,36 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{URL('users')}}">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Users</span></a>
+                    <span>All Users</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('users')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Recommendations</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('users')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Expert system data</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('users')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Appointments</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('users')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Therapists profiles</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('users')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Journals</span></a>
             </li>
 
             <!-- Divider -->

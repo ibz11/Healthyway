@@ -26,6 +26,11 @@ class ExpertController extends Controller
         $user_id= Session::get('loginId');
         $userdata=User::where('id','=',Session::get('loginId'))->first();
         $expdata=Expert::where('user_id',$user_id)->latest()->simplePaginate(8);
+ 
+        $latestexpdata=Expert::where('user_id',$user_id)->latest()->first();
+
+
+
 
         $very_severe=Expert::where('user_id',$user_id)->where('socialanxiety_level','very_severe')->count();
         $severe=Expert::where('user_id',$user_id)->where('socialanxiety_level','severe')->count();
@@ -80,7 +85,9 @@ class ExpertController extends Controller
         $created_at [] = $createdAt;
         }
         // print_r($created_at);
-        return view('Panel.student.progress',compact('userdata','expdata','LSAS_scores','created_at',  'averageLSAS','very_severe',
+        return view('Panel.student.progress',compact('userdata','expdata','LSAS_scores','created_at',  'averageLSAS',
+        'latestexpdata',
+        'very_severe',
         'severe',
         'marked',
         'moderate',
@@ -153,7 +160,20 @@ public function deletediagnosis($exp_id){
 // public function expertsystem2(Request $request){
         if ($request->isMethod('post')) 
         {
-      
+//   $fearValidationRules = [];   
+//   foreach ($feartag as $feartag) {
+//     $fearValidationRules[$feartag] = 'required|in:1,2,3';
+// }
+//  $request->validate($fearValidationRules);
+$request->validate(
+  [
+'F1'=>'required|in:0,1,2,3',
+// 'F2'=>'required|in:0,1,2,3|not_in:0',
+// 'F3'=>'required|in:0,1,2,3|not_in:0',
+
+  ]);
+
+
         //Fear Request
         $F1=$request->F1; 
         $F2=$request->F2; 
@@ -303,7 +323,7 @@ public function deletediagnosis($exp_id){
 
             }
             $exp->save(); 
-            return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+            return redirect('/progress')->with('success','Congratulations on taking the test view your latest result below');
 
 
 

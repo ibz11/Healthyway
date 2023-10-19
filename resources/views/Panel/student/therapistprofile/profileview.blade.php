@@ -21,6 +21,9 @@
                       <h4>{{$therapist->user_id}} {{$therapist->title}}.{{$therapist->Full_name}}</h4>
                       <p class="text-light mb-1"><span class="badge bg-info">{{$therapist->specialization}} </span></p>
                       <p class="text-dark font-size-sm">Address- {{$therapist->Location}}</p>
+                      <p>You can select this therapist as your therapist and wait for feedback for the therapist to accept </p>
+                      <a href=""class="m-1 btn btn-outline-primary">Select this Therapist</a>
+                      <a href="" class="m-1 btn btn-outline-danger">Deselect this therapist</a>
                     
                      
                     </div>
@@ -72,15 +75,7 @@
                   </div>
                   <hr>
 
-                  <!-- <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Qualification</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-             
-                    </div>
-                  </div>
-                  <hr> -->
+                
            
                   <div class="row">
                     <div class="col-sm-3">
@@ -99,6 +94,7 @@
                     <div class="col-sm-9 text-secondary">
                     {{$therapist->Location}}
                     </div>
+
                   </div>
                   <hr>
                   <div class="row">
