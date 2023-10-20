@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Therapist;
 use App\Models\Expert;
+use App\Models\Choosetherapist;
 use Hash;
 use Session;
 use Illuminate\Support\Str;
@@ -20,6 +21,37 @@ use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 class StudentController extends Controller
 {
+  public function deletetherapistapplication($ChooseID){
+    $choose=Choosetherapist::find($ChooseID);
+    $choose->delete();
+    return redirect()->back()->with('warning','You have deleted application for this therapist');
+  }
+  public function selecttherapist($ChooseID){
+    $choose=Choosetherapist::find($ChooseID);
+      $choose->selection_status='selected';
+      $choose->update();
+      return redirect()->back()->with('success','You have selected this therapist');
+    }
+
+  public function deselecttherapist($ChooseID){
+    $choose=Choosetherapist::find($ChooseID);
+    $choose->selection_status='deselected';
+    $choose->update();
+    return redirect()->back()->with('warning','You have deselected this therapist');
+  }
+public function choosetherapist($therapist_id){
+  $user=Auth::User();
+  $therapist=Therapist::find($therapist_id);
+
+  $choose=new Choosetherapist;
+  $choose->student_id=$user->id;
+  $choose->student_fullname=$user->full_name;
+  $choose->therapist_id=$therapist->user_id;
+  $choose->therapist_fullname=$therapist->Full_name;
+  $choose->save();
+
+  return redirect()->back()->with('success','Therapist selection is succesfull.Wait for the therapist to accept your request');
+  }
 public function progresspdfview(){
     $user_id= Session::get('loginId');
     $userdata=User::where('id','=',Session::get('loginId'))->first();
@@ -188,15 +220,60 @@ public function deleteuser($id)
 
 public function studenttherapistprofile(){
     $userdata=User::where('id','=',Session::get('loginId'))->first();
+    $choose=Choosetherapist::select('therapist_id')->where('student_id',Auth::user()->id)->where('application_status','accepted')->get();
+   
+   
+//This code selects al the therapist profileof the therapist where they have approven your chosen application 
+    $selectedtherapistArray = [];
+    foreach ($choose as $data) {
+      $therapistId = $data['therapist_id'];
+  
+      // Query the therapist profile based on the therapist ID
+      $selected=Therapist::where('user_id',$therapistId)->latest()->first();
+      // $therapistProfile = $selectedtherapist->where('user_id', $therapistId)->first();
+  
+      if ($selected) {
+          // If a therapist profile is found, append it to the therapistProfiles array
+          $selectedtherapistArray[] = $selected;
+      }
+  }
+  
+
+
+
+
+
+
     $therapist=Therapist::latest()->simplePaginate(8);
-    return view('Panel.student.therapistprofile.profile',compact('userdata','therapist'));
+    return view('Panel.student.therapistprofile.profile',compact('userdata','therapist','selectedtherapistArray','choose'));
 }
 
 
 public function viewtherapist(Request $request,$therapist_id){
     $therapist=Therapist::find($therapist_id);
+    $choose=Choosetherapist::where('therapist_id',$therapist->user_id)->where('student_id',Auth::user()->id)->get();
+    // where('therapist_id',$therapist->user_id)->or
+    if($choose->isEmpty()){
+     $choose='no-data';
+    }
+   
+    $choosestatus='pending';
+    // Choosetherapist::select('status')->where('therapist_id',$therapist->user_id)->get();
+    $choosecount=Choosetherapist::where('therapist_id',$therapist->user_id)->where('student_id',Auth::user()->id)->count();
+    if($choosecount<=0){
+        $choosecount=0;
+    }
+   
+    $choosestatus='pending';
+   
+    
     $userdata=User::where('id','=',Session::get('loginId'))->first();
-    return view('Panel.student.therapistprofile.profileview',compact('userdata','therapist'));
+    return view('Panel.student.therapistprofile.profileview',compact(
+      'userdata',
+      'therapist',
+      'choose',
+      'choosestatus',
+      'choosecount'));
 }
 
 

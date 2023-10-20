@@ -109,6 +109,12 @@ route::get('viewappointment/{appointment_id}',[AppointmentController::class, 'vi
 Route::match(['get', 'post'],'updateappointment/{appointment_id}',[AppointmentController::class,'updateappointment'] );
 Route::get('/myprogresspdf', [StudentController::class, 'myprogresspdf']);
 route::get('/progresspdfview',[StudentController::class,'progresspdfview']);
+
+
+route::get('/deletetherapistapplication/{ChooseID}',[StudentController::class,'deletetherapistapplication']);
+route::post('/choosetherapist/{therapist_id}',[StudentController::class,'choosetherapist']);
+route::get('/selecttherapist/{ChooseID}',[StudentController::class,'selecttherapist']);
+route::get('/deselecttherapist/{ChooseID}',[StudentController::class,'deselecttherapist']);
 // route::get('/myChart',[StudentController::class,'myChart']);
 
 });

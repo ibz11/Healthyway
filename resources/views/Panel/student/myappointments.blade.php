@@ -31,7 +31,7 @@
                                             <th>Rejection reason</th>
                                       
                                             <th>Created at</th>
-                                            <th>Download PDF</th>
+                                            <!-- <th>Download PDF</th> -->
                                             <th>View</th>
                                             <th>Update</th>
                                             <th>Delete</th>
@@ -87,7 +87,7 @@
 
 
                                 @if($appointment->status=='accepted')
-                                <td><a style="border-radius:0em;"href="{{URL('viewdiagnosis',$appointment->appointment_id)}}" class="btn btn-outline-dark">Download PDF</a></td>
+                                <!-- <td><a style="border-radius:0em;"href="{{URL('viewdiagnosis',$appointment->appointment_id)}}" class="btn btn-outline-dark">Download PDF</a></td> -->
                                 @else
                                 <td> </td>
                                 @endif

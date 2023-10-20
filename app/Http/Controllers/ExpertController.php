@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Rules;
 use App\Models\Recommendations;
 use App\Models\Expert;
+use App\Models\Choosetherapist;
 use Hash;
 use Session;
 use Illuminate\Support\Str;
@@ -26,6 +27,7 @@ class ExpertController extends Controller
         $user_id= Session::get('loginId');
         $userdata=User::where('id','=',Session::get('loginId'))->first();
         $expdata=Expert::where('user_id',$user_id)->latest()->simplePaginate(8);
+        $latestexpdata=Expert::where('user_id',$user_id)->latest()->first();
 
         $very_severe=Expert::where('user_id',$user_id)->where('socialanxiety_level','very_severe')->count();
         $severe=Expert::where('user_id',$user_id)->where('socialanxiety_level','severe')->count();
@@ -80,7 +82,9 @@ class ExpertController extends Controller
         $created_at [] = $createdAt;
         }
         // print_r($created_at);
-        return view('Panel.student.progress',compact('userdata','expdata','LSAS_scores','created_at',  'averageLSAS','very_severe',
+        return view('Panel.student.progress',compact('userdata','expdata','LSAS_scores','created_at',  'averageLSAS',
+       'latestexpdata',
+       'very_severe',
         'severe',
         'marked',
         'moderate',

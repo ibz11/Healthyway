@@ -6,13 +6,32 @@
     <a href="{{URL('myprogresspdf')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
             class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
 </div>
-
 <div class="row">
-
-<div class="col-xl-3  col-lg-5">
+<div class="col-xl-8  col-lg-5">
 <div class="card shadow mb-4">
 <div class="card-body p-5">
-    <h1><u>Expert System entries</u></h1>
+    <!-- <h1><strong>ID : {{ $latestexpdata->exp_id}}  </strong></h1> -->
+    <span class="badge bg-info text-light text-2xl p-2">Latest</span>
+    <h1>Your Latest Test Score:<strong>  {{ $latestexpdata->LSAS_score}}  </strong></h1>
+    <h1>Diagnosis(Social Anxiety): <strong>  {{ $latestexpdata->socialanxiety_level}}  </strong></h1>
+    <h4>Fear Level: <strong>  {{ $latestexpdata->socialanxiety_level}}  </strong></h4>
+    <h4>Avoidance Level: <strong>  {{ $latestexpdata->socialanxiety_level}}  </strong></h4>
+    <h5>Test submitted at: <strong>  {{ $latestexpdata->created_at}}  </strong></h5>
+    <a style="border-radius:0em;"href="{{URL('viewdiagnosis',$latestexpdata->exp_id)}}" class="btn btn-outline-primary">View Recommendation</a>
+    <div class="row">
+  
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="col-xl-4  col-lg-4">
+<div class="card shadow mb-4">
+<div class="card-body p-5">
+    <h1><strong>Expert System Data Analysis</strong></h1>
+
+  <div style="background:whitesmoke; padding:1em;border-radius:.3em; border:1px solid black;">  
     <div class="row">
     <p class="text-dark">Number of <span class="badge bg-danger text-light">very severe</span> cases:</p> 
     <h4 class="text-dark"><strong>{{$very_severe}}</strong></h4>
@@ -38,8 +57,28 @@
     <h4 class="text-dark"><strong>{{$mild}}</strong></h4>
     </div>
 </div>
+
+
 </div>
 </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+<div class="row">
+
     <!-- Area Chart -->
     <div class="col-xl-8 col-lg-7">
         <div class="card shadow mb-4">
@@ -93,7 +132,7 @@
     <div class="col-xl-9 col-lg-5">
     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">My Expert System Data</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">My LSAS SCORE DATA and DIAGNOSIS</h6>
                         </div>
 
                         @if(method_exists($expdata,'links'))
@@ -211,8 +250,22 @@
     },
     options: {
       scales: {
+        x: {
+          type: 'category', 
+          time: {
+            unit: 'day' // You can customize the time unit based on your data
+          },
+          title: {
+            display: true,
+            text: 'Time test was completed' // X-axis label
+          }
+        },
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'LSAS Score' // Y-axis label
+          }
         }
       }
     }

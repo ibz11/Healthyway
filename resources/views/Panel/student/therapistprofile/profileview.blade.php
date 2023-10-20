@@ -21,7 +21,53 @@
                       <h4>{{$therapist->user_id}} {{$therapist->title}}.{{$therapist->Full_name}}</h4>
                       <p class="text-light mb-1"><span class="badge bg-info">{{$therapist->specialization}} </span></p>
                       <p class="text-dark font-size-sm">Address- {{$therapist->Location}}</p>
+
+                      <p>-You can select this therapist as your therapist and wait for feedback for the therapist to accept </p>
+                      @if($choose=='no-data')
+                      <p>-You can  check for therapist your  application status untill you have chosen a therapist </p>
+                      @else
+                      <p><strong>Your therapist application process status is:</strong> </p>
+                     <h3><span class="badge bg-dark text-light"><strong>{{$choose->first()->application_status}}</strong></span></h3>
+                       @endif
+                    @if($choosecount>0)
+                    @else
                     
+                      <form action="{{URL('choosetherapist',$therapist->therapist_id)}}" enctype="multipart/form-data"method="post">
+                        @csrf
+                      <button type="submit" href=""class="m-1 btn btn-outline-info">Choose this Therapist</button>
+                      </form>
+                    
+                    @endif
+
+                    
+                  @if($choose=='no-data')
+                  <p> </p>
+                  @else
+                    @if($choose->first()->student_id==Auth::user()->id)
+                      @if($choose->first()->application_status=='accepted')
+                      @if($choose->first()->selection_status=='deselected')
+                      <a href="{{URL('selecttherapist',$choose->first()->ChooseID)}}" class="m-1 btn btn-outline-primary">Select this therapist</a>
+                      @else
+                      <a href="{{URL('deselecttherapist',$choose->first()->ChooseID)}}" class="m-1 btn btn-outline-warning">Deselect this therapist</a>
+                       @endif
+                    
+                      @elseif($choose->first()->application_status=='rejected')
+                      <p><strong>Your application status has been <u>rejected</u> by this therapist.You can apply to other therapists</strong></p>
+                      <a href="{{URL('deletetherapistapplication',$choose->first()->ChooseID)}}" class="m-1 btn btn-outline-danger">Delete application for this therapist</a>
+                      @else
+                      <p><strong>You application has been submitted and you will get feedback shortly</strong></p> 
+                      
+                      @endif
+                    @endif
+                    @endif
+
+                    
+                  
+                     
+                     
+                    
+
+                      
                      
                     </div>
                   </div>
@@ -103,7 +149,11 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-12">
-                    
+@if($choose=='no-data')
+<h1 class="mt-4 text-2xl"><strong>You cannot book an appointment because you have not selected them as your therapist</strong></h1>  
+@else
+@if($choose->first()->application_status=='accepted') 
+ 
 <div class="row">
 
 <div class="col-sm-12">
@@ -111,7 +161,7 @@
 <form action="{{URL('createappointment')}}" method="POST" id="editform"enctype="multipart/form-data">
 @csrf
 
-<h1 class="mt-4 text-2xl"><strong>Book An appointment</strong></h1>  
+<h1 class="mt-4 text-2xl"><strong>You can Book An appointment</strong></h1>  
 <p class="text-danger">Note: be mindful of the date and time,it should be at a <u><strong>reasonable</strong></u> time and date </p>
 
 <div  hidden class="mb-3 mt-3">
@@ -188,7 +238,11 @@ Therapist's office: {{$therapist->Location}}
                
                 </div>
             
-              </div>
+              </div>                  
+@else
+<h1 class="mt-4 text-2xl"><strong>You cannot book an appointment with this therapist because your application status is not approved</strong></h1>   
+@endif
+@endif
            
               
                 </div>
