@@ -245,7 +245,7 @@
       datasets: [{
         label: 'Social anxiety progress',
         data:  LsasArr,
-        borderWidth: 1
+        borderWidth: 3
       }]
     },
     options: {
@@ -257,7 +257,7 @@
           },
           title: {
             display: true,
-            text: 'Time test was completed' // X-axis label
+            text: 'Date and Time test was done'// X-axis label
           }
         },
         y: {

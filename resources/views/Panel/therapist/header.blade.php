@@ -118,7 +118,11 @@ overflow-x: auto;
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>My Therapist Profile</span></a>
             </li> 
-       
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('myclients')}}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>My client applications</span></a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{URL('studentprogress')}}">
                     <i class="fas fa-fw fa-chart-area"></i>
@@ -144,6 +148,8 @@ overflow-x: auto;
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Expert system recommendations</span></a>
             </li>
+
+            
 
 
 

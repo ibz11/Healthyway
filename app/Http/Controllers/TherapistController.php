@@ -10,6 +10,7 @@ use App\Models\Expert;
 use App\Models\Journal;
 use App\Models\Therapist;
 use App\Models\Appointments;
+use App\Models\Choosetherapist;
 use Hash;
 use Session;
 use Illuminate\Support\Str;
@@ -24,6 +25,25 @@ use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 class TherapistController extends Controller
 {
+ public function  myclients(){
+  $choose=Choosetherapist::where('therapist_id',Auth::user()->id)->latest()->simplepaginate(15);
+  $userdata=User::where('id','=',Session::get('loginId'))->first();
+return view('Panel.therapist.myclients',compact('userdata','choose'));
+  }
+  public function  acceptclient($ChooseID){
+    $choose=Choosetherapist::find($ChooseID);
+    $choose->selection_status='selected';
+    $choose->application_status='accepted';
+    $choose->save();
+    return redirect()->back()->with('success','Client application has been Accepted');
+  }
+  public function  rejectclient($ChooseID){
+    $choose=Choosetherapist::find($ChooseID);
+    $choose->selection_status='deselected';
+    $choose->application_status='rejected';
+    $choose->save();
+  return redirect()->back()->with('warning','Client application has been Rejected');
+  }
     public function appointmentcreate(Request $request){
         $appointment=new Appointments;
         //$appointment->user_id=Auth::User()->id;
@@ -234,7 +254,22 @@ class TherapistController extends Controller
     public function studentprogress(){
         $user_id= Session::get('loginId');
         $userdata=User::where('id','=',Session::get('loginId'))->first();
-        $user=User::where('role','student')->latest()->simplePaginate(12);
+        $choose=Choosetherapist::where('therapist_id',Auth::user()->id)->where('application_status','accepted')->get();
+        // $user=User::where('id',$choose->student)->where('role','student')->latest()->simplePaginate(12);
+        $user = [];
+        foreach ($choose as $data) {
+          $studentId = $data['student_id'];
+      
+          // Query the therapist profile based on the therapist ID
+          $selected=User::where('id',$studentId)->latest()->first();
+          // $therapistProfile = $selectedtherapist->where('user_id', $therapistId)->first();
+      
+          if ($selected) {
+              // If a therapist profile is found, append it to the therapistProfiles array
+              $user[] = $selected;
+          }
+      }
+      
         // simplePaginate(1);
 
 
@@ -245,6 +280,7 @@ class TherapistController extends Controller
         $expdata=Expert::where('user_id',$id)->latest()->simplePaginate(8);
         $user=User::find($id);
         $userdata=User::where('id','=',Session::get('loginId'))->first();
+        $latestexpdata=Expert::where('user_id',$id)->latest()->first();
        
         $very_severe=Expert::where('user_id',$id)->where('socialanxiety_level','very_severe')->count();
         $severe=Expert::where('user_id',$id)->where('socialanxiety_level','severe')->count();
@@ -300,6 +336,7 @@ class TherapistController extends Controller
         $address=Therapist::select('Location')->where('user_id',Auth::user()->id)->get();
         $location=$address[0]['Location'];
         return view('Panel.therapist.progress.viewprogress',compact(
+          'latestexpdata',
             'location',
             'user',
             'userdata',
@@ -330,7 +367,23 @@ class TherapistController extends Controller
     public function  viewstudentjournals(){
         $user_id= Session::get('loginId');
         $userdata=User::where('id','=',Session::get('loginId'))->first();
-        $user=User::where('role','student')->latest()->simplePaginate(12);
+        //$user=User::where('role','student')->latest()->simplePaginate(12);
+
+        $choose=Choosetherapist::where('therapist_id',Auth::user()->id)->where('application_status','accepted')->get();
+        // $user=User::where('id',$choose->student)->where('role','student')->latest()->simplePaginate(12);
+        $user = [];
+        foreach ($choose as $data) {
+          $studentId = $data['student_id'];
+      
+          // Query the therapist profile based on the therapist ID
+          $selected=User::where('id',$studentId)->latest()->first();
+          // $therapistProfile = $selectedtherapist->where('user_id', $therapistId)->first();
+      
+          if ($selected) {
+              // If a therapist profile is found, append it to the therapistProfiles array
+              $user[] = $selected;
+          }
+        }
         return view('Panel.therapist.journal.viewstudentjournals',compact('userdata','user'));
 
     }

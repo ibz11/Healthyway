@@ -153,7 +153,10 @@ route::get('/getrecommendations',[TherapistController::class,'getrecommendations
 Route::post('/addrecommendation/{Recommendations_id}',[TherapistController::class,'addrecommendation']);
 
 route::get('/getRecommendationDetails/{Recommendations_id}',[TherapistController::class,'getRecommendationDetails']);
-
+//Clients choosing therapist routes
+route::get('/myclients',[TherapistController::class,'myclients']);
+route::get('/acceptclient/{ChooseID}',[TherapistController::class,'acceptclient']);
+route::get('/rejectclient/{ChooseID}',[TherapistController::class,'rejectclient']);
 
 //Reports pdf
 Route::get('/studentpdfview/{id}', [TherapistController::class, 'studentpdfview']);

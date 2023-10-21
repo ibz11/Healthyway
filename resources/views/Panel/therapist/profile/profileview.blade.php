@@ -107,7 +107,7 @@
                   <div class="row">
                     <div class="col-sm-12">
                     
-                      <a href="" class="mt-4 btn btn-outline-success">Update</a>
+                      <a href="{{URL('updateprofile',$therapist->therapist_id)}}" class="mt-4 btn btn-outline-success">Update</a>
                     </div>
                   </div>
                
