@@ -8,6 +8,7 @@ use App\Models\Rules;
 use App\Models\Recommendations;
 use App\Models\Expert;
 use App\Models\Choosetherapist;
+use App\Models\Notifications;
 use Hash;
 use Session;
 use Illuminate\Support\Str;
@@ -18,6 +19,8 @@ use App\Mail\ForgotPassword;
 use App\Helpers\RandomCodeGenerator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 class ExpertController extends Controller
 {
 
@@ -146,11 +149,15 @@ public function deletediagnosis($exp_id){
     
         $avoidancetag=['A1','A2','A3','A4','A5','A6','A7','A8','A9','A10','A11','A12',
                       'A13','A14','A15','A16','A17','A18','A19','A20','A21','A22','A23','A24'];
+        $choose=Choosetherapist::select('therapist_id')->where('student_id',Auth::user()->id)->get();
+        if($choose->isEmpty()){
+          $choose='no-data';
+         }
     
          if ($request->isMethod('get')) 
         { 
-    
-        return view('Panel.student.expertsystem',compact('userdata','questions','feartag','avoidancetag'))->with('Error','Test');  
+        
+        return view('Panel.student.expertsystem',compact('userdata','questions','feartag','avoidancetag','choose'))->with('Error','Test');  
         }
     
 
@@ -214,11 +221,11 @@ public function deletediagnosis($exp_id){
     
         //Total Fear
         $totalFear=$F1 +$F2+ $F3+$F4+$F5+$F6+$F7+$F8+$F9+ $F10+ $F11 
-          + $F12+ $F13+ $F14+ $F15+ $F16+ $F17+ $F18+ $F19+ $F20+ $F21+ $F22+ $F23+ $F24;
+         + $F12+ $F13+ $F14+ $F15+ $F16+ $F17+ $F18+ $F19+ $F20+ $F21+ $F22+ $F23+ $F24;
 
         //Total Avoidance
-        $totalAvoidance=$A1 +$A2 + $A3 + $A4 + $A5 + $A6 + $A7 + $A8 + $A9  + $A10 + $A11 + $A12 
-         + $A13 + $A14 + $A15 + $A16 + $A17 + $A18 + $A19 + $A20 + $A21 + $A22 + $A23 + $A24;
+        $totalAvoidance=  $A1 +$A2 + $A3 + $A4 + $A5 + $A6 + $A7 + $A8 + $A9  + $A10 + $A11 + $A12 
+           + $A13 + $A14 + $A15 + $A16 + $A17 + $A18 + $A19 + $A20 + $A21 + $A22 + $A23 + $A24;
 
         //Total Fear +Total Avoidance
         $result=$totalFear+$totalAvoidance; 
@@ -232,6 +239,38 @@ public function deletediagnosis($exp_id){
         $highAV=$totalAvoidance >= 49 && $totalAvoidance <= 72;
         $midAV=$totalAvoidance >= 25 && $totalAvoidance <= 48;
         $lowAV=$totalAvoidance >= 0 && $totalAvoidance <= 24;
+
+        //Notifications
+        //Very severe and severe social anxiety notifications
+        
+        if($choose=='no-data'){
+
+        }
+        else{
+          if($result>=95){
+            $not=new Notifications;
+            $not->student_id=Auth::user()->id;
+            $not->student_fullname=Auth::user()->full_name;
+            $not->therapist_id=$choose->first()->therapist_id;
+            $not->diagnosis='very severe';
+            $not->LSAS_score=$result;
+            $not->message="This user has score Very Severe levels of social anxiety";
+            $not->save();
+            
+          }
+         
+            if($result>=80 && $result<=94){
+            $not=new Notifications;
+            $not->student_id=Auth::user()->id;
+            $not->student_fullname=Auth::user()->full_name;
+            $not->therapist_id=$choose->first()->therapist_id;
+            $not->diagnosis='severe';
+            $not->LSAS_score=$result;
+            $not->message="This user has score Severe levels of social anxiety";
+            $not->save();
+            
+          }
+        }
 
         $exp=new Expert;
 

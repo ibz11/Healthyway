@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('choosetherapists', function (Blueprint $table) {
-            $table->id('ChooseID');
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->id('NotID');
             $table->unsignedBigInteger('student_id');
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('therapist_id');
-            $table->foreign('therapist_id')->references('user_id')->on('therapists')->onDelete('cascade');
+            $table->foreign('therapist_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('therapist_fullname')->nullable();
             $table->string('student_fullname')->nullable();
-            $table->enum('selection_status',['selected','deselected'])->default('selected');
-            $table->enum('application_status',['accepted','rejected','pending'])->default('pending');
-         
+            $table->string('diagnosis')->nullable();
+            $table->string('LSAS_score')->nullable();
+            $table->LongText('message')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('choosetherapists');
+        Schema::dropIfExists('notifications');
     }
 };

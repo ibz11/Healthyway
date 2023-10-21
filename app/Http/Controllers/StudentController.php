@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Therapist;
 use App\Models\Expert;
 use App\Models\Choosetherapist;
+use App\Models\Notifications;
 use Hash;
 use Session;
 use Illuminate\Support\Str;

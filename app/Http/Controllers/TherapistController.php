@@ -11,6 +11,7 @@ use App\Models\Journal;
 use App\Models\Therapist;
 use App\Models\Appointments;
 use App\Models\Choosetherapist;
+use App\Models\Notifications;
 use Hash;
 use Session;
 use Illuminate\Support\Str;

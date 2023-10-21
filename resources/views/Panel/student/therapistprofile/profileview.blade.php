@@ -152,8 +152,8 @@
 @if($choose=='no-data')
 <h1 class="mt-4 text-2xl"><strong>You cannot book an appointment because you have not selected them as your therapist</strong></h1>  
 @else
-@if($choose->first()->application_status=='accepted') 
- 
+@if($choose->first()->application_status=='accepted' and $choose->first()->selection_status=='selected') 
+
 <div class="row">
 
 <div class="col-sm-12">
@@ -240,7 +240,7 @@ Therapist's office: {{$therapist->Location}}
             
               </div>                  
 @else
-<h1 class="mt-4 text-2xl"><strong>You cannot book an appointment with this therapist because your application status is not approved</strong></h1>   
+<h1 class="mt-4 text-2xl"><strong>You cannot book an appointment with this therapist because your application status is <u>not approved</u> or you have <u>deselected</u> this therapist</strong></h1>   
 @endif
 @endif
            
