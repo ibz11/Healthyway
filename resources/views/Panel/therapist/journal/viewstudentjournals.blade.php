@@ -1,11 +1,12 @@
 @include('Panel/therapist/header')
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between  mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Hello {{$userdata->full_name}}.Here you can view Student's journals </h1>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+    <h1 class="h3 mb-0 text-gray-800">Hello {{$userdata->full_name}}.Here you can view Student's journals </h1><br>
+   
+    <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
 </div>
-
+<p>Note:if you can't see any journals that means you havent approved a students applications for private therapy consultation</p>
 
 <div class="row">
 

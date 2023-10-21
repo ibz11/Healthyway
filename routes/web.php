@@ -162,6 +162,14 @@ route::get('/rejectclient/{ChooseID}',[TherapistController::class,'rejectclient'
 Route::get('/studentpdfview/{id}', [TherapistController::class, 'studentpdfview']);
 Route::get('/studentprogresspdf/{id}', [TherapistController::class, 'studentprogresspdf']);
 Route::post('/appointmentcreate', [TherapistController::class, 'appointmentcreate']);
+
+
+//Notifications
+Route::get('/therapistnotifications', [TherapistController::class, 'therapistnotifications']);
+route::get('/markread/{NotID}',[TherapistController::class,'markread']);
+route::get('/markunread/{NotID}',[TherapistController::class,'markunread']);
+route::get('/deletenotification/{NotID}',[TherapistController::class,'deletenotification']);
+
 });
     
 

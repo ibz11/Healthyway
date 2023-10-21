@@ -26,6 +26,43 @@ use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 class TherapistController extends Controller
 {
+
+public function countNot(){
+$notCount=Notifications::where('therapist_id',Auth::user()->id)->count();  
+return view('Panel.therapist.header',compact('notCount'));
+}
+
+
+
+//Notifcations
+public function markread($NotID){
+  $not=Notifications::find($NotID);
+  $not->Mark_read='read';
+  $not->update();
+return redirect()->back()->with('success','Notification is marked as Read');
+}
+
+public function markunread($NotID){
+  $not=Notifications::find($NotID);
+  $not->Mark_read='unread';
+  $not->update();
+return redirect()->back()->with('warning','Notification is marked as Unread'); 
+}
+public function deletenotification($NotID){
+  $not=Notifications::find($NotID);
+  $not->delete();
+return redirect()->back()->with('Error','Notification is deleted');
+}
+//End of Notifications
+public function therapistnotifications()
+{
+$userdata=User::where('id','=',Session::get('loginId'))->first();
+$not=Notifications::where('therapist_id',Auth::user()->id)->get();
+return view('Panel.therapist.notifications',compact('not','userdata'));
+
+
+  }
+
  public function  myclients(){
   $choose=Choosetherapist::where('therapist_id',Auth::user()->id)->latest()->simplepaginate(15);
   $userdata=User::where('id','=',Session::get('loginId'))->first();

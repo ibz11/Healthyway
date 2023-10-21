@@ -2,13 +2,12 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between  mb-4">
     <h1 class="h3 mb-0 text-gray-800">Hello {{$userdata->full_name}}.Here you can view Student's LSAS progress </h1>
-    <a href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-    <a href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+  
+    <!-- <a href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
 </div>
 
-
+<p>Note:if you can't see any student's progress  that means you haven't approved any students applications for private therapy consultation</p>
 
 <div class="row">
 

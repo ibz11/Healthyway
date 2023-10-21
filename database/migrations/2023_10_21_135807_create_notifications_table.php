@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('therapist_id');
             $table->foreign('therapist_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('therapist_fullname')->nullable();
             $table->string('student_fullname')->nullable();
+            $table->enum('Mark_read',['read','unread'])->default('unread');
             $table->string('diagnosis')->nullable();
             $table->string('LSAS_score')->nullable();
             $table->LongText('message')->nullable();

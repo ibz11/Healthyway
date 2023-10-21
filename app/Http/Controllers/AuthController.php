@@ -9,6 +9,8 @@ use App\Models\Expert;
 use App\Models\Journal;
 use App\Models\Therapist;
 use App\Models\Appointments;
+use App\Models\Choosetherapist;
+use App\Models\Notifications;
 
 use Hash;
 use Session;
@@ -195,13 +197,13 @@ if($userdata->role=='admin')
     return view('Panel/Admin/home',compact('userdata'));
 
 else if($userdata->role=='therapist'){
-  
-    $public_journal=Journal::where('view_content',1)->count();
+    $choose=Choosetherapist::where('therapist_id',Auth::user()->id)->get();
+    $public_journal=Journal::where('user_id',$choose->first()->student_id)->where('view_content',1)->count();
     $apt=Appointments::where('Therapists_id',Auth::user()->id)->count();
     $accepted_apt=Appointments::where('Therapists_id',Auth::user()->id)->where('status','accepted')->count();
     $rejected_apt=Appointments::where('Therapists_id',Auth::user()->id)->where('status','rejected')->count();
     $pending_apt=Appointments::where('Therapists_id',Auth::user()->id)->where('status','accepted')->count();
-    $urgent_anxiety=Expert::where('socialanxiety_level', 'severe')
+    $urgent_anxiety=Expert::where('user_id',$choose->first()->student_id)->where('socialanxiety_level', 'severe')
     ->orWhere('socialanxiety_level', 'very_severe')
     ->count();
 
@@ -225,9 +227,11 @@ else if($userdata->role=='student'){
 // $apt=Appointments;
 // $exp=Expert;
     foreach ($data as $data) {
-    $columnData[] = $data;}
+    $columnData[] = $data;
+}
+    $choosecount=Choosetherapist::where('student_id',Auth::user()->id)->where('application_status','accepted')->orWhere('application_status','pending')->count();
 
-    return view('Panel/student/home',compact('userdata','columnData','journal','apt','exp','accepted_apt'));
+    return view('Panel/student/home',compact('userdata','columnData','journal','apt','exp','accepted_apt','choosecount'));
 }
 else{
     $user=Auth::User();

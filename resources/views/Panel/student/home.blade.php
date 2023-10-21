@@ -7,10 +7,14 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between  mb-4">
     <h1 class="h3 mb-0 text-gray-800">Welcome back {{Auth::User()->full_name}}</h1>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-</div>
 
+    <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
+</div>
+@if($choosecount<=0)
+<h1>Please choose a therapist for them to be able to serve you.</h1>
+<p class="text-gray-800">Note:the therapist will have access to your data to help best serve you</p>
+@endif
 <!-- Content Row -->
 <div class="row">
 

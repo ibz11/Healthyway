@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notifications extends Model
 {
+    protected $primaryKey = 'NotID';
     use HasFactory;
 }

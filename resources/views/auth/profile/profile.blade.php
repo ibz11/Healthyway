@@ -64,7 +64,7 @@
 
 </div>
 
-
+<!-- 
 <div class="div-center">
 <div class="auth-form">
 
@@ -76,13 +76,13 @@
 <div ><a href="{{URL('enable2FA',$userdata->id)}}"class="btn btn-outline-success"><strong>Enable</strong></a></div> 
  <div ><a href="{{URL('disable2FA',$userdata->id)}}"class="btn btn-outline-danger"><strong>Disable</strong></a></div> 
  
- <!-- data->twoFA_enabled==1) -->
+
 
 
 
 
 </div>
-</div>
+</div> -->
 
 </div>
 
@@ -94,7 +94,7 @@
 <form class="auth-form" action="{{URL('profile',$userdata->id)}}" method="POST" enctype="multipart/form-data">
 @csrf
 <div class="mb-3">
-<h1>Update Your details here</h1>
+<h1>Update your details here</h1>
 </div>
 
 @if(Session::has('success'))
