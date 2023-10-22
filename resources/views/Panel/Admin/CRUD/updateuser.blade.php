@@ -41,7 +41,7 @@ method="POST" id="editform"enctype="multipart/form-data">
         <option value="{{$user->role}}">Current Role:( {{$user->role}} ) </option>
         <option value="admin">admin</option>
         <option value="therapist">therapist</option>
-        <option value="student">Three</option>
+        <option value="student">Student</option>
       </select>
   </div> 
 

@@ -4,6 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Rules;
+use App\Models\Recommendations;
+use App\Models\Expert;
+use App\Models\Journal;
+use App\Models\Therapist;
+use App\Models\Appointments;
+use App\Models\Choosetherapist;
+use App\Models\Notifications;
 use Hash;
 use Session;
 use Illuminate\Support\Str;
@@ -17,6 +25,97 @@ use Illuminate\Support\Facades\Config;
 use Barryvdh\DomPDF\Facade\Pdf;
 class AdminController extends Controller
 {
+    //Recomendation routes
+
+    public function getadminrecommendations()
+    {
+    $userdata=User::where('id','=',Session::get('loginId'))->first();
+      $rec=Recommendations::simplePaginate(9);
+      return view('Panel.Admin.recommendations',compact('rec','userdata'));
+    }
+    public function getadminRecommendationDetails($Recommendations_id)
+    {
+        $rec = Recommendation::find($id);
+        return view('Panel.Admin.modals.recommendationmodal',compact('rec'));
+    }
+    public function updaterecommendation(Request $request,$Recommendations_id)
+    {
+        
+            $rec=Recommendations::find($Recommendations_id);
+            $rec->fear_level=$request->fear_level;
+            $rec->avoidance_level=$request->avoidance_level;
+            $rec->Recommendation=$request->recommendation;
+            $rec->update();
+       
+            // $request->all();
+            return redirect('getadminrecommendations')->with('success','Recommendation has been Updated.');
+     
+
+    }
+    public function deleterecommendation(Request $request,$Recommendations_id)
+    {
+        $rec=Recommendations::find($Recommendations_id); 
+        $rec->delete(); 
+        return redirect('getadminrecommendations')->with('Error','Recommendation has been Deleted.
+        You should not delete the data as it works with the expert system');
+    }
+    public function  createrecommendation(Request $request){
+        $rec=new Recommendations;
+        $rec->fear_level=$request->fear_level;
+        $rec->avoidance_level=$request->avoidance_level;
+        $rec->Recommendation=$request->recommendation;
+        $rec->save();
+        return redirect('getadminrecommendations')->with('success','Recommendation has been created.');
+    }
+
+
+
+
+
+
+
+
+
+    public function createuser(Request $request){
+        $request->validate([
+      
+             'email' => 'required|email|unique:users',
+        ]);
+          //     'full_name' => 'required',
+        //     'phone'=>'required',
+        //     // 'password' => 'required|min:6',
+        //     'password' => [
+        //         'required',
+        //         'string',
+        //         'min:8', // Minimum length of 8 characters
+        //         'max:17',
+        //         'regex:/[A-Z]/', // Requires at least one uppercase letter
+        //         'regex:/[a-z]/', // Requires at least one lowercase letter
+        //         'regex:/[0-9]/', // Requires at least one digit
+        //         'regex:/[@$!%*#?&]/', // Requires at least one special character
+        //     ]
+       
+        // ]);
+           
+        $data = $request->all();
+        $check = $this->create($data);
+        if($check==true) {
+            return redirect()->back()->with('success','You have succesfully created a user');
+            }
+            else{
+                return back()->with('Error','Something went wrong try again');
+            }  
+    }
+    public function create(array $data)
+    {
+      return User::create([
+        'full_name' => $data['full_name'],
+        'phone' => $data['phone'],
+        'email' => $data['email'],
+        'role' => $data['role'],
+        'password' => Hash::make($data['password'])
+      ]);
+    } 
     public function users(){
         $userdata=User::where('id','=',Session::get('loginId'))->first();
         $users=User::all();

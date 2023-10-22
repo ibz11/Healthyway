@@ -67,11 +67,19 @@ Route::match(['get', 'post'],'profile/{id}',[AuthController::class,'profile'] )-
 
 
 //Admin Controlls
-Route::middleware(['admin','AlreadyAuth', 'isLoggedin'])->group(function () {
+Route::middleware(['auth','admin'])->group(function () {
 
 Route::get('/users', [AdminController::class,'users']);
 Route::match(['get', 'post'],'updateuser/{id}',[AdminController::class,'updateuser'] );
 route::get('deleteuser/{id}',[AdminController::class,'deleteuser']);
+route::post('createuser',[AdminController::class,'createuser']);
+
+//Admin Expert system recommendations
+route::get('/getadminrecommendations',[AdminController::class,'getadminrecommendations']);
+Route::post('/updaterecommendation/{Recommendations_id}',[AdminController::class,'updaterecommendation']);
+route::get('/getadminRecommendationDetails/{Recommendations_id}',[AdminController::class,'getadminRecommendationDetails']);
+route::post('/createrecommendation',[AdminController::class,'createrecommendation']);
+route::get('/deleterecommendation/{Recommendations_id}',[AdminController::class,'deleterecommendation']);
 
 });
 

@@ -4,6 +4,7 @@
 <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">USERS</h6>
+                            <button type="button" class="show btn btn-primary text-light" data-bs-toggle="modal" data-bs-target="#createuserModal">Create a USER</button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -45,6 +46,6 @@
                     </div>
 
 
-
+@include('Panel/Admin/modals/createuser')
 
  @include('Panel/Admin/footer')

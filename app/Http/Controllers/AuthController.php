@@ -193,8 +193,22 @@ $userdata =array();
 if(Session::has('loginId')){
     $userdata=User::where('id','=',Session::get('loginId'))->first();
 
-if($userdata->role=='admin')
-    return view('Panel/Admin/home',compact('userdata'));
+if($userdata->role=='admin'){
+    $profiles=Therapist::count();
+    // $loggedInUsers=Session::count();
+    $therapist=User::where('role','therapist')->count();
+    $student=User::where('role','student')->count();
+    $rec=Recommendations::count();
+    $pendingapt=Appointments::where('status','pending')->count();
+    return view('Panel/Admin/home',compact('userdata',
+  
+    'rec',
+    'profiles',
+    'therapist',
+    'student',
+    'pendingapt'
+));
+}
 
 else if($userdata->role=='therapist'){
     $choose=Choosetherapist::where('therapist_id',Auth::user()->id)->get();

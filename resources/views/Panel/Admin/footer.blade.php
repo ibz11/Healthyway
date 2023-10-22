@@ -62,16 +62,17 @@
 
 
 
-
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <!-- Bootstrap core JavaScript-->
-    <script src="adminpanel/vendor/jquery/jquery.min.js"></script>
+    <script src="/adminpanel/vendor/jquery/jquery.min.js"></script>
     <script src="adminpanel/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core pluadminpanel/gin JavaScript-->
-    <script src="adminpanel/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/adminpanel/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom sadminpanel/cripts for all pages-->
-    <script src="adminpanel/js/sb-admin-2.min.js"></script>
+    <script src="/adminpanel/js/sb-admin-2.min.js"></script>
 
     <!-- Page levadminpanel/el plugins -->
     <script src="/adminpanel/vendor/chart.js/Chart.min.js"></script>
