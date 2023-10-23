@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('Full_name')->nullable();
             $table->string('onlinelink')->nullable();
-            $table->string('email')->unique()->nullable();
-            $table->string('phone')->unique()->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->string('Location')->nullable();
             $table->string('profile_img')->nullable();
             $table->string('specialization')->nullable();

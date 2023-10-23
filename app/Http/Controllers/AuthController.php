@@ -212,14 +212,17 @@ if($userdata->role=='admin'){
 
 else if($userdata->role=='therapist'){
     $choose=Choosetherapist::where('therapist_id',Auth::user()->id)->get();
-    $public_journal=Journal::where('user_id',$choose->first()->student_id)->where('view_content',1)->count();
+    // $public_journal=Journal::where('user_id',$choose->first()->student_id)->where('view_content',1)->count();
+    // if(!$public_journal){
+    //     $public_journal=0;
+    // }
     $apt=Appointments::where('Therapists_id',Auth::user()->id)->count();
     $accepted_apt=Appointments::where('Therapists_id',Auth::user()->id)->where('status','accepted')->count();
     $rejected_apt=Appointments::where('Therapists_id',Auth::user()->id)->where('status','rejected')->count();
     $pending_apt=Appointments::where('Therapists_id',Auth::user()->id)->where('status','accepted')->count();
-    $urgent_anxiety=Expert::where('user_id',$choose->first()->student_id)->where('socialanxiety_level', 'severe')
-    ->orWhere('socialanxiety_level', 'very_severe')
-    ->count();
+    // $urgent_anxiety=Expert::where('user_id',$choose->first()->student_id)->where('socialanxiety_level', 'severe')
+    // ->orWhere('socialanxiety_level', 'very_severe')
+    // ->count();
 
     $columnData = [];
     // $hello = User::select('twoFA_enabled')->get();
@@ -228,7 +231,7 @@ else if($userdata->role=='therapist'){
     $columnData[] = $data;
     }
     // response()->json($columnData);
-    return view('Panel/therapist/home',compact('userdata','columnData','public_journal','accepted_apt','rejected_apt','pending_apt','urgent_anxiety'));
+    return view('Panel/therapist/home',compact('userdata','columnData','accepted_apt','rejected_apt','pending_apt'));
 }
 else if($userdata->role=='student'){
     $columnData = [];

@@ -114,13 +114,14 @@ public function viewstudentsappointments(){
    {
     $userdata=User::where('id','=',Session::get('loginId'))->first();
     $appointment=Appointments::where('user_id',Auth::User()->id)->latest()->simplePaginate(8);
-    
+    $latestapt=Appointments::where('user_id',Auth::User()->id)->latest()->first();
+  
     $location=Therapist::all();
     //select('location')->get();
    //  $address=$location;
    //  //$location[0]['location'];
    //  // echo $address;
-    return view('Panel.student.myappointments',compact('userdata','appointment','location'));
+    return view('Panel.student.myappointments',compact('userdata','appointment','location','latestapt'));
    }
    public function viewappointment(Request $request,$appointment_id){
     $appointment=Appointments::find($appointment_id);

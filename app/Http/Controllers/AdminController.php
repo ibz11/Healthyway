@@ -25,6 +25,123 @@ use Illuminate\Support\Facades\Config;
 use Barryvdh\DomPDF\Facade\Pdf;
 class AdminController extends Controller
 {
+    //Therapist profiles
+    public function admincreatetherapistprofile(Request $request){
+        if($request->isMethod('get')){
+
+        $userdata=User::where('id','=',Session::get('loginId'))->first();
+        $user=User::where('role','therapist')->latest()->get();
+          
+        return view('Panel.Admin.therapistprofile.create',compact('userdata','user'));
+        }  
+        if ($request->isMethod('post'))
+        {  $request->validate([
+            'therapist_id'=>'required|unique:therapists,user_id',
+            'email'=>'required|unique:therapists,email',
+    
+            'full_name'=>'required',
+            'phone'=>'required|unique:therapists,phone',
+            // 'title' => 'required',
+            'specialization' => 'required',
+            'location' => 'required',
+            'profile_img' => 'required|image|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
+        ]);
+           
+
+            $therapist=new Therapist;
+            $therapist->user_id=$request->therapist_id;
+            $therapist->Full_name=$request->full_name;
+            $therapist->email=$request->email;
+            $therapist->phone=$request->phone;
+
+            $therapist->Location=$request->location;
+            $therapist->title=$request->title;
+            $therapist->specialization=$request->specialization;
+            $therapist->bio=$request->bio;
+
+            $profile_img=$request->profile_img;
+
+            if($profile_img){
+                  $imagename=time().'.'.$profile_img->getClientOriginalExtension();
+            
+                  $profile_img->move('therapist_img',$imagename);
+            
+                  $therapist->profile_img= $imagename;
+                  }
+
+            $therapist->save();
+            return redirect('therapistprofiles')->with('success','Profile is created');
+
+       
+        } 
+    }
+
+
+    public function updatetherapistprofile(Request $request,$therapist_id){
+        if($request->isMethod('get')){
+        $userdata=User::where('id','=',Session::get('loginId'))->first();
+        $therapist=Therapist::find($therapist_id);
+          
+        return view('Panel.Admin.therapistprofile.update',compact('userdata','therapist'));
+        }  
+        if ($request->isMethod('post'))
+        {  $request->validate([
+            'specialization' => 'title',
+            'specialization' => 'required',
+            'location' => 'required',
+            'profile_img' => 'image|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
+        ]);
+           
+
+            $therapist=Therapist::find($therapist_id);
+            $therapist->user_id=$request->user_id;
+            $therapist->Full_name=$request->full_name;
+            $therapist->email=$request->email;
+            $therapist->phone=$request->phone;
+
+            $therapist->Location=$request->location;
+            $therapist->title=$request->title;
+            $therapist->specialization=$request->specialization;
+            $therapist->bio=$request->bio;
+
+            $profile_img=$request->profile_img;
+
+            if(!$profile_img){
+            
+            }
+                
+            else{
+                  $imagename=time().'.'.$profile_img->getClientOriginalExtension();
+            
+                  $profile_img->move('therapist_img',$imagename);
+            
+                  $therapist->profile_img= $imagename;
+                  }
+
+            $therapist->save();
+            return redirect('therapistprofiles')->with('success','Profile is Updated');
+
+       
+        } }
+    public function deletetherapistprofile(Request $request,$therapist_id){
+        $therapist=Therapist::find($therapist_id);
+        $therapist->delete();
+        return redirect('therapistprofiles')->with('warning','Profile has been deleted');   
+    }
+    public function therapistprofiles(){
+        $userdata=User::where('id','=',Session::get('loginId'))->first();
+        // $choose=Choosetherapist::select('therapist_id')->where('student_id',Auth::user()->id)->where('application_status','accepted')->get();
+    
+        $therapist=Therapist::latest()->simplePaginate(8);
+        return view('Panel.Admin.therapistprofile.profile',compact('userdata','therapist'));
+    
+    } 
+    
+    public function viewtherapistprofile(Request $request,$therapist_id){
+        $therapist=Therapist::find($therapist_id);
+        $userdata=User::where('id','=',Session::get('loginId'))->first();
+        return view('Panel.Admin.therapistprofile.profileview',compact('userdata','therapist'));
+    }
     //Recomendation routes
 
     public function getadminrecommendations()

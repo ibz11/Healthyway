@@ -81,6 +81,13 @@ route::get('/getadminRecommendationDetails/{Recommendations_id}',[AdminControlle
 route::post('/createrecommendation',[AdminController::class,'createrecommendation']);
 route::get('/deleterecommendation/{Recommendations_id}',[AdminController::class,'deleterecommendation']);
 
+//Therapist Profiles routes
+route::get('/therapistprofiles',[AdminController::class,'therapistprofiles']);
+route::get('viewtherapistprofile/{therapist_id}',[AdminController::class,'viewtherapistprofile']);
+
+Route::match(['get', 'post'],'updatetherapistprofile/{therapist_id}',[AdminController::class,'updatetherapistprofile'] );
+Route::get('deletetherapistprofile/{therapist_id}',[AdminController::class,'deletetherapistprofile']);
+Route::match(['get', 'post'],'admincreatetherapistprofile',[AdminController::class,'admincreatetherapistprofile'] );
 });
 
 // 'AlreadyAuth','2FAVerified',

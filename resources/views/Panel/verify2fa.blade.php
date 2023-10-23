@@ -15,7 +15,7 @@
 @csrf
 <div class="mb-3">
 <h1>{{$title}}</h1>
-{{Auth::user()->full_name}}
+
 </div>
 
 @if(Session::has('success'))

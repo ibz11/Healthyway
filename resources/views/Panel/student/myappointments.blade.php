@@ -1,13 +1,50 @@
 @include('Panel/student/header')
 
-@if(!$appointment)
+@if(!$appointment and $latestapt)
 <h1>No appointments have been made yet.</h1>
 @else
+
+<div class="row">
+<div class="col-xl-8  col-lg-5">
+<div class="card shadow mb-4">
+<div class="card-body p-5">
+ 
+    <span class="badge bg-info text-light text-2xl p-2">Latest appointment</span>
+    <h2>Appointment Date<strong>  {{ $latestapt->appointment_date}}  </strong></h2>
+    <h2>Status:<strong> <span class="p-2 badge bg-dark text-light">  {{ $latestapt->status}}</span>  </strong></h2>
+    <h2>AppointmentTime:<strong> <span class="p-2 badge bg-dark text-light">  {{ $latestapt->time}}</span>  </strong></h2>
+    @if( $latestapt->status=="rejected")
+    <h4>Rejection reason: <strong>  {{ $latestapt->rejectionreason }}  </strong></h4>
+    @else
+
+    @endif
+    @if( $latestapt->location="Online")
+    <h4>Online link <strong>  {{ $latestapt->onlinelink}}  </strong></h4>
+    @else
+    <h4>Therapist Office <strong>  {{ $latestapt->location}}  </strong></h4>
+    @endif
+    <h5>Appointment created at: <strong>  {{ $latestapt->created_at}}  </strong></h5>
+    <button style="border-radius:0em;" type="button" class="show btn btn-outline-primary" data-appointment-id="{{ $latestapt->appointment_id }}"data-bs-toggle="modal" data-bs-target="#appointment_{{ $latestapt->appointment_id }}">View appointment</button></td>
+    <button style="border-radius:0em;" type="button" class="show btn btn-outline-success" data-update-id="{{ $latestapt->appointment_id }}"data-bs-toggle="modal" data-bs-target="#updateModal_{{ $latestapt->appointment_id }}">Update</button></td>
+    <a style="border-radius:0em;" href="{{URL('deleteappointment',$latestapt->appointment_id)}}"class="btn btn-outline-danger">Delete</a>
+
+   
+  
+</div>
+</div>
+</div>
+</div>
 <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">MY APPOINTMENTS</h6>
                         </div>
                         <div>
+
+                       
+
+
+
+
 @if(method_exists($appointment,'links'))
 <div class="d-flex justify-content-center">
   {!! $appointment->links()!!} 
@@ -89,7 +126,7 @@
                                 @if($appointment->status=='accepted')
                                 <!-- <td><a style="border-radius:0em;"href="{{URL('viewdiagnosis',$appointment->appointment_id)}}" class="btn btn-outline-dark">Download PDF</a></td> -->
                                 @else
-                                <td> </td>
+                                
                                 @endif
                                
                             
