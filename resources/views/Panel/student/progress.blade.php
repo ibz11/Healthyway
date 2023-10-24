@@ -6,11 +6,18 @@
     <a href="{{URL('myprogresspdf')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
             class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
 </div>
+
 <div class="row">
+@if($latestexpdata='no-data')
+<div class="col-xl-7  col-lg-5">
+    <h1 class="text-grey-900">You have not done the test yet.Please take the LSAS test to view progress</h1>
+</div>
+    @else
 <div class="col-xl-8  col-lg-5">
 <div class="card shadow mb-4">
 <div class="card-body p-5">
-    <!-- <h1><strong>ID : {{ $latestexpdata->exp_id}}  </strong></h1> -->
+   
+  
     <span class="badge bg-info text-light text-2xl p-2">Latest</span>
     <h1>Your Latest Test Score:<strong>  {{ $latestexpdata->LSAS_score}}  </strong></h1>
     <h1>Diagnosis(Social Anxiety): <strong>  {{ $latestexpdata->socialanxiety_level}}  </strong></h1>
@@ -18,12 +25,11 @@
     <h4>Avoidance Level: <strong>  {{ $latestexpdata->socialanxiety_level}}  </strong></h4>
     <h5>Test submitted at: <strong>  {{ $latestexpdata->created_at}}  </strong></h5>
     <a style="border-radius:0em;"href="{{URL('viewdiagnosis',$latestexpdata->exp_id)}}" class="btn btn-outline-primary">View Recommendation</a>
-    <div class="row">
-  
+
 </div>
 </div>
 </div>
-</div>
+@endif
 
 
 <div class="col-xl-4  col-lg-4">

@@ -294,6 +294,7 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
         $userdata=User::where('id','=',Session::get('loginId'))->first();
         $choose=Choosetherapist::where('therapist_id',Auth::user()->id)->where('application_status','accepted')->get();
         // $user=User::where('id',$choose->student)->where('role','student')->latest()->simplePaginate(12);
+
         $user = [];
         foreach ($choose as $data) {
           $studentId = $data['student_id'];
@@ -319,6 +320,9 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
         $user=User::find($id);
         $userdata=User::where('id','=',Session::get('loginId'))->first();
         $latestexpdata=Expert::where('user_id',$id)->latest()->first();
+        if(!$latestexpdata){
+          $latestexpdata='no-data';
+         }
        
         $very_severe=Expert::where('user_id',$id)->where('socialanxiety_level','very_severe')->count();
         $severe=Expert::where('user_id',$id)->where('socialanxiety_level','severe')->count();

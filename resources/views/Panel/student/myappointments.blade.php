@@ -3,7 +3,9 @@
 @if(!$appointment and $latestapt)
 <h1>No appointments have been made yet.</h1>
 @else
-
+@if($latestapt='no-data')
+<h1 class="text-gray-500">You have not made any appointments yet</h1>
+@else
 <div class="row">
 <div class="col-xl-8  col-lg-5">
 <div class="card shadow mb-4">
@@ -34,6 +36,7 @@
 </div>
 </div>
 </div>
+@endif
 <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">MY APPOINTMENTS</h6>

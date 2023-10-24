@@ -150,7 +150,7 @@ $user=User::where('id','=',Session::get('loginId'))->first();
 
 // if($request->twoFA_input ==$twoFAcode){
 if($request->twoFA_input ==$twoFAcode){
-//(Hash::check($request->twoFA_input , $user->twoFA_code))
+//  if(Hash::check($request->twoFA_input , $user->twoFA_code)){
     $request->session()->put('loginId',$user->id);
     // $data->twoFA_verified=1;
     // $data->save();

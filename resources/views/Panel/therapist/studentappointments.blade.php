@@ -1,4 +1,4 @@
-@include('./Panel/therapist/header') 
+@include('Panel/therapist/header') 
 
 
 

@@ -31,6 +31,9 @@ class ExpertController extends Controller
         $userdata=User::where('id','=',Session::get('loginId'))->first();
         $expdata=Expert::where('user_id',$user_id)->latest()->simplePaginate(8);
         $latestexpdata=Expert::where('user_id',$user_id)->latest()->first();
+       if(!$latestexpdata){
+        $latestexpdata='no-data';
+       }
 
         $very_severe=Expert::where('user_id',$user_id)->where('socialanxiety_level','very_severe')->count();
         $severe=Expert::where('user_id',$user_id)->where('socialanxiety_level','severe')->count();
@@ -220,14 +223,12 @@ public function deletediagnosis($exp_id){
         $A24=$request->A24;
     
         //Total Fear
-        $totalFear=72;
-        // $F1 +$F2+ $F3+$F4+$F5+$F6+$F7+$F8+$F9+ $F10+ $F11 
-        //  + $F12+ $F13+ $F14+ $F15+ $F16+ $F17+ $F18+ $F19+ $F20+ $F21+ $F22+ $F23+ $F24;
+        $totalFear= $F1 +$F2+ $F3+$F4+$F5+$F6+$F7+$F8+$F9+ $F10+ $F11 
+        + $F12+ $F13+ $F14+ $F15+ $F16+ $F17+ $F18+ $F19+ $F20+ $F21+ $F22+ $F23+ $F24;
 
         //Total Avoidance
-        $totalAvoidance= 72;
-        //  $A1 +$A2 + $A3 + $A4 + $A5 + $A6 + $A7 + $A8 + $A9  + $A10 + $A11 + $A12 
-        //    + $A13 + $A14 + $A15 + $A16 + $A17 + $A18 + $A19 + $A20 + $A21 + $A22 + $A23 + $A24;
+        $totalAvoidance=$A1 +$A2 + $A3 + $A4 + $A5 + $A6 + $A7 + $A8 + $A9  + $A10 + $A11 + $A12 
+            + $A13 + $A14 + $A15 + $A16 + $A17 + $A18 + $A19 + $A20 + $A21 + $A22 + $A23 + $A24;
 
         //Total Fear +Total Avoidance
         $result=$totalFear+$totalAvoidance; 

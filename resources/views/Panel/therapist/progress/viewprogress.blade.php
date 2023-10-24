@@ -14,10 +14,15 @@
             class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
 </div>
 <div class="row">
+@if($latestexpdata='no-data')
+<div class="col-xl-7  col-lg-5">
+    <h1 class="text-grey-900">The student has not done the test yet.Please wait until they take the LSAS test track  progress</h1>
+</div>
+    @else
 <div class="col-xl-8  col-lg-5">
 <div class="card shadow mb-4">
 <div class="card-body p-5">
-    <!-- <h1><strong>ID : {{ $latestexpdata->exp_id}}  </strong></h1> -->
+  
     <span class="badge bg-info text-light text-2xl p-2">Latest Diagnosis</span>
     <h1>{{$user->full_name}} Latest LSAS Test Score:<strong>  {{ $latestexpdata->LSAS_score}}  </strong></h1>
     <h1>Diagnosis(Social Anxiety): <strong>  {{ $latestexpdata->socialanxiety_level}}  </strong></h1>
@@ -31,7 +36,7 @@
 </div>
 </div>
 </div>
-
+@endif
 
 <div class="col-xl-4  col-lg-4">
 <div class="card shadow mb-4">
