@@ -1,4 +1,4 @@
-@include('Panel/student/header')
+@include('Panel/Admin/header')
 
 @if(!$appointment and $latestapt)
 <h1>No appointments have been made yet.</h1>
@@ -7,6 +7,7 @@
 <h1 class="text-gray-500">You have not made any appointments yet</h1>
 @else
 <div class="row">
+<h1 class="text-gray-800">Below are {{$user->full_name}}'s Appointments</h1>
 <div class="col-xl-8  col-lg-5">
 <div class="card shadow mb-4">
 <div class="card-body p-5">
@@ -28,7 +29,7 @@
     <h5>Appointment created at: <strong>  {{ $latestapt->created_at}}  </strong></h5>
     <button style="border-radius:0em;" type="button" class="show btn btn-outline-primary" data-appointment-id="{{ $latestapt->appointment_id }}"data-bs-toggle="modal" data-bs-target="#appointment_{{ $latestapt->appointment_id }}">View appointment</button></td>
     <button style="border-radius:0em;" type="button" class="show btn btn-outline-success" data-update-id="{{ $latestapt->appointment_id }}"data-bs-toggle="modal" data-bs-target="#updateModal_{{ $latestapt->appointment_id }}">Update</button></td>
-    <a style="border-radius:0em;" href="{{URL('deleteappointment',$latestapt->appointment_id)}}"class="btn btn-outline-danger">Delete</a>
+    <a style="border-radius:0em;" href="{{URL('admindeleteappointment',$latestapt->appointment_id)}}"class="btn btn-outline-danger">Delete</a>
 
    
   
@@ -66,7 +67,7 @@
                                             <th>Online link</th>
                                            
                                             <th>Therapists_id</th>
-                                            <th>Issue</th>
+                                            <!-- <th>Issue</th> -->
                                             <th>status</th>
                                             <th>Rejection reason</th>
                                       
@@ -100,7 +101,7 @@
                             @endif
                             
                                 <td>{{$appointment->Therapists_id}}</td>
-                                <td>{{$appointment->issue}}</td>
+                                <!-- <td>{{$appointment->issue}}</td> -->
                                 <td>
                                 @if($appointment->status=='accepted')
                                 <span class="text-light badge bg-success">accepted</span>
@@ -137,11 +138,11 @@
                                 <td><button type="button" class="show btn btn-outline-primary" data-appointment-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#appointment_{{ $appointment->appointment_id }}">View appointment</button></td>
                                 <td><button type="button" class="show btn btn-outline-success" data-update-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#updateModal_{{ $appointment->appointment_id }}">Update</button></td>
                                 <!-- <a style="border-radius:0em;"href="{{URL('viewdiagnosis',$appointment->appointment_id)}}" class="btn btn-outline-primary">View </a> -->
-                                <td><a style="border-radius:0em;" href="{{URL('deleteappointment',$appointment->appointment_id)}}"class="btn btn-outline-danger">Delete</a></td>
+                                <td><a style="border-radius:0em;" href="{{URL('admindeleteappointment',$appointment->appointment_id)}}"class="btn btn-outline-danger">Delete</a></td>
 
                                 </tr>
-                                @include('Panel/student/modals/appointmentmodal')
-                               @include('Panel/student/modals/updateappointmentmodal')
+                                @include('Panel/Admin/modals/appointmentmodal')
+                               @include('Panel/Admin/modals/updateappointmentmodal')                       
                                     @endforeach
                                       
                                  
@@ -157,4 +158,4 @@
 
 
 
-@include('Panel/student/footer')
+@include('Panel/Admin/footer')

@@ -135,6 +135,25 @@ overflow-x: auto;
                     <i class="fas fa-fw fa-table"></i>
                     <span>Therapist profiles</span></a>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('dashboard')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Chosen Therapists</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('allstudents')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Appointments</span></a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('adminstudentjournals')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Student Journals</span></a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 

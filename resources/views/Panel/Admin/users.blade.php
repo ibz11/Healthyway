@@ -5,7 +5,19 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">USERS</h6>
                             <button type="button" class="show btn btn-primary text-light" data-bs-toggle="modal" data-bs-target="#createuserModal">Create a USER</button>
+                        
+                            <a class="btn btn-success" href="{{URL('users')}}">Refresh</a>
+                            <a class="btn btn-outline-info" href="{{URL('displayonlytherapists')}}">Display Only Therapists</a>
+                        <a class="btn btn-outline-dark" href="{{URL('displayonlystudents')}}">Display Only Students</a>
+                        
                         </div>
+
+                        @if(method_exists($users,'links'))
+<div class="d-flex justify-content-center">
+  {!! $users->links()!!} 
+</div>
+@endif
+
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

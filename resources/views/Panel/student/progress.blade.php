@@ -8,7 +8,7 @@
 </div>
 
 <div class="row">
-@if($latestexpdata='no-data')
+@if($latestexpdata=='no-data')
 <div class="col-xl-7  col-lg-5">
     <h1 class="text-grey-900">You have not done the test yet.Please take the LSAS test to view progress</h1>
 </div>

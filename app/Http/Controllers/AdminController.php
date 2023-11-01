@@ -25,6 +25,183 @@ use Illuminate\Support\Facades\Config;
 use Barryvdh\DomPDF\Facade\Pdf;
 class AdminController extends Controller
 {
+// Appointment Controlls
+public function displayonlytherapists(){
+   
+        // $user=User::all();
+        $userdata=User::where('id','=',Session::get('loginId'))->first();
+         $users = DB::table('users')->where('role','therapist')->simplepaginate(12);
+         return view('Panel.Admin.users',compact('users','userdata'));
+    
+        // $users=User::where('role','therapist')->simplepaginate(8);
+        // return redirect('users')->with(compact('users'));
+}
+
+public function displayonlystudents(){
+   
+    // $user=User::all();
+    $userdata=User::where('id','=',Session::get('loginId'))->first();
+     $users = DB::table('users')->where('role','student')->simplepaginate(12);
+     return view('Panel.Admin.users',compact('users','userdata'));
+
+    // $users=User::where('role','therapist')->simplepaginate(8);
+    // return redirect('users')->with(compact('users'));
+}
+
+public function adminupdateappointment(Request $request,$appointment_id){
+    $appointment=Appointments::find($appointment_id);
+    $location=Therapist::select('location')->where('therapist_id',$appointment->Therapists_id)->get();
+  
+
+    if($request->isMethod('get')){
+   
+   
+    return view('Panel.Admin.modals.updateappointmentmodal', compact('appointment'));
+    }
+
+    if($request->isMethod('post')){
+
+        $request->validate([
+         'time'=>'required',  
+         'appointment_date'=>'required',  
+         'location'=>'required',  
+         ]);
+     
+         $appointment=Appointments::find($appointment_id);
+         $appointment->user_id=$request->user_id;
+         $appointment->Therapists_id=$request->Therapists_id;
+         $appointment->appointment_date=$request->appointment_date;
+         $appointment->time=$request->time;
+         $appointment->location=$request->location;
+        //  $appointment->issue=$request->issue;
+         $appointment->save();
+         
+        return redirect('myAppointments')->with('success','Appointment is Updated');
+        }
+   }
+   public function admindeleteappointment(Request $request,$appointment_id){
+    $appointment=Appointments::find($appointment_id);
+    $appointment->delete();
+    return redirect()->back()->with('warning','Appointment is deleted');
+
+   }
+
+
+
+
+
+
+
+
+public function allstudents(){
+    $user_id= Session::get('loginId');
+    $userdata=User::where('id','=',Session::get('loginId'))->first();
+    $user=User::where('role','student')->get();
+    // $journal=Journal::where('user_id','=',$id)->latest()->simplePaginate(12);
+    return view('Panel.Admin.appointments.allstudents',compact('userdata','user'));
+}
+public function adminAppointments($id)
+{
+ $userdata=User::where('id','=',Session::get('loginId'))->first();
+ $appointment=Appointments::where('user_id',$id)->latest()->get();
+//  where('user_id',Auth::User()->id)->latest()->simplePaginate(8);
+$user=User::find($id);
+ $latestapt=Appointments::where('user_id',$id)->latest()->first();
+if(!$latestapt){
+   $latestapt='no-data';
+}
+ $location=Therapist::all();
+ //select('location')->get();
+//  $address=$location;
+//  //$location[0]['location'];
+//  dd($latestapt);
+ return view('Panel.Admin.appointments.studentappointments',compact('userdata','appointment','location','user','latestapt'));
+}
+    //Journal Controlls
+
+    public function adminpublicjournal($id)
+    {
+
+        // $user_id= Session::get('loginId');        
+        $journal=Journal::where('user_id','=',$id)->update(['view_content'=>1]);
+        return redirect()->back()->with('warning','All journals have been made public');
+        }
+    
+        public function adminprivatejournal($id){
+            // $user_id= Session::get('loginId');        
+            $journal=Journal::where('user_id','=',$id)->update(['view_content'=>0]);
+            return redirect()->back()->with('success','All journals have been made Private');
+        }
+
+    public function adminprivateselectjournal($Journal_id){
+        $user_id= Session::get('loginId');        
+        // $journal=Journal::where('user_id','=',$user_id)->update(['view_content'=>0]);
+        $journal=Journal::find($Journal_id);
+        $journal->view_content=0;
+        $journal->save();
+        return redirect()->back()->with('success','Journal has been made Private');
+    }
+
+    public function adminpublicselectjournal($Journal_id)
+    {
+        $journal=Journal::find($Journal_id);
+        $journal->view_content=1;
+        $journal->save();
+        return redirect()->back()->with('warning','Journal has been made Public');
+    }
+
+
+
+    public function adminstudentjournals(){
+        $user_id= Session::get('loginId');
+        $userdata=User::where('id','=',Session::get('loginId'))->first();
+        $user=User::where('role','student')->get();
+        // $journal=Journal::where('user_id','=',$id)->latest()->simplePaginate(12);
+        return view('Panel.Admin.journals.studentjournals',compact('userdata','user'));
+    }
+
+    public function adminviewstudentjournal($id)
+    {
+    $user=User::find($id);
+    $userdata=User::where('id','=',Session::get('loginId'))->first();
+    $journal=Journal::where('user_id',$id)->latest()->get();
+
+    return view('Panel.Admin.journals.individualstudentjournal',compact('userdata','journal','user'));
+    }
+
+
+
+
+
+    public function adminupdatejournal(Request $request,$Journal_id){
+
+    // $user_id= Session::get('loginId');
+    $studentjournal=Journal::find($Journal_id);
+
+    if ($request->isMethod('get')) 
+    {   $journal=Journal::find($Journal_id);
+        $userdata=User::where('id','=',Session::get('loginId'))->first();
+        return view('panel.Admin.journals.updatejournal',compact('userdata','journal')); 
+    }
+    if ($request->isMethod('post')) 
+    { 
+        $journal=Journal::find($Journal_id);
+        $journal->title=$request->title;
+        $journal->user_id=$request->student_id;
+        $journal->view_content=$request->view_content;
+        $journal->content=$request->content;
+        $journal->update();
+        return redirect('adminstudentjournals')->with('success','Journal has been updated');
+    } 
+    }
+
+    public function admindeletejournal(Request $request,$Journal_id)
+    {
+    $journal=Journal::find($Journal_id);
+    $journal->delete();
+    return redirect()->back()->with('Error','Journal has been deleted');
+    }
+
     //Therapist profiles
     public function admincreatetherapistprofile(Request $request){
         if($request->isMethod('get')){
@@ -235,7 +412,7 @@ class AdminController extends Controller
     } 
     public function users(){
         $userdata=User::where('id','=',Session::get('loginId'))->first();
-        $users=User::all();
+        $users=User::simplepaginate(12);
         return view('Panel.Admin.Users',compact('users','userdata'));
 
     }

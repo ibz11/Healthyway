@@ -88,6 +88,39 @@ route::get('viewtherapistprofile/{therapist_id}',[AdminController::class,'viewth
 Route::match(['get', 'post'],'updatetherapistprofile/{therapist_id}',[AdminController::class,'updatetherapistprofile'] );
 Route::get('deletetherapistprofile/{therapist_id}',[AdminController::class,'deletetherapistprofile']);
 Route::match(['get', 'post'],'admincreatetherapistprofile',[AdminController::class,'admincreatetherapistprofile'] );
+
+//Journal controlls
+route::get('/adminstudentjournals',[AdminController::class,'adminstudentjournals']);
+
+route::get('/adminviewstudentjournal/{id}',[AdminController::class,'adminviewstudentjournal']);
+
+Route::match(['get', 'post'],'adminupdatejournal/{Journal_id}',[AdminController::class,'adminupdatejournal'] );
+route::get('admindeletejournal/{Journal_id}',[AdminController::class,'admindeletejournal']);
+
+
+route::get('/adminpublicjournal/{id}',[AdminController::class,'adminpublicjournal']);
+route::get('/adminprivatejournal/{id}',[AdminController::class,'adminprivatejournal']);
+
+route::get('adminpublicselectjournal/{Journal_id}',[AdminController::class,'adminpublicselectjournal']);
+route::get('adminprivateselectjournal/{Journal_id}',[AdminController::class,'adminprivateselectjournal']);
+
+//Appointments
+route::get('/allstudents',[AdminController::class,'allstudents']);
+route::get('/adminAppointments/{id}',[AdminController::class,'adminAppointments']);
+route::get('admindeleteappointment/{appointment_id}',[AdminController::class, 'admindeleteappointment']);
+Route::match(['get', 'post'],'adminupdateappointment/{appointment_id}',[AdminController::class,'adminupdateappointment'] );
+
+//Display only therapists and students
+route::get('displayonlytherapists',[AdminController::class, 'displayonlytherapists']);
+route::get('displayonlystudents',[AdminController::class, 'displayonlystudents']);
+
+
+
+
+
+
+
+
 });
 
 // 'AlreadyAuth','2FAVerified',
@@ -115,6 +148,7 @@ route::get('privatejournal',[JournalController::class,'privatejournal']);
 route::get('publicselectjournal/{Journal_id}',[JournalController::class,'publicselectjournal']);
 route::get('privateselectjournal/{Journal_id}',[JournalController::class,'privateselectjournal']);
 
+//Therapist profile routes
 route::get('/studenttherapistprofile',[StudentController::class,'studenttherapistprofile']);
 route::get('/viewtherapist/{therapist_id}',[StudentController::class,'viewtherapist']);
 route::post('createappointment',[AppointmentController::class,'createappointment']);
@@ -122,10 +156,13 @@ route::get('myAppointments',[AppointmentController::class,'myAppointments']);
 route::get('deleteappointment/{appointment_id}',[AppointmentController::class, 'deleteappointment']);
 route::get('viewappointment/{appointment_id}',[AppointmentController::class, 'viewappointment']);
 Route::match(['get', 'post'],'updateappointment/{appointment_id}',[AppointmentController::class,'updateappointment'] );
+
+
+//Progress pdf routes
 Route::get('/myprogresspdf', [StudentController::class, 'myprogresspdf']);
 route::get('/progresspdfview',[StudentController::class,'progresspdfview']);
 
-
+//Select Therapist Routes
 route::get('/deletetherapistapplication/{ChooseID}',[StudentController::class,'deletetherapistapplication']);
 route::post('/choosetherapist/{therapist_id}',[StudentController::class,'choosetherapist']);
 route::get('/selecttherapist/{ChooseID}',[StudentController::class,'selecttherapist']);

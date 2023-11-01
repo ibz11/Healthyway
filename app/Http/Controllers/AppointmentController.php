@@ -169,4 +169,13 @@ public function viewstudentsappointments(){
     return redirect()->back()->with('warning','Appointment is deleted');
 
    }
+
+
+
+
+
+
+
+
+   
 }

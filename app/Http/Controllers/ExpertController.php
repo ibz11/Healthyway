@@ -120,15 +120,86 @@ public function deletediagnosis($exp_id){
     public function expertsystem(Request $request){
 
         $userdata=User::where('id','=',Session::get('loginId'))->first();
-       
+        $data = [
+          'fruits' => ['Apple', 'Banana', 'Cherry'],
+          'colors' => ['Red', 'Yellow', 'Purple'],
+      ];
+
+
+       $general=[
+      'questions'=> [
+        '1. Participating in a small group activity',
+        '2. Drinking with others in public places. ',
+        '3. Going to a party.',
+        '4. Returning goods to a store. ',
+        '5. Giving a party.',
+        '6. Resisting a high pressure salesperson.'],
+
+      'feartag'=>['F1','F2', 'F3','F4','F5','F6'],
+
+      'avoidancetag'=>['A1','A2','A3','A4','A5','A6']
+
+       ];
+
+      $performance=[
+     'questions'=>[ 
+      '7. Acting, performing or giving a talk in front of an audience. ', 
+      '8. Working while being observed. ',
+      '9. Writing while being observed. ',
+      '10. Speaking up at a meeting. ',
+      '11. Taking a test. ',
+      '12. Giving a report to a group.',
+         ],
+     'feartag'=>[ 'F7','F8' ,'F9' ,'F10' ,'F11' ,'F12'],
+     'avoidancetag'=>['A7','A8','A9','A10','A11','A12' ]
+      ];
+
+
+      $interpersonal=
+      [
+      'questions'=>[
+        '13. Talking to people in authority.',
+        '14. Calling someone you dont know very well. ',
+        '15. Talking with people you dont know very well. ',
+        '16. Expressing a disagreement or disapproval to people you dont know very well.',
+        '17. Looking at people you dont know very well in the eyes.',
+        '18. Trying to pick up someone.',
+      ],
+      'feartag'=>['F12','F13','F14','F15' ,'F16' ,'F17'],
+      'avoidancetag'=>['A13','A14','A15','A16','A17','A18']
+      ];
+
+
+
+      $situational=
+      [
+      'questions'=>[
+        '19. Using a telephone in public.',
+        '20. Eating in public places.',
+        '21. Meeting strangers. ',
+        '22. Urinating in a public bathroom.',
+        '23. Entering a room when others are already seated.',
+        '24. Being the center of attention.',
+      ],
+      'feartag'=>['F19','F20','F21','F22','F23','F24'],
+      'avoidancetag'=>['A19','A20','A21','A22','A23','A24']
+      ];
+
+
+
+
+
+
+
+
         $questions=[
         '1. Using a telephone in public.(P)',
         '2. Participating in a small group activity.(P)',
         '3. Eating in public places. (P) ',
-        '4. Drinking with others in public places. (P) 4.',
+        '4. Drinking with others in public places. ',
         '5. Talking to people in authority. (S) 5.',
         '6. Acting, performing or giving a talk in front of an audience. (P) 6.',
-        '7. Going to a party. (S) 7.',
+        '7. Going to a party.',
         '8. Working while being observed. (P) 8.',
         '9. Writing while being observed. (P) 9.',
         '10. Calling someone you dont know very well. (S) 10.',
@@ -143,7 +214,7 @@ public function deletediagnosis($exp_id){
         '19. Looking at people you dont know very well in the eyes. (S) 19.',
         '20. Giving a report to a group. (P) 20.',
         '21. Trying to pick up someone. (P) 21.',
-        '22. Returning goods to a store. (S) 22.',
+        '22. Returning goods to a store. ',
         '23. Giving a party. (S) 23.',
         '24. Resisting a high pressure salesperson. (S)'
         ];
@@ -160,13 +231,31 @@ public function deletediagnosis($exp_id){
          if ($request->isMethod('get')) 
         { 
         
-        return view('Panel.student.expertsystem',compact('userdata','questions','feartag','avoidancetag','choose'))->with('Error','Test');  
+        return view('Panel.student.expertsystem',compact('userdata',
+        'general',
+        'performance',
+        'interpersonal',
+        'situational',
+        'choose'
+
+        // 'jail',
+        // 'avoidancetag1',
+        // 'questions',
+        // 'feartag',
+        // 'avoidancetag',
+
+        ))
+        ->with('success','LSAS Test');  
         }
     
 
 // public function expertsystem2(Request $request){
         if ($request->isMethod('post')) 
         {
+          $request->validate([
+            'F1' => 'required', // This rule ensures the "gender" field is required.
+            // Add other validation rules as needed.
+        ]);
       
         //Fear Request
         $F1=$request->F1; 
