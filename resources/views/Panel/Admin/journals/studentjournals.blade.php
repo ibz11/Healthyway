@@ -18,7 +18,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        <h3>{{$user->full_name}}</h3></div>
+                        <h3>User ID:{{$user->id}}</h3>  <h3>{{$user->full_name}}</h3></div>
                         <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">LSAS Average :<span style="color:blue;">54</span></div> -->
                         <!-- <div><span class="badge bg-danger text-light">High risk</span></div>
                         <div><span class="badge bg-warning text-light">Moderate risk</span></div>

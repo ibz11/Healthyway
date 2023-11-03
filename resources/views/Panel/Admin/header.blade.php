@@ -137,7 +137,7 @@ overflow-x: auto;
             </li>
             
             <li class="nav-item">
-                <a class="nav-link" href="{{URL('dashboard')}}">
+                <a class="nav-link" href="{{URL('studentschosen')}}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Chosen Therapists</span></a>
             </li>
@@ -409,6 +409,10 @@ overflow-x: auto;
 
  @if(Session::has('Error'))
  <div class="alert alert-danger">{{Session::get('Error')}}</div>
+ @endif
+
+ @if(Session::has('warning'))
+ <div class="alert alert-warning">{{Session::get('warning')}}</div>
  @endif
 
   

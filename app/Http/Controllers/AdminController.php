@@ -25,6 +25,51 @@ use Illuminate\Support\Facades\Config;
 use Barryvdh\DomPDF\Facade\Pdf;
 class AdminController extends Controller
 {
+//Student Chosen Therapist functions
+public function  adminacceptapplication($ChooseID){
+    $choose=Choosetherapist::find($ChooseID);
+    $choose->selection_status='selected';
+    $choose->application_status='accepted';
+    $choose->save();
+    return redirect()->back()->with('success','Client application has been Accepted');
+  }
+  public function  adminrejectapplication($ChooseID){
+    $choose=Choosetherapist::find($ChooseID);
+    $choose->selection_status='deselected';
+    $choose->application_status='rejected';
+    $choose->save();
+  return redirect()->back()->with('warning','Client application has been Rejected');
+  }
+
+public function admindeletetherapistapplication($ChooseID){
+    $choose=Choosetherapist::find($ChooseID);
+    $choose->delete();
+    return redirect()->back()->with('warning','You have deleted application for this student`s chosen therapist');
+  }
+public function studentschosen(){
+   
+    // $user=User::all();
+    $userdata=User::where('id','=',Session::get('loginId'))->first();
+     $user = DB::table('users')->where('role','student')->simplepaginate(12);
+     return view('Panel.Admin.chosentherapist.students',compact('user','userdata'));
+}  
+
+
+public function studentschosentherapist($id){
+   
+    // $user=User::all();
+    
+    $choose=Choosetherapist::where('student_id',$id)->latest()->simplepaginate(12);
+    if($choose===null){
+        $choose="no-data"; 
+    }
+    // $choose="no-data";
+    $userdata=User::where('id','=',Session::get('loginId'))->first();
+    //  $user = DB::table('users')->where('role','student')->simplepaginate(12);
+    //   dd( $choose);
+    // echo $choose;
+     return view('Panel.Admin.chosentherapist.studentchosentherapist',compact('userdata','choose'));
+} 
 // Appointment Controlls
 public function displayonlytherapists(){
    
@@ -313,9 +358,12 @@ if(!$latestapt){
         return view('Panel.Admin.therapistprofile.profile',compact('userdata','therapist'));
     
     } 
+   
+
     
     public function viewtherapistprofile(Request $request,$therapist_id){
         $therapist=Therapist::find($therapist_id);
+        // $therapist=Therapist::where('user_id',$therapist_id);
         $userdata=User::where('id','=',Session::get('loginId'))->first();
         return view('Panel.Admin.therapistprofile.profileview',compact('userdata','therapist'));
     }

@@ -73,14 +73,14 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
     $choose->selection_status='selected';
     $choose->application_status='accepted';
     $choose->save();
-    return redirect()->back()->with('success','Client application has been Accepted');
+    return redirect()->back()->with('success','Student`s application has been Accepted');
   }
   public function  rejectclient($ChooseID){
     $choose=Choosetherapist::find($ChooseID);
     $choose->selection_status='deselected';
     $choose->application_status='rejected';
     $choose->save();
-  return redirect()->back()->with('warning','Client application has been Rejected');
+  return redirect()->back()->with('warning','Student`s application has been Rejected');
   }
     public function appointmentcreate(Request $request){
         $appointment=new Appointments;

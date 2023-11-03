@@ -3,18 +3,18 @@
 <div class="d-sm-flex align-items-center justify-content-between  mb-4">
     <h1 class="h3 mb-0 text-gray-800">Hello {{auth()->user()->full_name}}.Below you can check <u>{{$user->full_name}}</u>'s progress</h1>
 
-    <button type="button" class="show d-none d-sm-inline-block btn btn-sm btn-info shadow-sm" data-appointment-id="{{ $user->id }}" data-bs-toggle="modal" data-bs-target="#appointmentModal">
+    <button type="button" class="m-1 show d-none d-sm-inline-block btn btn-sm btn-info shadow-sm" data-appointment-id="{{ $user->id }}" data-bs-toggle="modal" data-bs-target="#appointmentModal">
       <i class="fas fa-book fa-sm text-white-50">
       </i> Make an appointment for this user</button>
     
       
    
     
-      <a href="{{URL('studentprogresspdf',$user->id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+      <a href="{{URL('studentprogresspdf',$user->id)}}" class="m-1 d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
             class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
 </div>
 <div class="row">
-@if($latestexpdata='no-data')
+@if($latestexpdata=='no-data')
 <div class="col-xl-7  col-lg-5">
     <h1 class="text-grey-900">The student has not done the test yet.Please wait until they take the LSAS test track  progress</h1>
 </div>

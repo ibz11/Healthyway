@@ -34,6 +34,7 @@
                     
                       <form action="{{URL('choosetherapist',$therapist->therapist_id)}}" enctype="multipart/form-data"method="post">
                         @csrf
+                      
                       <button type="submit" href=""class="m-1 btn btn-outline-info">Choose this Therapist</button>
                       </form>
                     

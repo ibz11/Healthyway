@@ -40,13 +40,14 @@ class StudentController extends Controller
     $choose->update();
     return redirect()->back()->with('warning','You have deselected this therapist');
   }
-public function choosetherapist($therapist_id){
+public function choosetherapist(Request $request ,$therapist_id){
   $user=Auth::User();
   $therapist=Therapist::find($therapist_id);
 
   $choose=new Choosetherapist;
   $choose->student_id=$user->id;
   $choose->student_fullname=$user->full_name;
+  $choose->profile_id=$therapist->therapist_id;
   $choose->therapist_id=$therapist->user_id;
   $choose->therapist_fullname=$therapist->Full_name;
   $choose->save();

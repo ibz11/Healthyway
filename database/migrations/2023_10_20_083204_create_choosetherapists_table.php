@@ -16,6 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id');
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('therapist_id');
+            
+            $table->unsignedBigInteger('profile_id');
+            $table->foreign('profile_id')->references('therapist_id')->on('therapists')->onDelete('cascade');
+
             $table->foreign('therapist_id')->references('user_id')->on('therapists')->onDelete('cascade');
             $table->string('therapist_fullname')->nullable();
             $table->string('student_fullname')->nullable();

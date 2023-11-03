@@ -1,7 +1,7 @@
 @include('Panel/Admin/header')
 <div class="container-fluid">
 <div class="text-center mt-5">
-<h1 class="text-gray-800" style="font-size:40px;"><strong>Hello! {{Auth::user()->full_name}}.This is {{$therapist->Full_name}}'s profile</strong></h1>
+<h1 class="text-gray-800" style="font-size:40px;"><strong>Hello!{{Auth::user()->full_name}} .This is {{$therapist->Full_name}}'s profile</strong></h1>
 <h5 class="text-gray-600"style="font-size:40px;"><strong>Note:This will be displayed to the students</strong></h5>
 </div>
 

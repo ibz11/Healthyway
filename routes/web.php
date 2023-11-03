@@ -114,7 +114,12 @@ Route::match(['get', 'post'],'adminupdateappointment/{appointment_id}',[AdminCon
 route::get('displayonlytherapists',[AdminController::class, 'displayonlytherapists']);
 route::get('displayonlystudents',[AdminController::class, 'displayonlystudents']);
 
-
+//Chosen therapists routes
+route::get('studentschosen',[AdminController::class, 'studentschosen']);
+route::get('studentschosentherapist/{id}',[AdminController::class, 'studentschosentherapist']);
+route::get('admindeletetherapistapplication/{ChooseID}',[AdminController::class, 'admindeletetherapistapplication']);
+route::get('/adminacceptapplication/{ChooseID}',[AdminController::class,'adminacceptapplication']);
+route::get('/adminrejectapplication/{ChooseID}',[AdminController::class,'adminrejectapplication']);
 
 
 
