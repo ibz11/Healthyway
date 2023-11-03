@@ -32,6 +32,14 @@
     <!-- Custom styles for this template-->
     
     <link href="/adminpanel/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- J query -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://trentrichardson.com/examples/timepicker/jquery-ui-timepicker-addon.css">
+    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"> -->
+
+
     @vite('resources/js/app.js')
     <!-- <link href="/Panel/css/styles.css" rel="stylesheet" /> -->
   <style>

@@ -23,6 +23,11 @@
 <input readonly type="text" class="datepicker form-control w-50" id="phone" value="{{$appointment->Therapists_id}}"  name="Therapists_id" required>
 </div>
 
+<div  class="mb-3 mt-3">
+<label for="email" class="form-label">My email to receive notifcations</label>
+
+<input type="text" class="datepicker form-control w-75" id="phone" value="{{$appointment->student_email}}"  name="student_email" required>
+</div>
 <div   class="mb-3 mt-3">
 <label for="email" class="form-label">Date</label>
 

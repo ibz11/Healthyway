@@ -22,6 +22,7 @@
     <!-- Custom styles for this template-->
     
     <link href="/adminpanel/css/sb-admin-2.min.css" rel="stylesheet">
+   
     
     @vite('resources/js/app.js')
     <!-- <link href="/Panel/css/styles.css" rel="stylesheet" /> -->

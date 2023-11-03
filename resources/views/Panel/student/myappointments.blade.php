@@ -64,7 +64,7 @@
                                             <th>Time</th>
                                             <th>Location</th>
                                             <th>Online link</th>
-                                           
+                                            <th>Email</th>
                                             <th>Therapists_id</th>
                                             <th>Issue</th>
                                             <th>status</th>
@@ -98,7 +98,7 @@
                             @else
                             <td></td>
                             @endif
-                            
+                            <td>{{$appointment->student_email}}</td>
                                 <td>{{$appointment->Therapists_id}}</td>
                                 <td>{{$appointment->issue}}</td>
                                 <td>

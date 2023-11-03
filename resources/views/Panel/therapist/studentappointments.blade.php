@@ -21,7 +21,8 @@
                                     <thead>
                                         <tr>
                                             <th>Appointment ID</th>
-                                            <th>User ID</th>
+                                            <th>Student ID</th>
+                                            <th>Student Email</th>
                                             <th>Time</th>
                                             <th>Date</th>
                                             <th>Location</th>
@@ -45,7 +46,9 @@
                                 @foreach($appointment as $appointment)
                                 <tr>
                                 <td>{{$appointment->appointment_id}}</td>
+                          
                                 <td>{{$appointment->user_id}}</td>
+                                <td>{{$appointment->student_email}}</td>
                                 <td>{{$appointment->time}}</td>
                                 <td>{{$appointment->appointment_date}}</td>
                                 <td>    

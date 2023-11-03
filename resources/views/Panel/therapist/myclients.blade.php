@@ -23,6 +23,7 @@
                                             <th>Choose ID</th>
                                             <th>Student ID</th>
                                             <th>student_fullname</th>
+                                           
                                             <th>Therapist_id(my ID)</th>
                                             <th>therapist_fullname</th>
                                             <th>Selection status</th>
@@ -47,6 +48,7 @@
                                 <td>{{$choose->ChooseID}}</td>
                                 <td>{{$choose->student_id}}</td>
                                 <td>{{$choose->student_fullname}}</td>
+                               
                                 <td>{{$choose->therapist_id}}</td>
                                 <td>{{$choose->therapist_fullname}}</td>
 

@@ -38,10 +38,15 @@
 
 <div   class="mb-3 mt-3">
 <label for="email" class="form-label">Student ID</label>
-<input readonly type="text" class="datepicker form-control w-50" id="phone" value="{{$user->id}}"  name="user_id" required>
+<input readonly type="text" class="form-control w-50" id="phone" value="{{$user->id}}"  name="user_id" required>
 </div>
 
 
+<div   class="mb-3 mt-3">
+<label for="email" class="form-label">Email</label>
+<div id="emailHelp" style="border-radius:.3em;background:#f5cac3; color:#d00000;"class="m-1 text-danger form-text"></div>
+<input  type="text" class="form-control w-75" value="{{$user->email}}"  name="student_email" required>
+</div>
 
 <div   class="mb-3 mt-3">
 <label for="email" class="form-label">Date</label>

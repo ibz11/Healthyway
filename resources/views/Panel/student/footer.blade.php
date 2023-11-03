@@ -74,8 +74,57 @@
     <!-- Custom sadminpanel/cripts for all pages-->
     <script src="/adminpanel/js/sb-admin-2.min.js"></script>
 
+
+  
     <!-- Page levadminpanel/el plugins -->
     <script src="/adminpanel/vendor/chart.js/Chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+   
+   
+   
+   
+   
+   
+   
+    <!-- J query -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+    <script src="https://trentrichardson.com/examples/timepicker/jquery-ui-timepicker-addon.js"></script>
+    <!-- Date picker -->
+    <script>
+    $(document).ready(function() {
+
+    $('#datepicker').datepicker({
+        dateFormat: "yy-mm-dd", // Set the date format
+        minDate: 0,            // Minimum date (0 means today)
+        maxDate: "+1W", 
+        beforeShowDay: function(date) {
+            var day = date.getDay();
+            // Disable Sundays (0 is Sunday, 1 is Monday, and so on)
+            return [day !== 0, ''];
+        }       // Maximum date (1 month from today)
+    });
+
+ $('#timepicker').timepicker({
+        timeFormat: 'HH:mm',
+        interval: 30,  // Set the time interval to 30 minutes
+    });
+
+
+    
+    });
+    </script>
+    <!-- Time picker -->
+    <!-- <script>
+$(document).ready(function() {
+    $('#timepicker').timepicker({
+        timeFormat: 'HH:mm',
+        interval: 30,  // Set the time interval to 30 minutes
+    });
+});
+</script> -->
+
+
 
 
     <!-- Page level custom scripts -->

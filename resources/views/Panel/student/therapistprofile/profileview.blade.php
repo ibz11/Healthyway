@@ -176,9 +176,10 @@
 
 <div id="emailHelp" style="border-radius:.3em;background:#f5cac3; color:#d00000;"class="m-1 text-danger form-text">
 <strong>@error('appointment_date') {{$message}} @enderror</strong></div>
-
-<input  type="date" class="datepicker form-control w-50" id="phone" value=""  name="appointment_date" required>
+<input type="text" class="form-control w-50" name="appointment_date" id="datepicker">
+<!-- <input  type="text" class="datepicker form-control w-50" id="datepicker" value=""  name="appointment_date" required> -->
 </div>
+
 
 
 
@@ -195,8 +196,12 @@
 <div id="emailHelp" style="border-radius:.3em;background:#f5cac3; color:#d00000;"class="m-1 text-danger form-text">
 <strong>@error('time') {{$message}} @enderror</strong></div>
 
-<input type="time" class="form-control w-50" id="email" value=""  name="time" required>
+<!-- <input type="time" class="form-control w-50" id="email" value=""  name="time" required> -->
 </div>
+
+<input type="text" class="form-control w-50" name="time" id="timepicker">
+
+
 
 <div class="mb-0 mt-3">
 <label for="email" class="form-label">Issue that I am dealing with</label>
@@ -268,4 +273,7 @@ Therapist's office: {{$therapist->Location}}
 
 
 </div>
+
+
+
 @include('Panel/student/footer')

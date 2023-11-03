@@ -98,12 +98,13 @@ public function viewstudentsappointments(){
     'appointment_date'=>'required',  
     'location'=>'required',  
     ]);
-
+   $student_email=Auth::user()->email;
     $appointment=new Appointments;
     $appointment->user_id=Auth::User()->id;
     $appointment->Therapists_id=$request->therapists_id;
     $appointment->appointment_date=$request->appointment_date;
     $appointment->time=$request->time;
+    $appointment->student_email=$student_email;
     $appointment->location=$request->location;
     $appointment->issue=$request->issue;
     $appointment->save();
@@ -156,9 +157,10 @@ public function viewstudentsappointments(){
          $appointment->Therapists_id=$request->Therapists_id;
          $appointment->appointment_date=$request->appointment_date;
          $appointment->time=$request->time;
+         $appointment->student_email=$request->student_email;
          $appointment->location=$request->location;
          $appointment->issue=$request->issue;
-         $appointment->save();
+         $appointment->update();
          
         return redirect('myAppointments')->with('success','Appointment is Updated');
         }

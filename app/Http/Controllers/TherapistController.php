@@ -88,6 +88,7 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
         $appointment->user_id=$request->user_id;
         $appointment->Therapists_id=$request->Therapists_id;
         $appointment->appointment_date=$request->appointment_date;
+        $appointment->student_email=$request->student_email;
         $appointment->time=$request->time;
         $appointment->onlinelink=$request->onlinelink;
         $appointment->location=$request->location;
@@ -449,6 +450,9 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
     public function therapistprofile(){
         $userdata=User::where('id','=',Session::get('loginId'))->first();
         $therapist=Therapist::where('user_id',Auth::User()->id)->get();
+      //   $zoom = new \MacsiDigital\Zoom\Support\Entry;
+      //   $user = new \MacsiDigital\Zoom\User($zoom);
+      // dd( $user) ;
         return view('Panel.therapist.profile.profile',compact('userdata','therapist'));
     }
 

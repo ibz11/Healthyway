@@ -121,7 +121,7 @@ overflow-x: auto;
             <li class="nav-item">
                 <a class="nav-link" href="{{URL('myclients')}}">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>My client applications </span>
+                    <span>Student's applications </span>
                     @if($newclient<=0)
                     @else
                     <span class="badge bg-danger">{{$newclient}}</span>
