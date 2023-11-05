@@ -121,6 +121,8 @@ route::get('admindeletetherapistapplication/{ChooseID}',[AdminController::class,
 route::get('/adminacceptapplication/{ChooseID}',[AdminController::class,'adminacceptapplication']);
 route::get('/adminrejectapplication/{ChooseID}',[AdminController::class,'adminrejectapplication']);
 
+//Rules Routes
+Route::get('/exprules',[AdminController::class,'exprules']);
 
 
 

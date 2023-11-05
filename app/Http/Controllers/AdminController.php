@@ -25,6 +25,41 @@ use Illuminate\Support\Facades\Config;
 use Barryvdh\DomPDF\Facade\Pdf;
 class AdminController extends Controller
 {
+
+    //Expert systems rules
+    public function exprules(){
+    $userdata=User::where('id','=',Session::get('loginId'))->first();
+    $rules=Rules::all();
+    return view('Panel.Admin.expertrules',compact('rules','userdata'));
+    }
+   
+    public function createrule(){
+        $rules=new Rules;
+        $rules->score_range=$request->score_range;
+        $rules->socialanxiety_level=$request->socialanxiety_level;
+        $rules->save();
+        return redirect()->back()->with('success','Rule Created Successfully');
+    }
+
+    public function updaterule($Rule_id){
+        $rules=Rules::find($Rule_id);
+        $rules->score_range=$request->score_range;
+        $rules->socialanxiety_level=$request->socialanxiety_level;
+        $rules->update();
+        return redirect()->back()->with('success','Rule Updated Successfully');
+    }
+
+    public function deleterule($Rule_id){
+        $rules=Rules::find($Rule_id);
+        $rules->score_range=$request->score_range;
+        $rules->socialanxiety_level=$request->socialanxiety_level;
+        $rules->delete();
+        return redirect()->back()->with('Error','Rule is Deleted');
+    }
+
+
+
+
 //Student Chosen Therapist functions
 public function  adminacceptapplication($ChooseID){
     $choose=Choosetherapist::find($ChooseID);

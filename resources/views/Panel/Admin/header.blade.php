@@ -154,7 +154,11 @@ overflow-x: auto;
                     <i class="fas fa-fw fa-table"></i>
                     <span>Student Journals</span></a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('exprules')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Expert system Rules</span></a>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 

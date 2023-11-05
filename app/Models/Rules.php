@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rules extends Model
 {
+    protected $primaryKey = 'Rule_id';
     use HasFactory;
 }
