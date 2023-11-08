@@ -24,7 +24,39 @@ use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
+public function timeslots(Request $request){
+   $times = [
+      '8:30-9:30',
+      '10:00-11:00',
+      '11:30-12:30',
+      '2:30-3:30',
+      '3:30-4:30',
+  ];
+  
+   $selectedID =$request->input('therapists_id');
+   $selectedDate = $request->input('appointment_date');
+   // $selectedTime = $request->input('time');
+   $newslots=[];
+   // Query the database to get available time slots based on $selectedDate
 
+
+$bookedTimeSlots = Appointments::where('Therapists_id', $selectedID)
+->where('appointment_date', $selectedDate)
+->where(function ($query) {
+   $query->where('status', 'pending')
+       ->orWhere('status', 'accepted');
+})
+->pluck('time')
+->toArray();
+
+$availableTimeSlots = array_values(array_diff($times, $bookedTimeSlots));
+
+return response()->json([
+'available_time_slots' => $availableTimeSlots,
+'booked_time_slots' => $bookedTimeSlots,
+]);
+   
+}
    //Therapists Controls
    public function  modalrejection(Request $request,$appointment_id){
 if($request->isMethod('get')){

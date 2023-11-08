@@ -159,23 +159,27 @@
 
 <div class="col-sm-12">
 
-<form action="{{URL('createappointment')}}" method="POST" id="editform"enctype="multipart/form-data">
+<form id="apt-form"action="{{URL('createappointment')}}" method="POST" id="editform"enctype="multipart/form-data">
 @csrf
 
 <h1 class="mt-4 text-2xl"><strong>You can Book An appointment</strong></h1>  
 <p class="text-danger">Note: be mindful of the date and time,it should be at a <u><strong>reasonable</strong></u> time and date </p>
 
+
+
+
 <div  hidden class="mb-3 mt-3">
 <label for="email" class="form-label">Therapist ID</label>
-
-<input readonly type="text" class="datepicker form-control w-50" id="phone" value="{{$therapist->user_id}}"  name="therapists_id" required>
+<!-- name="therapists_id" -->
+<input readonly type="text" class="datepicker form-control w-50" id="therapistID" value="{{$therapist->user_id}}"  name="therapists_id"   required>
 </div>
 
 <div   class="mb-3 mt-3">
-<label for="email" class="form-label">Date</label>
+<label for="email" class="form-label">Appointment Date</label>
 
 <div id="emailHelp" style="border-radius:.3em;background:#f5cac3; color:#d00000;"class="m-1 text-danger form-text">
 <strong>@error('appointment_date') {{$message}} @enderror</strong></div>
+
 <input type="text" class="form-control w-50" name="appointment_date" id="datepicker">
 <!-- <input  type="text" class="datepicker form-control w-50" id="datepicker" value=""  name="appointment_date" required> -->
 </div>
@@ -186,20 +190,21 @@
 
 
 <div class="mb-3 mt-3">
-<p class="text-danger">Nb: Time in and time out should be less than or equal to 2 hours</p>
+<p class="text-danger"></p>
 </div>
+
+
+
 <div class="mb-3 mt-3">
 <label for="email" class="form-label">Appointment time</label>
-
-<p class="text-danger">Nb:Write in am pm format</p>
-
-<div id="emailHelp" style="border-radius:.3em;background:#f5cac3; color:#d00000;"class="m-1 text-danger form-text">
-<strong>@error('time') {{$message}} @enderror</strong></div>
-
-<!-- <input type="time" class="form-control w-50" id="email" value=""  name="time" required> -->
+<p class="text-primary">Note:Select date first to see available timeslots</p>
+<div>
+<input hidden id="available-time-slots" name="available_time_slots">
+<select name="time" class="form-control w-50" id="time-select">
 </div>
+</select>
+<div>
 
-<input type="text" class="form-control w-50" name="time" id="timepicker">
 
 
 
@@ -273,6 +278,86 @@ Therapist's office: {{$therapist->Location}}
 
 
 </div>
+
+
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+
+
+<script>
+$(document).ready(function() {
+    $('#datepicker').on('change', function() {
+        const selectedDate = $(this).val();
+        const selectedID = $('#therapistID').val();
+      
+        // console.log(selectedID);
+        console.log(selectedDate);
+      
+        $.ajax({
+            url: "/timeslots",
+            type: 'GET',
+            data: { therapists_id:selectedID, appointment_date: selectedDate },
+          
+            success: function(response) {
+               // Populate the select input with available time slots
+                const select = $('#time-select');
+                select.empty();
+
+                $.each(response.available_time_slots, function(key, value) {
+                    select.append($('<option>', { value: value }).text(value));
+                });
+
+                // Update the hidden input with the available time slots
+                $('#available-time-slots').val(JSON.stringify(response.available_time_slots));
+
+                const bookedTimeSlots = response.booked_time_slots;
+
+                console.log(bookedTimeSlots)
+                select.find('option').each(function() {
+                    const optionValue = $(this).val();
+                    if (bookedTimeSlots.includes(optionValue)) {
+                        $(this).prop('disabled', true);
+                    }
+                });
+
+
+                // const availableTimeSlots = response.available_time_slots;
+                // const bookedTimeSlots = response.booked_time_slots;
+
+                // // Filter out booked time slots from available time slots
+                // const filteredTimeSlots = availableTimeSlots.filter(slot => !bookedTimeSlots.includes(slot));
+
+                // // Populate the select input with the filtered time slots
+                // const select = $('#time-select');
+                // select.empty();
+                // $.each(bookedTimeSlots, function(key, value) {
+                //     select.append($('<option>', { value: value }).text(value));
+                // });
+
+                // // Update the hidden input with the available time slots
+                // $('#available-time-slots').val(JSON.stringify(filteredTimeSlots));
+            
+
+            }
+            
+        });
+      
+    });
+});
+
+</script>
+
+
+
+
+
+
 
 
 

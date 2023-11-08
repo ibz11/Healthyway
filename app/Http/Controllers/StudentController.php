@@ -8,6 +8,7 @@ use App\Models\Therapist;
 use App\Models\Expert;
 use App\Models\Choosetherapist;
 use App\Models\Notifications;
+use App\Models\Appointments;
 use Hash;
 use Session;
 use Illuminate\Support\Str;
@@ -255,10 +256,24 @@ public function viewtherapist(Request $request,$therapist_id){
     $therapist=Therapist::find($therapist_id);
     $choose=Choosetherapist::where('therapist_id',$therapist->user_id)->where('student_id',Auth::user()->id)->get();
     // where('therapist_id',$therapist->user_id)->or
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
     if($choose->isEmpty()){
      $choose='no-data';
     }
-   
+ 
     $choosestatus='pending';
     // Choosetherapist::select('status')->where('therapist_id',$therapist->user_id)->get();
     $choosecount=Choosetherapist::where('therapist_id',$therapist->user_id)->where('student_id',Auth::user()->id)->count();
@@ -267,10 +282,34 @@ public function viewtherapist(Request $request,$therapist_id){
     }
    
     $choosestatus='pending';
-   
-    
+
+
+  $times=[
+      '8:30-9:30',
+      '10:00-11:00',
+      '11:30-12:30',
+      '2:30-3:30',
+      '3:30-4:30', 
+  ];
+  
+  $selectedDate = $request->input('appointment_date');
+   $selectedTime =$request->input('time');
+   $newslots=[];
+   // Query the database to get available time slots based on $selectedDate
+   for ($i = 0; $i < count($times); $i++) {
+   $availableTimeSlots = Appointments::where('Therapists_id',$therapist->user_id)
+   ->where('appointment_date', $selectedDate)
+   ->where('time', $selectedTime)
+   // $times[$i])
+   ->pluck('time')
+   ->toArray();
+   $newtimes = array_values(array_diff($times, $availableTimeSlots));
+   }
+
+  //  dd($newtimes);
     $userdata=User::where('id','=',Session::get('loginId'))->first();
     return view('Panel.student.therapistprofile.profileview',compact(
+      'times',
       'userdata',
       'therapist',
       'choose',

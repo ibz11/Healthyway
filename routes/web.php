@@ -137,6 +137,9 @@ Route::get('/exprules',[AdminController::class,'exprules']);
 //Students routes
 Route::middleware(['auth','student'])->group(function () 
 {
+route::get('timeslots',[AppointmentController::class,'timeslots']);
+// Route::get('/timeslots/available', 'TimeSlotController@getAvailableTimeSlots')->name('timeslots.available');
+
 route::get('progress',[ExpertController::class,'progress']);
 Route::match(['get', 'post'],'expertsystem',[ExpertController::class,'expertsystem'] );
 route::get('viewdiagnosis/{exp_id}',[ExpertController::class,'viewdiagnosis']);

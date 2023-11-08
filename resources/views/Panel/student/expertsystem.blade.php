@@ -296,5 +296,5 @@ Happy Test Taking!!
 
 
 </div>
-
+<script src="/expertform/script.js" ></script>
 @include('Panel/student/footer')

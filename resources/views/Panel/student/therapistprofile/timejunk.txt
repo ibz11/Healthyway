@@ -1,0 +1,98 @@
+
+
+
+
+   
+   $availableTimeSlots = Appointments::
+     where('Therapists_id', $selectedID)
+   ->where('appointment_date', $selectedDate)
+   ->pluck('time')
+   ->toArray();
+   $newslots = array_values(array_diff($times, $availableTimeSlots));
+ 
+
+   //  dd($availableTimeSlots); 
+   //  dd($newslots); 
+     return response()->json([
+      'available_time_slots' => $newslots,
+      'booked_time_slots' =>$availableTimeSlots
+ 
+
+]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#datepicker').on('change', function() {
+        const selectedDate = $(this).val();
+        $.ajax({
+            url: "/timeslots",
+            type: 'GET',
+            data: { date: selectedDate },
+            success: function(response) {
+                // Populate the select input with available time slots
+                const select = $('#time-select');
+                select.empty();
+                $.each(response.available_time_slots, function(key, value) 
+                {
+                select.append($('<option>', { value: value }).text(value));
+                });
+
+                // Update the hidden input with the available time slots
+                $('#available-time-slots').val(JSON.stringify(response.$available_time_slots));
+            }
+        });
+    });
+
+    // Handle form submission (validation, etc.)
+    $('#apt-form').submit(function(e) {
+        e.preventDefault();
+        // Add your form submission logic here
+    });
+});
+</script>
+
+
+
+
+<div class="mb-3 mt-3">
+<label for="email" class="text-gray-800 form-label"><strong>Appointment time slots</strong></label>
+
+<div>
+
+<div style="display:flex;flex-direction:row;">
+<label for="email" class="text-gray-800 form-label m-2"><strong>{{$times}}</strong></label>
+<input  id="time" type="radio" value="{{$times}}"class="m-2" name="time" required>
+</div>
+
+<div id="emailHelp" style="border-radius:.3em;background:#f5cac3; color:#d00000;"class="m-1 text-danger form-text">
+<strong>@error('time') {{$message}} @enderror</strong></div>
+
+
+</div>
+
+</div>

@@ -22,7 +22,7 @@
 
 <!--Expert system form css and js-->
     <link rel="stylesheet" href="/expertform/styles.css">
-    <script src="/expertform/script.js" defer></script>
+    
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
