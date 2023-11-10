@@ -21,25 +21,36 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Auth;
 
-
+use App\Models\Timeslot;
 class AppointmentController extends Controller
 {
+
+
+
+
 public function timeslots(Request $request){
-   $times = [
+ /*  $times = [
       '8:30-9:30',
       '10:00-11:00',
       '11:30-12:30',
       '2:30-3:30',
       '3:30-4:30',
-  ];
+  ];*/
+
+$selectedID =$request->input('therapists_id');
+$selectedDate = $request->input('appointment_date');
+
+
+
+$times = Timeslot::where('therapist_id', $selectedID)
+->pluck('timeslot')
+->toArray();
+
   
-   $selectedID =$request->input('therapists_id');
-   $selectedDate = $request->input('appointment_date');
-   // $selectedTime = $request->input('time');
-   $newslots=[];
-   // Query the database to get available time slots based on $selectedDate
+  
+// $selectedTime = $request->input('time');
 
-
+// Query the database to get available time slots based on $selectedDate
 $bookedTimeSlots = Appointments::where('Therapists_id', $selectedID)
 ->where('appointment_date', $selectedDate)
 ->where(function ($query) {
@@ -50,7 +61,7 @@ $bookedTimeSlots = Appointments::where('Therapists_id', $selectedID)
 ->toArray();
 
 $availableTimeSlots = array_values(array_diff($times, $bookedTimeSlots));
-
+// dd($times);
 return response()->json([
 'available_time_slots' => $availableTimeSlots,
 'booked_time_slots' => $bookedTimeSlots,

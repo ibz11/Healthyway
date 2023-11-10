@@ -1,7 +1,9 @@
 <!-- Button trigger modal -->
 
 <!-- Modal -->
-<div class="modal fade" id="appointmentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- data-bs-keyboard="false"  -->
+
+<div class="modal fade" id="appointmentModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -20,46 +22,58 @@
 
 
 
-
-
-
-
-
-
-<div class="mb-0 mt-3">
-<label for="email" class="form-label">Online meeting link</label>
-<p class="text-primary">Note: You can give an online meeting link if the location is online</p>
-</div>
-
-<div  class="mb-3 mt-3">
+<div hidden class="mb-3 mt-3">
 <label for="email" class="form-label">Therapist ID (Your user id)</label>
-<input readonly type="text" class=" form-control w-50" id="phone" value="{{Auth::user()->id}}" placeholder="{{Auth::user()->id}}" name="Therapists_id" required>
+<input readonly type="text" class=" form-control w-50" id="therapistID" value="{{Auth::user()->id}}" placeholder="{{Auth::user()->id}}" name="Therapists_id" required>
 </div>
 
-<div   class="mb-3 mt-3">
+<div  hidden class="mb-3 mt-3">
 <label for="email" class="form-label">Student ID</label>
 <input readonly type="text" class="form-control w-50" id="phone" value="{{$user->id}}"  name="user_id" required>
 </div>
 
 
-<div   class="mb-3 mt-3">
+<div hidden  class="mb-3 mt-3">
 <label for="email" class="form-label">Email</label>
 <div id="emailHelp" style="border-radius:.3em;background:#f5cac3; color:#d00000;"class="m-1 text-danger form-text"></div>
-<input  type="text" class="form-control w-75" value="{{$user->email}}"  name="student_email" required>
+<input readonly type="text" class="form-control w-75" value="{{$user->email}}"  name="student_email" required>
 </div>
 
-<div   class="mb-3 mt-3">
+<!-- <div   class="mb-3 mt-3">
 <label for="email" class="form-label">Date</label>
 <div id="emailHelp" style="border-radius:.3em;background:#f5cac3; color:#d00000;"class="m-1 text-danger form-text"></div>
-<input  type="date" class="datepicker form-control w-50" value=""  name="appointment_date" required>
+<input  type="date" class=" form-control w-50" value=""  name="appointment_date" required>
+</div> -->
+
+
+
+<div   class="mb-3 mt-3">
+<label for="email" class="form-label">Appointment Date</label>
+
+
+<input type="text" class="form-control w-50" autocomplete="off" name="appointment_date" id="datepicker"> 
+<!-- <input  type="date" class="datepicker form-control w-50"  value="" id="datepicker" name="appointment_date" required> -->
 </div>
 
 
 <div class="mb-3 mt-3">
 <label for="email" class="form-label">Appointment time</label>
+<!-- <p class="text-primary">Note:Select date first to see available timeslots</p> -->
+<div>
+<input hidden id="available-time-slots" name="available_time_slots">
+<select name="time" class="form-control w-50" id="time-select">
+    @foreach($times as $times)
+    <option value="{{$times}}">{{$times}}</option>
+    @endforeach
+</div>
+</select>
+<div>
+
+<!-- <div class="mb-3 mt-3">
+<label for="email" class="form-label">Appointment time</label>
 <p class="text-danger">Nb:Write in am pm format</p>
 <input type="time" class="form-control w-50" id="email"  name="time" required>
-</div>
+</div> -->
 
 <div class="mb-0 mt-3">
 <label for="email" class="form-label">Venue</label>
@@ -109,9 +123,11 @@ My Office : {{$location}}
 </div>
 
 <!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+@include('Panel/therapist/jquery')
+
 
 <script>
+
     $(document).ready(function() {
         // Show modal when a button is clicked
         $('.show').on('click', function() {
@@ -133,3 +149,7 @@ My Office : {{$location}}
         });
     });
 </script>
+
+
+
+

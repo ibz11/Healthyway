@@ -1,6 +1,66 @@
+Working script
+<script>
+$(document).ready(function() {
+    $('#datepicker').on('change', function() {
+        const selectedDate = $(this).val();
+        const selectedID = $('#therapistID').val();
+      
+        // console.log(selectedID);
+        console.log(selectedDate);
+      
+        $.ajax({
+            url: "/timeslots",
+            type: 'GET',
+            data: { therapists_id:selectedID, appointment_date: selectedDate },
+          
+            success: function(response) {
+               // Populate the select input with available time slots
+                const select = $('#time-select');
+                select.empty();
+
+                $.each(response.available_time_slots, function(key, value) {
+                    select.append($('<option>', { value: value }).text(value));
+                });
+
+                // Update the hidden input with the available time slots
+                $('#available-time-slots').val(JSON.stringify(response.available_time_slots));
+
+                const bookedTimeSlots = response.booked_time_slots;
+
+                console.log(bookedTimeSlots)
+                select.find('option').each(function() {
+                    const optionValue = $(this).val();
+                    if (bookedTimeSlots.includes(optionValue)) {
+                        $(this).prop('disabled', true);
+                    }
+                });
 
 
+                // const availableTimeSlots = response.available_time_slots;
+                // const bookedTimeSlots = response.booked_time_slots;
 
+                // // Filter out booked time slots from available time slots
+                // const filteredTimeSlots = availableTimeSlots.filter(slot => !bookedTimeSlots.includes(slot));
+
+                // // Populate the select input with the filtered time slots
+                // const select = $('#time-select');
+                // select.empty();
+                // $.each(bookedTimeSlots, function(key, value) {
+                //     select.append($('<option>', { value: value }).text(value));
+                // });
+
+                // // Update the hidden input with the available time slots
+                // $('#available-time-slots').val(JSON.stringify(filteredTimeSlots));
+            
+
+            }
+            
+        });
+      
+    });
+});
+
+</script>
 
    
    $availableTimeSlots = Appointments::

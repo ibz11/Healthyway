@@ -105,7 +105,7 @@
         }       // Maximum date (1 month from today)
     });
 
- $('#timepicker').timepicker({
+$('#timepicker').timepicker({
         timeFormat: 'HH:mm',
         interval: 30,  // Set the time interval to 30 minutes
     });

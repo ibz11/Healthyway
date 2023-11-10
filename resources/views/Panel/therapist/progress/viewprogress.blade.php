@@ -216,7 +216,7 @@
 
 
 
-@include('Panel/therapist/modal/appointmentmodal')
+
 
 
 
@@ -227,7 +227,21 @@
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+
+
+
+<!-- <script src="https://trentrichardson.com/examples/timepicker/jquery-ui-timepicker-addon.js"></script> -->
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js">
+
+</script>
 
 <script>
   const ctx = document.getElementById('myAreaChart');
@@ -283,4 +297,38 @@
     }
   });
 </script>
+
+
+
+@include('Panel/therapist/modal/appointmentmodal')
+
+
+<!-- Datepicker script -->
+<script>
+
+
+$(document).ready(function() {
+
+$('#datepicker').datepicker({
+    dateFormat: "yy-mm-dd", // Set the date format
+    minDate: 0,            // Minimum date (0 means today)
+    maxDate: "+1W", 
+    beforeShowDay: function(date) {
+        var day = date.getDay();
+        // Disable Sundays (0 is Sunday, 1 is Monday, and so on)
+        return [day !== 0, ''];
+    }       // Maximum date (1 month from today)
+});
+
+// $('#timepicker').timepicker({
+//     timeFormat: 'HH:mm',
+//     interval: 30,  // Set the time interval to 30 minutes
+// });
+
+
+
+});
+</script>
+
+
 @include('Panel/therapist/footer')

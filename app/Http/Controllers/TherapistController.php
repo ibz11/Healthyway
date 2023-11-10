@@ -12,6 +12,7 @@ use App\Models\Therapist;
 use App\Models\Appointments;
 use App\Models\Choosetherapist;
 use App\Models\Notifications;
+use App\Models\Timeslot;
 use Hash;
 use Session;
 use Illuminate\Support\Str;
@@ -293,6 +294,7 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
     public function studentprogress(){
         $user_id= Session::get('loginId');
         $userdata=User::where('id','=',Session::get('loginId'))->first();
+      
         $choose=Choosetherapist::where('therapist_id',Auth::user()->id)->where('application_status','accepted')->get();
         // $user=User::where('id',$choose->student)->where('role','student')->latest()->simplePaginate(12);
 
@@ -313,12 +315,13 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
         // simplePaginate(1);
 
 
-        return view('Panel.therapist.progress.studentProgress',compact('userdata','user'));
+        return view('Panel.therapist.progress.studentProgress',compact('userdata'));
     }
 
     public function viewstudent(Request $request,$id){
         $expdata=Expert::where('user_id',$id)->latest()->simplePaginate(8);
         $user=User::find($id);
+        $times=Timeslot::where('therapist_id',Auth::user()->id)->pluck('timeslot')->toArray();
         $userdata=User::where('id','=',Session::get('loginId'))->first();
         $latestexpdata=Expert::where('user_id',$id)->latest()->first();
         if(!$latestexpdata){
@@ -379,6 +382,7 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
         $address=Therapist::select('Location')->where('user_id',Auth::user()->id)->get();
         $location=$address[0]['Location'];
         return view('Panel.therapist.progress.viewprogress',compact(
+          'times',
           'latestexpdata',
             'location',
             'user',
@@ -403,8 +407,12 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
         $diagnosis=Recommendations::select('Recommendation')->where('Recommendations_id',$expdata->recommend_id)->get();
         $recommendation=$diagnosis[0]['Recommendation'];
      
-       return view('Panel.therapist.progress.viewstudentdiagnosis',compact('userdata',
-       'expdata','recommendation',));
+       return view('Panel.therapist.progress.viewstudentdiagnosis',
+       compact(
+        'userdata',
+       'expdata',
+
+       'recommendation',));
     
     }
     public function  viewstudentjournals(){

@@ -40,5 +40,4 @@
 
 
 
-
 @include('Panel/therapist/footer')

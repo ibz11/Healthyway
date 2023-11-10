@@ -12,9 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('timeslots', function (Blueprint $table) {
-            $table->time_id();
-            $table->string();
-            $isbookes->boolean()->default(False);
+            $table->id('time_id');
+            $table->unsignedBigInteger('therapist_id');
+            $table->foreign('therapist_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('timeslot');
+        
             $table->timestamps();
         });
     }

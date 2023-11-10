@@ -23,6 +23,10 @@
     <!-- Custom styles for this template-->
     <!-- {{ asset('css/style.css') }} -->
     <link href=" {{ asset('/adminpanel/css/sb-admin-2.min.css')}}" rel="stylesheet">
+
+       <!-- J query -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="https://trentrichardson.com/examples/timepicker/jquery-ui-timepicker-addon.css"> -->
     
     @vite('resources/js/app.js')
     <!-- <link href="/Panel/css/styles.css" rel="stylesheet" /> -->
@@ -118,6 +122,11 @@ overflow-x: auto;
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>My Therapist Profile</span></a>
             </li> 
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('timeslotspage')}}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Timeslots</span></a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{URL('myclients')}}">
                     <i class="fas fa-fw fa-chart-area"></i>

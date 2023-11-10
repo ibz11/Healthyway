@@ -8,6 +8,7 @@ use App\Http\Controllers\TherapistController;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\JournalController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\TimeslotController;
 use App\Mail\TwoFA_Login;
 use Illuminate\Support\Facades\Mail;
 /*
@@ -231,6 +232,14 @@ Route::get('/therapistnotifications', [TherapistController::class, 'therapistnot
 route::get('/markread/{NotID}',[TherapistController::class,'markread']);
 route::get('/markunread/{NotID}',[TherapistController::class,'markunread']);
 route::get('/deletenotification/{NotID}',[TherapistController::class,'deletenotification']);
+
+//Timeslots
+route::get('timeslotstherapist',[AppointmentController::class,'timeslotstherapist']);
+route::get('timeslotspage',[TimeslotController::class,'timeslotspage']);
+Route::match(['get', 'post'],'createtimeslot',[TimeslotController::class,'createtimeslot'] );
+Route::match(['get', 'post'],'updatetimeslot/{time_id}',[TimeslotController::class,'updatetimeslot'] );
+route::get('deletetimeslot/{time_id}',[TimeslotController::class,'deletetimeslot']);
+
 
 });
     

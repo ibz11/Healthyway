@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Timeslot extends Model
 {
+    protected $primaryKey = 'time_id';
     use HasFactory;
 }

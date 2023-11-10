@@ -180,7 +180,7 @@
 <div id="emailHelp" style="border-radius:.3em;background:#f5cac3; color:#d00000;"class="m-1 text-danger form-text">
 <strong>@error('appointment_date') {{$message}} @enderror</strong></div>
 
-<input type="text" class="form-control w-50" name="appointment_date" id="datepicker">
+<input type="text" class="form-control w-50" autocomplete="off" name="appointment_date" id="datepicker">
 <!-- <input  type="text" class="datepicker form-control w-50" id="datepicker" value=""  name="appointment_date" required> -->
 </div>
 
@@ -327,22 +327,6 @@ $(document).ready(function() {
                 });
 
 
-                // const availableTimeSlots = response.available_time_slots;
-                // const bookedTimeSlots = response.booked_time_slots;
-
-                // // Filter out booked time slots from available time slots
-                // const filteredTimeSlots = availableTimeSlots.filter(slot => !bookedTimeSlots.includes(slot));
-
-                // // Populate the select input with the filtered time slots
-                // const select = $('#time-select');
-                // select.empty();
-                // $.each(bookedTimeSlots, function(key, value) {
-                //     select.append($('<option>', { value: value }).text(value));
-                // });
-
-                // // Update the hidden input with the available time slots
-                // $('#available-time-slots').val(JSON.stringify(filteredTimeSlots));
-            
 
             }
             
