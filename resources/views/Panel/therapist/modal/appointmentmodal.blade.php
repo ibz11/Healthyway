@@ -22,10 +22,7 @@
 
 
 
-<div hidden class="mb-3 mt-3">
-<label for="email" class="form-label">Therapist ID (Your user id)</label>
-<input readonly type="text" class=" form-control w-50" id="therapistID" value="{{Auth::user()->id}}" placeholder="{{Auth::user()->id}}" name="Therapists_id" required>
-</div>
+
 
 <div  hidden class="mb-3 mt-3">
 <label for="email" class="form-label">Student ID</label>
@@ -46,12 +43,17 @@
 </div> -->
 
 
+<div hidden class="mb-3 mt-3">
+<label for="email" class="form-label">Therapist ID (Your user id)</label>
+<input readonly type="text" class=" form-control w-50" id="therapistID" value="{{Auth::user()->id}}" placeholder="{{Auth::user()->id}}" name="Therapists_id" required>
+</div>
+
 
 <div   class="mb-3 mt-3">
 <label for="email" class="form-label">Appointment Date</label>
 
 
-<input type="text" class="form-control w-50" autocomplete="off" name="appointment_date" id="datepicker"> 
+<input type="text" class="form-control w-50" autocomplete="off" name="appointment_date" id="datepicker2"> 
 <!-- <input  type="date" class="datepicker form-control w-50"  value="" id="datepicker" name="appointment_date" required> -->
 </div>
 
@@ -62,7 +64,7 @@
 <div>
 <input hidden id="available-time-slots" name="available_time_slots">
 <select name="time" class="form-control w-50" id="time-select">
-    @foreach($times as $times)
+   @foreach($times as $times)
     <option value="{{$times}}">{{$times}}</option>
     @endforeach
 </div>
@@ -122,33 +124,9 @@ My Office : {{$location}}
   </div>
 </div>
 
-<!-- Include jQuery -->
-@include('Panel/therapist/jquery')
 
 
-<script>
 
-    $(document).ready(function() {
-        // Show modal when a button is clicked
-        $('.show').on('click', function() {
-            var itemId = $(this).data('data-online-id');
-
-            // Make an AJAX request to fetch item details based on the ID
-            $.ajax({
-                url: '/modalrejection/' + itemId, // Replace with the actual route
-                method: 'GET',
-                success: function(data) {
-                    // Assuming you have a modal with the ID "item-modal"
-                    $('#staticBackdrop .modal-body').html(data);
-                    $('#staticBackdrop').modal('show');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-    });
-</script>
 
 
 

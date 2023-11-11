@@ -23,8 +23,10 @@ class TimeslotController extends Controller
              '3:30-4:30',
          ];*/
        
-       $selectedID =$request->input('therapists_id');
-       $selectedDate = $request->input('appointment_date');
+       $selectedID = $request->input('therapists_id');
+       //16;
+       $selectedDate =$request->input('appointment_date');
+       // '2023-11-30';
        
        
        
@@ -47,8 +49,8 @@ class TimeslotController extends Controller
        ->toArray();
        
        $availableTimeSlots = array_values(array_diff($times, $bookedTimeSlots));
-       // dd($times);
-       return response()->json([
+    //    dd($times);
+        return response()->json([
        'available_time_slots' => $availableTimeSlots,
        'booked_time_slots' => $bookedTimeSlots,
        ]);

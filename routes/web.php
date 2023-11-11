@@ -234,7 +234,10 @@ route::get('/markunread/{NotID}',[TherapistController::class,'markunread']);
 route::get('/deletenotification/{NotID}',[TherapistController::class,'deletenotification']);
 
 //Timeslots
-route::get('timeslotstherapist',[AppointmentController::class,'timeslotstherapist']);
+route::get('timeslotstherapist',[TimeslotController::class,'timeslotstherapist']);
+
+
+
 route::get('timeslotspage',[TimeslotController::class,'timeslotspage']);
 Route::match(['get', 'post'],'createtimeslot',[TimeslotController::class,'createtimeslot'] );
 Route::match(['get', 'post'],'updatetimeslot/{time_id}',[TimeslotController::class,'updatetimeslot'] );

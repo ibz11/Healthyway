@@ -1,4 +1,9 @@
 @include('Panel/therapist/header')
+@if($therapist->count()==0)
+<h1 style="font-size:40px;"><strong>Hello! {{Auth::user()->full_name}}.<br>It seems you dont have a profile.Click below to create one</strong></h1>
+
+
+
 <div class="container-form"> 
 
  
@@ -69,7 +74,10 @@ class="btn btn-primary"><strong>Create</strong></button>
 </form>
 </div>
 </div>
+@else
+<h1 style="font-size:40px;"><strong>Hello! {{Auth::user()->full_name}}.You have already created a profile so you cant create another one.</strong></h1>
 
+@endif
 
 <div style="margin-top:20em;">
 @include('Panel/therapist/footer')

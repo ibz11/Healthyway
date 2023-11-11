@@ -315,7 +315,7 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
         // simplePaginate(1);
 
 
-        return view('Panel.therapist.progress.studentProgress',compact('userdata'));
+        return view('Panel.therapist.progress.studentProgress',compact('userdata','user'));
     }
 
     public function viewstudent(Request $request,$id){
@@ -472,10 +472,11 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
     }
     public function createtherapistprofile(Request $request){
         if($request->isMethod('get')){
+          $therapist=Therapist::where('user_id',Auth::User()->id)->get();
         $userdata=User::where('id','=',Session::get('loginId'))->first();
 
           
-        return view('Panel.therapist.profile.create',compact('userdata'));
+        return view('Panel.therapist.profile.create',compact('userdata','therapist'));
         }  
         if ($request->isMethod('post'))
         {  $request->validate([

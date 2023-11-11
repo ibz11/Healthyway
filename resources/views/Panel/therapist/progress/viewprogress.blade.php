@@ -222,7 +222,7 @@
 
 
 </div>
-
+@include('Panel/therapist/jquery')
 
 
 
@@ -256,7 +256,7 @@
     const readableDate = dateObject.toLocaleString( options); 
     createdAtArr.push(readableDate)
    }
-   console.log(createdAtArr)
+  //  console.log(createdAtArr)
   var LsasArr=[]
   
   for(let i in Lsas){
@@ -300,35 +300,7 @@
 
 
 
-@include('Panel/therapist/modal/appointmentmodal')
 
-
-<!-- Datepicker script -->
-<script>
-
-
-$(document).ready(function() {
-
-$('#datepicker').datepicker({
-    dateFormat: "yy-mm-dd", // Set the date format
-    minDate: 0,            // Minimum date (0 means today)
-    maxDate: "+1W", 
-    beforeShowDay: function(date) {
-        var day = date.getDay();
-        // Disable Sundays (0 is Sunday, 1 is Monday, and so on)
-        return [day !== 0, ''];
-    }       // Maximum date (1 month from today)
-});
-
-// $('#timepicker').timepicker({
-//     timeFormat: 'HH:mm',
-//     interval: 30,  // Set the time interval to 30 minutes
-// });
-
-
-
-});
-</script>
 
 
 @include('Panel/therapist/footer')
