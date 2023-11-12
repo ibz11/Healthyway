@@ -125,6 +125,13 @@ route::get('/adminrejectapplication/{ChooseID}',[AdminController::class,'adminre
 //Rules Routes
 Route::get('/exprules',[AdminController::class,'exprules']);
 
+//Therapists timeslots
+route::get('therapiststimeslot',[TimeslotController::class,'therapiststimeslot']);
+route::get('admintimeslotspage/{id}',[TimeslotController::class,'admintimeslotspage']);
+
+Route::match(['get', 'post'],'admincreatetimeslot/{id}',[TimeslotController::class,'admincreatetimeslot'] );
+Route::match(['get', 'post'],'adminupdatetimeslot/{time_id}',[TimeslotController::class,'adminupdatetimeslot'] );
+route::get('admindeletetimeslot/{time_id}',[TimeslotController::class,'admindeletetimeslot']);
 
 
 

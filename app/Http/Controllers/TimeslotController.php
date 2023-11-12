@@ -10,6 +10,7 @@ use Hash;
 use Session;
 use App\Models\User;
 use App\Models\Appointments;
+use App\Models\Therapist;
 use App\Models\Timeslot;
 
 class TimeslotController extends Controller
@@ -109,4 +110,93 @@ class TimeslotController extends Controller
     $times->delete();
     return redirect('timeslotspage')->with('Error','Timeslot is deleted');
     }
+
+//Admin Timeslots
+
+public function therapiststimeslot(){
+    $userdata=User::where('id','=',Session::get('loginId'))->first();
+$user=User::where('role','therapist')->get();
+$therapist=Therapist::all();
+return view('Panel.Admin.Timeslot.therapists',compact('userdata','user','therapist'));
+}
+public function admintimeslotspage($id){
+    $userdata=User::where('id','=',Session::get('loginId'))->first();
+    // $therapist=Therapist::where('user_id',$id)->get();
+    $therapist=Therapist::where('user_id',$id)->latest()->get();
+   $times=Timeslot::where('therapist_id',$id)->latest()->get(); 
+   if($times->isEmpty()){
+    $times='no-data';
+   }
+//    echo $times;
+   return view('Panel.Admin.Timeslot.home',compact('userdata','times','therapist'));
+}
+public function admincreatetimeslot(Request $request,$id){
+    $userdata=User::where('id','=',Session::get('loginId'))->first();
+    $therapist=Therapist::where('user_id',$id)->get();
+    $user=User::all();
+    if($request->isMethod('get')){
+        return view('Panel.Admin.Timeslot.create',compact('userdata','user','therapist'));
+    }
+    if($request->isMethod('post')){
+    $request->validate([
+        'timeslot'=>'required'
+    ]);
+
+    // echo $request->timeslot;
+    $times=new Timeslot;
+    $times->therapist_id=$request->therapist_id;
+    $times->timeslot=$request->timeslot;
+    $times->save();
+    return redirect('therapiststimeslot')->with('success','Timeslot is created');
+    }
+}
+public function adminupdatetimeslot(Request $request,$time_id)
+{  
+    $userdata=User::where('id','=',Session::get('loginId'))->first();
+    $times=Timeslot::find($time_id); 
+    if($request->isMethod('get')){
+        return view('Panel.Admin.Timeslot.update',compact('times','userdata'));
+   
+}
+
+if($request->isMethod('post')){
+    $request->validate([
+        'timeslot'=>'required'
+    ]);  
+    $times=Timeslot::find($time_id); 
+    $times->therapist_id=$request->therapist_id;
+    $times->timeslot=$request->timeslot;
+    $times->update();
+    return redirect('therapiststimeslot')->with('success','Timeslot is updated');
+   }
+}
+public function admindeletetimeslot(Request $request,$time_id){
+$times=Timeslot::find($time_id);
+$times->delete();
+return redirect()->back()->with('Error','Timeslot is deleted');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

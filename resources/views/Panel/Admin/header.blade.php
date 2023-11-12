@@ -136,6 +136,11 @@ overflow-x: auto;
                     <i class="fas fa-fw fa-table"></i>
                     <span>Therapist profiles</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{URL('therapiststimeslot')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Therapist's Timeslot</span></a>
+            </li>
             
             <li class="nav-item">
                 <a class="nav-link" href="{{URL('studentschosen')}}">
