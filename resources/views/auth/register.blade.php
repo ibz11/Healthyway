@@ -50,9 +50,19 @@
 
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Phone Number</label>
-    <input type="text" name="phone" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <input type="number" name="phone" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
     <div id="emailHelp" style="border-radius:.3em;background:#f5cac3; color:#d00000;"class=" text-danger form-text"><strong>@error('phone') {{$message}} @enderror</strong></div>
     <div id="emailHelp" class="form-text">We'll never share your phone number with anyone else.</div>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Account Type</label>
+    <select name="role" class="form-control" id="">
+    <option value="student">Student</option> 
+     <option value="therapist">Therapist</option> 
+   
+    </select>
+
+    <div id="emailHelp" class="form-text">Note:If you select as a  therapist you will have to verify that you are one otherwise your account will be terminated</div>
   </div>
 
   <div class="mb-3">

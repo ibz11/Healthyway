@@ -24,7 +24,22 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class ExpertController extends Controller
 {
 
-
+  public function expertsystemdiagnosis(){
+    $diagnosis = Expert::where('user_id',Auth::user()->id)->latest()->first();
+    $rec=Recommendations::where('Recommendations_id',$diagnosis->recommend_id)->first();
+    $userdata=User::where('id','=',Session::get('loginId'))->first();
+    if(!$diagnosis){
+$diagnosis="no-data";
+    }
+    if(!$rec){
+      $rec="no-data";
+          }
+    return view('Panel.student.expertsystemdiagnosis')->with([
+    'diagnosis'=>$diagnosis,
+    'rec'=>$rec,
+    'userdata'=>$userdata]);
+  }
+  
     
     public function progress(){
         $user_id= Session::get('loginId');
@@ -401,7 +416,7 @@ public function deletediagnosis($exp_id){
             
             }
             $exp->save(); 
-            return redirect('/progress')->with('success','Congratulations on taking the LSAS test.View your latest result here');
+            return redirect('/expertsystemdiagnosis')->with('success','Congratulations on taking the LSAS test.View your latest result here');
         }
         
         //high + marked
@@ -438,7 +453,7 @@ public function deletediagnosis($exp_id){
 
             }
             $exp->save(); 
-            return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+            return redirect('/expertsystemdiagnosis')->with('success','Congratulations on taking the test view your latest result here');
 
 
 
@@ -475,7 +490,7 @@ public function deletediagnosis($exp_id){
 
             }
             $exp->save(); 
-            return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+            return redirect('/expertsystemdiagnosis')->with('success','Congratulations on taking the test view your latest result here');
 
         }
         //mod +  high
@@ -510,7 +525,7 @@ public function deletediagnosis($exp_id){
 
             }
             $exp->save(); 
-            return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+            return redirect('/expertsystemdiagnosis')->with('success','Congratulations on taking the test view your latest result here');
 
         }
         //mod +  mod
@@ -546,7 +561,7 @@ public function deletediagnosis($exp_id){
 
             }
             $exp->save(); 
-            return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+            return redirect('/expertsystemdiagnosis')->with('success','Congratulations on taking the test view your latest result here');
 
         }
         //mod + low
@@ -581,7 +596,7 @@ public function deletediagnosis($exp_id){
 
             }
             $exp->save(); 
-            return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+            return redirect('/expertsystemdiagnosis')->with('success','Congratulations on taking the test view your latest result here');
 
         }
         //low + high
@@ -616,7 +631,7 @@ public function deletediagnosis($exp_id){
 
             }
             $exp->save(); 
-            return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+            return redirect('/expertsystemdiagnosis')->with('success','Congratulations on taking the test view your latest result here');
 
         }
         //low + mod
@@ -651,7 +666,7 @@ public function deletediagnosis($exp_id){
 
             }
             $exp->save(); 
-            return redirect('/progress')->with('success','Congratulations on taking the test view your latest result here');
+            return redirect('/expertsystemdiagnosis')->with('success','Congratulations on taking the test view your latest result here');
 
         }
         //low +low
@@ -686,7 +701,7 @@ public function deletediagnosis($exp_id){
 
             }
             $exp->save(); 
-            return redirect('/progress')->with('success','Congratulations on taking the LSAS test.View your latest result here');
+            return redirect('/expertsystemdiagnosis')->with('success','Congratulations on taking the LSAS test.View your latest result here');
 
         }
 
@@ -702,7 +717,6 @@ public function deletediagnosis($exp_id){
     
     }  
 }
-
 
 
 

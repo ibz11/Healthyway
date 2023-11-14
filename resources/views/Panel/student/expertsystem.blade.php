@@ -6,7 +6,7 @@
 <div class="scrollable-div">  -->
 
 
-<form class="expert-form"data-multi-step class="multi-step-form"
+<form class="expert-form" data-multi-step class="multi-step-form"
 action="{{URL('expertsystem')}}" 
 
 method="POST" class="expertform"id="editform"enctype="multipart/form-data">

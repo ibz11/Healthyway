@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 class StudentController extends Controller
 {
+ 
   public function deletetherapistapplication($ChooseID){
     $choose=Choosetherapist::find($ChooseID);
     $choose->delete();
