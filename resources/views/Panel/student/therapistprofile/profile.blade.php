@@ -70,6 +70,7 @@ If you have already chosen one wait for the therapist to accept your application
 
 <div class="row">
 @foreach($therapist as $therapist)
+@if($therapist->admin_approval=='approved')
 <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
@@ -92,6 +93,7 @@ If you have already chosen one wait for the therapist to accept your application
         
     </div>
 </div>
+@endif
 @endforeach
 
 

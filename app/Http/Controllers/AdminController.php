@@ -25,7 +25,23 @@ use Illuminate\Support\Facades\Config;
 use Barryvdh\DomPDF\Facade\Pdf;
 class AdminController extends Controller
 {
+//accept and reject profiles
 
+public function acceptprofile($therapist_id){
+    $therapist=Therapist::find($therapist_id);
+    
+    $therapist->admin_approval='approved';
+    $therapist->update();
+    return redirect()->back()->with('success','Therapist`s profile has been Accepted');
+}
+
+public function rejectprofile($therapist_id){
+    $therapist=Therapist::find($therapist_id);
+    
+    $therapist->admin_approval='rejected';
+    $therapist->update();
+    return redirect()->back()->with('warning','Therapist`s profile has been Rejected');
+}
     //Expert systems rules
     public function exprules(){
     $userdata=User::where('id','=',Session::get('loginId'))->first();

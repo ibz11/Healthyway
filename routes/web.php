@@ -134,7 +134,10 @@ Route::match(['get', 'post'],'adminupdatetimeslot/{time_id}',[TimeslotController
 route::get('admindeletetimeslot/{time_id}',[TimeslotController::class,'admindeletetimeslot']);
 
 
+//Admin therapist appliation approval
 
+Route::get('acceptprofile/{therapist_id}', [AdminController::class,'acceptprofile']);
+Route::get('rejectprofile/{therapist_id}', [AdminController::class,'rejectprofile']);
 
 });
 

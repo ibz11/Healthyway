@@ -33,6 +33,9 @@
                         <h4>{{$therapist->title}} {{$therapist->Full_name}}</h4>  </div>
                         
                         <span class="m-3 text-light badge bg-info">{{$therapist->specialization}}</span>  
+
+                        <p class="text-dark text-center font-size-sm"><strong>Administrator Approval:</strong></p>
+                      <p class="text-dark font-size-xl "><span class="p-2 font-size-xl badge bg-dark">{{$therapist->admin_approval}}</span></p>
                        
                         <div><a href="{{URL('viewtherapistprofile',$therapist->therapist_id)}}" class="btn btn-outline-primary"><strong>View Profile</strong></a>  </div>
                     </div>

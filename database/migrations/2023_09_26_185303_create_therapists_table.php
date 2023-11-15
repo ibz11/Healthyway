@@ -15,16 +15,19 @@ return new class extends Migration
             $table->id('therapist_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            
             $table->string('title')->nullable();
             $table->string('Full_name')->nullable();
-            // $table->string('onlinelink')->nullable();
+           
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('Location')->nullable();
             $table->string('profile_img')->nullable();
-            $table->string('bachelors')->nullable();
+            $table->string('credential')->nullable();
+            $table->string('credential_img')->nullable();
             $table->string('specialization')->nullable();
-            $table->enum('status',['approved','rejected','pending'])->default('pending');
+            $table->string('spec_img')->nullable();
+            $table->enum('admin_approval',['approved','rejected','pending'])->default('pending');
             $table->LongText('bio')->nullable();
 
             $table->timestamps();

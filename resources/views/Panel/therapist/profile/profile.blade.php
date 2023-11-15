@@ -7,8 +7,8 @@
 <h1 style="font-size:40px;"><strong>Hello! {{Auth::user()->full_name}}.<br>It seems you dont have a profile.Click below to create one</strong></h1>
 <a href="{{URL('createtherapistprofile')}}" class="btn btn-outline-primary">Create Profile</a>
 @else
-<h1 style="font-size:40px;"><strong>Hello! {{Auth::user()->full_name}}.You can view your created profile below.</strong></h1>
-<h5>Note:You profile will be displayed to the students</h5>
+<h1 style="font-size:40px;"><strong>Hello! {{Auth::user()->full_name}}.You can view your created profile below</strong></h1>
+<h4>Note:You profile will be displayed to the students. once it has been <u><strong>Approved</strong></u> by the administrator</h4>
 @endif
 
 
@@ -25,7 +25,8 @@
                         {{$therapist->title}} {{$therapist->Full_name}}  </div>
                         
                         <span class="m-3 badge bg-dark">{{$therapist->specialization}}</span>  
-                       
+                        <p class="text-dark text-center font-size-sm"><strong>Administrator Approval</strong></p>
+                      <p class="text-dark font-size-xl "><span class="p-3 font-size-xl badge bg-dark">{{$therapist->admin_approval}}</span></p>
                         <div><a href="{{URL('profileview',$therapist->therapist_id)}}" class="btn btn-outline-primary"><strong>View Profile</strong></a>  </div>
                     </div>
                   

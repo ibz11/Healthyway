@@ -480,10 +480,14 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
         }  
         if ($request->isMethod('post'))
         {  $request->validate([
-            'specialization' => 'title',
+            'title' => 'required',
+            'credential' => 'required',
             'specialization' => 'required',
             'location' => 'required',
-            'profile_img' => 'required|image|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
+            'profile_img' => 'required|image|dimensions:min_width=50,min_height=50,max_width=1000,max_height=1000',
+
+            'credential_img' => 'required|image|dimensions:min_width=50,min_height=50,max_width=1000,max_height=1000',
+            // 'spec_img' => 'required|image|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
         ]);
            
 
@@ -496,9 +500,13 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
             $therapist->Location=$request->location;
             $therapist->title=$request->title;
             $therapist->specialization=$request->specialization;
+            $therapist->credential=$request->credential;
+
             $therapist->bio=$request->bio;
 
             $profile_img=$request->profile_img;
+            $credential_img=$request->credential_img;
+            $spec_img=$request->spec_img;
 
             if($profile_img){
                   $imagename=time().'.'.$profile_img->getClientOriginalExtension();
@@ -506,7 +514,24 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
                   $profile_img->move('therapist_img',$imagename);
             
                   $therapist->profile_img= $imagename;
-                  }
+              }
+
+              if($credential_img){
+                $imagename=time().'.'.$credential_img->getClientOriginalExtension();
+          
+                $credential_img->move('credential',$imagename);
+          
+                $therapist->credential_img= $imagename;
+            }
+
+            if($spec_img){
+              $imagename=time().'.'.$spec_img->getClientOriginalExtension();
+        
+              $spec_img->move('specialization',$imagename);
+        
+              $therapist->spec_img= $imagename;
+          }
+
 
             $therapist->save();
             return redirect('therapistprofile')->with('success','Profile is created');
@@ -525,11 +550,15 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
         }  
         if ($request->isMethod('post'))
         {  $request->validate([
-            'specialization' => 'title',
-            'specialization' => 'required',
-            'location' => 'required',
-            'profile_img' => 'image|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
-        ]);
+          'title' => 'required',
+          'credential' => 'required',
+          'specialization' => 'required',
+          'location' => 'required',
+           'profile_img' => 'image|dimensions:min_width=50,min_height=50,max_width=1000,max_height=1000',
+
+          'credential_img' => 'image|dimensions:min_width=50,min_height=50,max_width=1000,max_height=1000',
+          // 'spec_img' => 'required|image|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
+      ]);
            
 
             $therapist=Therapist::find($therapist_id);
@@ -544,6 +573,9 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
             $therapist->bio=$request->bio;
 
             $profile_img=$request->profile_img;
+          
+            $credential_img=$request->credential_img;
+            $spec_img=$request->spec_img;
 
             if(!$profile_img){
             
@@ -557,11 +589,42 @@ return view('Panel.therapist.myclients',compact('userdata','choose'));
                   $therapist->profile_img= $imagename;
                   }
 
-            $therapist->save();
+              if(!$credential_img){
+
+              }
+              else{
+                    $imagename=time().'.'.$credential_img->getClientOriginalExtension();
+              
+                    $credential_img->move('credential',$imagename);
+              
+                    $therapist->credential_img= $imagename;
+                }
+    
+              if(!$spec_img){
+
+              }else{
+                  $imagename=time().'.'.$spec_img->getClientOriginalExtension();
+            
+                  $spec_img->move('specialization',$imagename);
+            
+                  $therapist->spec_img= $imagename;
+              }
+            
+              // echo $request->specialization,$request->specialization, $request->credential,$request->spec_img, $request->location;
+
+
+            $therapist->update();
             return redirect('therapistprofile')->with('success','Profile is Updated');
 
-       
-        } }
+       } 
+      
+      
+      
+      
+      
+      
+      
+      }
 
 
 
