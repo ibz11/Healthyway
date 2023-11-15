@@ -3,8 +3,8 @@
 
 
 <div class="div-center">
-
-<form class="auth-form" action="{{URL('loginUser')}}" method="POST" enctype="multipart/form-data">
+<!-- loginUser -->
+<form class="auth-form" action="{{URL('authenticate')}}" method="POST" enctype="multipart/form-data">
 @csrf
 <div class="mb-3">
 <h1>{{$title}}</h1>

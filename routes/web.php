@@ -9,6 +9,7 @@ use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\JournalController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\TimeslotController;
+use App\Http\Controllers\LoginController;
 use App\Mail\TwoFA_Login;
 use Illuminate\Support\Facades\Mail;
 /*
@@ -29,23 +30,34 @@ Route::get('/', function () {
 });
 
 //Authentication
+Route::post('/authenticate', [AuthController::class,'authenticate']);
+Route::post('/verifyLoginOtp', [LoginController::class,'verifyLoginOtp']);
+Route::get('/twofaview', [AuthController::class,'twofaview']);
+Route::get('resendOtp', [AuthController::class,'resendOtp']);
+
+
 Route::get('/login', [AuthController::class,'loginview'])->middleware('AlreadyAuth');
 Route::get('/register', [AuthController::class,'registerview'])->middleware('AlreadyAuth');
 Route::post('/registerUser', [AuthController::class,'registerUser']);
 // Route::post('/customRegistration', [AuthController::class,'customRegistration']);
-Route::post('/loginUser', [AuthController::class,'loginUser']);
-Route::get('/dashboard', [AuthController::class,'dashboard'])->middleware('isLoggedin');
 
-Route::get('/twofaview', [AuthController::class,'twofaview'])->middleware('auth');
+
+Route::get('/dashboard', [AuthController::class,'dashboard']);
+// ->middleware('isLoggedin');
+
+
+// ->middleware('auth');
 // 'AlreadyAuth','2FAVerified',
+
+
+//OLD Authentication
+Route::post('/loginUser', [AuthController::class,'loginUser']);
 Route::post('verify2FA', [AuthController::class,'verify2FA']);
 Route::get('enable2FA/{id}', [AuthController::class,'enable2FA']);
 Route::get('disable2FA/{id}', [AuthController::class,'disable2FA']);
 
 
 Route::get('/chart-data',[AuthController::class,'getData']);
-
-
 Route::get('/logout', [AuthController::class,'logout']);
 
 

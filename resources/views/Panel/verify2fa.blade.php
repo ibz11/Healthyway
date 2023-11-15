@@ -11,9 +11,11 @@
    
 <div class="div-center">
 
+<!-- "ulr('verify2FA')" -->
 <form class="auth-form" action="{{url('verify2FA')}}" method="POST" enctype="multipart/form-data">
 @csrf
 <div class="mb-3">
+
 <h1>{{$title}}</h1>
 
 </div>
@@ -30,7 +32,7 @@
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Type the code sent to your email to login</label>
  
-    <input type="text" name="twoFA_input"class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <input type="number" name="twoFA_input"class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
  
   </div>
 
@@ -40,8 +42,9 @@
 <div class="mb-3 form-check">
 <button type="submit" class="auth-btn btn btn-outline-dark">Verify</button>
 </div>
-
+<a style="text-decoration:none;"href="{{URL('resendOtp')}}"><strong><u>Didn't get OTP.Resend new OTP code here</u></strong></a>
 </form>
+
 </div>
  
 </body>

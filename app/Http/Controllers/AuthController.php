@@ -130,7 +130,38 @@ public function loginUser(Request $request)
 
 
 //Authentication views
+//Authenticate ---------------------------------------------------------------------
+public function authenticate(Request $request) {
+    $formFields = $request->validate([
+        'email' => ['required', 'email'],
+        'password' => 'required'
+    ]);
 
+    // Retrieve the user instance directly from the database
+    $user = User::where('email', $formFields['email'])->first();
+
+    // Check if the user exists and the password is correct
+    if ($user && Hash::check($formFields['password'], $user->password)) {
+        // Generate OTP
+        $fourDigitCode = rand(100000, 999999);
+        $user->twoFA_code =Hash::make($fourDigitCode);
+        // $user->otp_created_at = now();
+        $user->save();
+
+        // Store email in session for OTP verification
+        session(['email' => $formFields['email']]);
+     
+        // Send OTP to user's email
+        // Mail::to($user->email)->send(new SendOtpMail($otp));
+        Mail::to($user->email)->send(new TwoFA_Login($fourDigitCode));
+        // return redirect('twofaview');
+
+        // Redirect to OTP verification page
+        return redirect('/twofaview');
+    } else {
+        return redirect('/login')->with('Error', 'Wrong credentials!!');
+    }
+}
 
 
 
@@ -139,29 +170,75 @@ public function loginUser(Request $request)
 
 public function twofaview(){
     $title='Verify 2FA';
-    return view ('Panel/verify2fa',compact('title'));
+    $email = session('email');
+    return view ('Panel/verify2fa',compact('title','email'));
 }
 
 
 
 public function verify2FA(Request $request){
-$twoFAcode=123;
+// $twoFAcode=123;
+$email = session('email');
+$user=User::where('email','=',$email)->first();
+// ,Session::get('loginId'))->first();
 
-$user=User::where('id','=',Session::get('loginId'))->first();
 
-// if($request->twoFA_input ==$twoFAcode){
-// if($request->twoFA_input ==$twoFAcode){
- if(Hash::check($request->twoFA_input , $user->twoFA_code)){
-    $request->session()->put('loginId',$user->id);
-    // $data->twoFA_verified=1;
-    // $data->save();
+
+if(Hash::check($request->twoFA_input , $user->twoFA_code)){
+// if($request->twoFA_input == $user->twoFA_code){
+  
+    $user->twoFA_code = null; // Clear the OTP code
+    $user->save();
+
+    // Log the user in
+    auth()->login($user);
+    $ID=User::where('email',$email)->pluck('id')->first();
+    $request->session()->put('loginId',$ID);
+
+    // Clear the email from the session
+    // $request->session()->forget('email');
     return redirect('/dashboard')->with('success','Login Successful!');
 }
 else{
-return back()->with('Error',"Wrong 2FA Code.Try again");
+return back()->with('Error',"Wrong Code!!!");
 }
    
 }
+
+//Resend OTP
+public function resendOtp()
+{
+$email = session('email');
+$user = User::where('email', $email)->first();
+
+if ($user) {
+    // Generate a new OTP and store the generation time
+    // $otp = rand(100000, 999999);
+    // $user->otp_code = $otp;
+    // $user->otp_created_at = now();
+    // $user->save();
+
+    $fourDigitCode = rand(100000, 999999);
+    $user->twoFA_code =Hash::make($fourDigitCode);
+    // $user->otp_created_at = now();
+    $user->save();
+
+    // Store email in session for OTP verification
+    session(['email' => $email]);
+ 
+    // Send OTP to user's email
+    // Mail::to($user->email)->send(new SendOtpMail($otp));
+    Mail::to($user->email)->send(new TwoFA_Login($fourDigitCode));
+
+   
+
+    return redirect()->back()->with('success', 'A new  OTP code has been sent to your email.');
+} else {
+    return redirect()->back()->with('error', 'Error resending OTP. Please try again.');
+}
+}
+
+
 
 public function enable2FA($id){
 
@@ -190,9 +267,12 @@ return back()->with('Error','You have disabled 2fa');
 
 
 public function dashboard(){
+$email = session('email');
 $userdata =array();
 if(Session::has('loginId')){
-    $userdata=User::where('id','=',Session::get('loginId'))->first();
+    // $userdata=User::where('email','=',$email)->get();
+    $userdata=Auth::user();
+    //  $userdata=User::where('id','=',Session::get('loginId'))->first();
 
 if($userdata->role=='admin'){
     $profiles=Therapist::count();
