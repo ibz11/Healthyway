@@ -90,7 +90,11 @@
                                 
                               
                                 @if($appointment->status=='accepted')
+                                @if($appointment->location=='Online')
                                 <td><button type="button" class="show btn btn-outline-primary text-light" data-u-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#onlineModal__{{ $appointment->appointment_id }}">Give a online link if online</button></td>
+                                @else
+                                
+                                @endif
                                 @endif
                                 @if($appointment->status=='rejected')
                                 <td><button type="button" class="show btn btn-outline-warning text-light" data-reject-id="{{ $appointment->appointment_id }}"data-bs-toggle="modal" data-bs-target="#updateModal_{{ $appointment->appointment_id }}">Give a reason for rejecting</button></td>

@@ -56,7 +56,8 @@
                       <p><strong>Your application status has been <u>rejected</u> by this therapist.You can apply to other therapists</strong></p>
                       <a href="{{URL('deletetherapistapplication',$choose->first()->ChooseID)}}" class="m-1 btn btn-outline-danger">Delete application for this therapist</a>
                       @else
-                      <p><strong>You application has been submitted and you will get feedback shortly</strong></p> 
+                      <p><strong>You application has been submitted and you will get feedback shortly.If you dont want to choose this therapist you can delete application below</strong></p> 
+                      <a href="{{URL('deletetherapistapplication',$choose->first()->ChooseID)}}" class="m-1 btn btn-outline-danger">Delete application for this therapist</a>
                       
                       @endif
                     @endif
