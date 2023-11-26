@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
- 
+    <link rel="stylesheet" href="/therapistroadmap/therapistroadmap.css">
     @vite('resources/js/app.js')
     <!-- <link href="/Panel/css/styles.css" rel="stylesheet" /> -->
     <style>
@@ -129,7 +129,7 @@ overflow-x: auto;
                     <span>Timeslots</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{URL('myclients')}}">
+                <a class="nav-link" href="{{URL('mystudents')}}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Student's applications </span>
                     @if($newclient<=0)

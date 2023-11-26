@@ -124,7 +124,12 @@
 <!-- Content Row -->
 
 
+<h3>Click the button below to get a roadmap which will guide you on how to use the application</h3>
+<!-- Content Row -->
 
+
+
+@include('Panel/therapist/roadmap')
 
 </div>
 </div>

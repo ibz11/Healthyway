@@ -64,10 +64,10 @@ return view('Panel.therapist.notifications',compact('not','userdata'));
 
   }
 
- public function  myclients(){
+ public function  mystudents(){
   $choose=Choosetherapist::where('therapist_id',Auth::user()->id)->latest()->simplepaginate(15);
   $userdata=User::where('id','=',Session::get('loginId'))->first();
-return view('Panel.therapist.myclients',compact('userdata','choose'));
+return view('Panel.therapist.mystudents',compact('userdata','choose'));
   }
   public function  acceptclient($ChooseID){
     $choose=Choosetherapist::find($ChooseID);

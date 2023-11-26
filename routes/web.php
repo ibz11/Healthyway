@@ -10,6 +10,7 @@ use App\Http\Controllers\JournalController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\TimeslotController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\HomeController;
 use App\Mail\TwoFA_Login;
 use Illuminate\Support\Facades\Mail;
 /*
@@ -28,6 +29,8 @@ Route::get('/', function () {
     // dd(session()->all());
 
 });
+
+Route::get('/',[HomeController::class,'home']);
 
 //Authentication
 Route::post('/authenticate', [AuthController::class,'authenticate']);
@@ -239,7 +242,7 @@ Route::post('/addrecommendation/{Recommendations_id}',[TherapistController::clas
 
 route::get('/getRecommendationDetails/{Recommendations_id}',[TherapistController::class,'getRecommendationDetails']);
 //Clients choosing therapist routes
-route::get('/myclients',[TherapistController::class,'myclients']);
+route::get('/mystudents',[TherapistController::class,'mystudents']);
 route::get('/acceptclient/{ChooseID}',[TherapistController::class,'acceptclient']);
 route::get('/rejectclient/{ChooseID}',[TherapistController::class,'rejectclient']);
 
