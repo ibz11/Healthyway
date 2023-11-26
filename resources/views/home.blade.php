@@ -138,7 +138,7 @@
 <div class="row">          
 
                                 <div class="col-12 mb-1 ">
-                                    <div class="feature bg-info bg-gradient text-white rounded-3 mb-3"><i class="bi bi-">4</i></div>
+                                    <div class="feature bg-info bg-gradient text-white rounded-3 mb-3"><i class="bi bi-">3</i></div>
                                     <h2 class="h5">Step 3. Book an appointment on the form</h2>
                                     <p class="mb-0">There will be a form displayed once logged in in the therapist profile and then you can book date time and venue of the therapy session.You can check therapist profiles below</p>
                                     <!-- <a href="{{URL('alltherapistsview')}}"class="badge bg-dark">Check therapists profiles</a> -->
@@ -148,7 +148,7 @@
 
                                 <div class="row">                             
                                      <div class="col-12 mb-1">
-                                    <div class="feature bg-info bg-gradient text-white rounded-3 mb-3"><i class="bi bi">5</i></div>
+                                    <div class="feature bg-info bg-gradient text-white rounded-3 mb-3"><i class="bi bi">4</i></div>
                                     <h2 class="h5">Step 4. Wait for the appointment to be approved</h2>
                                     <p class="mb-0">You must wait for your appointment to be approved for you to proceed with the appointment</p>
                                     <!-- <a href="{{URL('appointments')}}"class="badge bg-dark">My appointments</a> -->
@@ -173,7 +173,7 @@
 
 
             <section >
-            <div class="py-5 bg-light">
+            <div class="mt-5 py-5 bg-light">
                 <div class="container px-5 my-5">
                     <div class="row gx-5 justify-content-center">
                         <div class="col-lg-10 col-xl-7">
@@ -183,9 +183,8 @@
                                   You might have to be your own best friend. That's not something they're 
                                   going to teach you in school. So start the work of loving yourself.</div>
                                 <div class="d-flex align-items-center justify-content-center">
-                                    <img class="rounded-circle me-3" src="
-                                    https://dummyimage.com/40x40/ced4da/6c757d 
-                            " alt="profile picture" />
+                                <!-- src=" https://dummyimage.com/40x40/ced4da/6c757d  -->
+                                    <img class="rounded-circle me-3" height="40" width="40"   src="/adminpanel/img/undraw_profile.svg" alt="profile picture" />
                                 
                                     <div class="fw-bold">
                                         Ibrahim
@@ -214,27 +213,33 @@
               @endif
                     <div class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center">
                     @foreach($therapist as $therapist)
-
+                    @if($therapist->admin_approval=='approved')
                     
                         <div class="col mb-5 mb-5 mb-xl-0">
+                      
                             <div class="text-center">
-                                <img class="img-fluid rounded-circle mb-4 px-4" src="/therapist_img/{{$therapist->image}}" alt="..." />
-                                <h5 class="fw-bolder">Dr.{{$therapist->fname}} {{$therapist->lname}}</h5>
+                                <img class="img-fluid rounded-circle mb-4 px-4" style="height:15em;width:18em;" src="/therapist_img/{{$therapist->profile_img}}" alt="..." />
+                                <h5 class="fw-bolder">Dr.{{$therapist->Full_name}}</h5>
                                 <div class="badge bg-primary bg-gradient rounded-pill mb-2">{{$therapist->role}}</div>
-                                <div class="fst-italic text-muted">Studied {{$therapist->qualification}} at {{$therapist->university}}</div>
-                                <div class="fst-italic text-muted">Place of work {{$therapist->location}} </div>
-                                <a class="btn btn-info text-light" href="{{URL('viewtherapist',$therapist->id)}}"> View profile</a>
+                                <div class="fst-italic text-muted"><strong>Credential</strong><br>  {{$therapist->credential}}</div>
+                                <div class="fst-italic text-muted"><strong>Specialization</strong> <br>
+                                {{$therapist->specialization}} </div>
+                                <div class="fst-italic text-muted"><strong>Place of work</strong><br> {{$therapist->Location}} </div>
+                                <div class="fst-italic text-muted"><strong>Biography</strong><br><i> {{$therapist->bio}}" </i> </div>
+                                <!-- <a class="btn btn-info text-light" href="{{URL('viewtherapist',$therapist->id)}}"> View profile</a> -->
                             </div>
                         </div>
+                        @else
 
+                        @endif
                       @endforeach
 
                     </div>
                 </div>
+</div>
             </section>
                    
-                    
-            </section>
+ 
 
 
                             <div class="col-xl-4">
